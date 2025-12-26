@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>HIERARCHY ABOVE | Shop</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <header class="navbar fade-in">
+            <a href="index.html" class="nav-logo">
+                <img src="assets/logo1.png" alt="MAD Logo" />
+            </a>
+
+            <div class="nav-container">
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <nav id="nav-menu">
+                    <a href="produtos.html" class="active">SHOP</a>
+                    <a href="lookbook.html">LOOKBOOK</a>
+                    <a href="suporte.html">SUPORTE</a>
+                </nav>
+            </div>
+        </header>
+        <main class="container">
+            <section id="vitrine" class="fade-in">
+                <h1
+                    class="logo-text"
+                    style="font-size: 1.5rem; margin-bottom: 40px"
+                >
+                    COLLECTION 01/25
+                </h1>
+                <div class="product-grid-simple">
+                    <div class="product-item" onclick="showProductDetail()">
+                        <div class="product-image-wrapper">
+                            <img
+                                src="assets/NOBLUFF.JPG"
+                                alt="Camiseta Hierarchy"
+                            />
+                            <div class="image-overlay">VER DETALHES</div>
+                        </div>
+                        <h3 class="product-title-grid">
+                            Camiseta Hierarchy – “No Bluff”
+                        </h3>
+                        <p class="product-price-grid">R$ 149,90</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="product-detail" class="hidden">
+                <button class="btn-back" onclick="hideProductDetail()">
+                    ← VOLTAR PARA VITRINE
+                </button>
+
+                <div class="product-detail-layout fade-in">
+                    <div class="product-image-large">
+                        <img
+                            src="assets/NOBLUFF.jpg"
+                            alt="Camiseta Hierarchy"
+                        />
+                    </div>
+
+                    <div class="product-info-checkout">
+                        <h2 class="product-title">
+                            CAMISETA HIERARCHY – “NO BLUFF”
+                        </h2>
+                        <p class="product-price">R$ 149,90</p>
+
+                        <div class="product-description">
+                            <p>
+                                Esta peça apresenta uma estética streetwear
+                                contemporânea, unindo elementos do design
+                                gráfico dos anos 2000 com uma silhueta moderna.
+                                É o item ideal para composições que buscam
+                                destacar um visual urbano e sofisticado. Devido
+                                à complexidade visual da estampa, recomenda-se a
+                                combinação com peças inferiores de tons neutros
+                                ou alfaiataria moderna para um contraste de
+                                texturas equilibrado.
+                            </p>
+                        </div>
+                        <div class="size-selection">
+                            <p class="section-label">TAMANHO:</p>
+                            <div class="size-options">
+                                <label class="size-btn">
+                                    <input
+                                        type="radio"
+                                        name="size"
+                                        value="M"
+                                        checked
+                                    />
+                                    <span>M</span>
+                                </label>
+                                <label class="size-btn">
+                                    <input type="radio" name="size" value="G" />
+                                    <span>G</span>
+                                </label>
+                                <label class="size-btn">
+                                    <input
+                                        type="radio"
+                                        name="size"
+                                        value="GG"
+                                    />
+                                    <span>GG</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="checkout-area">
+                            <div class="coupon-box">
+                                <input
+                                    type="text"
+                                    id="couponInput"
+                                    placeholder="CUPOM DE DESCONTO"
+                                />
+                                <button
+                                    onclick="applyCoupon()"
+                                    class="btn-black w-100"
+                                >
+                                    APLICAR
+                                </button>
+                            </div>
+                            <p id="totalPrice" class="final-price">
+                                TOTAL: R$ 149,90
+                            </p>
+                            <div class="pix-info">
+                                <p>PAGAMENTO VIA PIX</p>
+                                <div class="pix-qr-container">
+                                    <img
+                                        src="assets/pix-qr.png"
+                                        alt="QR Code Pix"
+                                        class="pix-qr-img"
+                                    />
+                                </div>
+                                <code class="pix-key"
+                                    >goinawlsherarco@gmail.com</code
+                                >
+                                <button
+                                    class="btn-black w-100"
+                                    onclick="sendPurchaseEmail()"
+                                >
+                                    JÁ PAGUEI - ENVIAR COMPROVANTE POR E-MAIL
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script src="script.js"></script>
+    </body>
+</html>
