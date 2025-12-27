@@ -476,7 +476,15 @@ nav#nav-menu a.active {
         font-size: 1.5rem !important;
         margin: 15px 0 !important;
     }
-
+    .product-image-large,
+    .product-image-large img {
+        width: 100% !important;
+        max-width: 100% !important; /* Impede de vazar lateralmente */
+        height: auto !important;
+        max-height: 450px !important; /* Limita o tamanho vertical no celular */
+        object-fit: contain !important; /* Garante que a foto apareça inteira sem cortes */
+        margin-bottom: 20px !important;
+    }
     /* SOLUÇÃO PARA O "INDO PRO LADO":
        Mudamos de GRID para FLEX para forçar a descida dos elementos */
     .product-grid,
@@ -514,15 +522,6 @@ nav#nav-menu a.active {
         flex-direction: column !important;
         gap: 0 !important;
     }
-}
-/* 1. Garante que o container da imagem não tenha largura fixa */
-.product-image,
-.product-image-wrapper,
-.product-image-large {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    display: block !important;
 }
 
 /* Container da imagem */
