@@ -1,11 +1,11 @@
 /**
- * HIERARCHY ABOVE - Official Script v2.1
+ * HIERARCHY ABOVE - Official Script v3.0
  */
 
 const targetDate = new Date("January 20, 2026 00:00:00").getTime();
-let cupomAplicado = false;
+let precoBase = 149.9;
 
-// 1. CRONÔMETRO COM REDIRECIONAMENTO E PULO DE DEV
+// 1. CRONÔMETRO
 function updateCountdown() {
   const urlParams = new URLSearchParams(window.location.search);
   const isDev = urlParams.get("dev");
@@ -47,7 +47,7 @@ function toggleMenu() {
   }
 }
 
-// 3. INTERFACE DE PRODUTO (VITRINE / DETALHES)
+// 3. INTERFACE DE PRODUTO
 function showProductDetail() {
   const vitrine = document.getElementById("vitrine");
   const detail = document.getElementById("product-detail");
@@ -69,64 +69,80 @@ function hideProductDetail() {
   }
 }
 
-// 4. LÓGICA DE CUPOM
-function applyCoupon() {
-  const inputField = document.getElementById("couponInput");
-  if (!inputField) return;
+// 4. LÓGICA DE CUPOM (Integrada com Formspree)
+// Códigos PIX Oficiais fornecidos
+const pixOriginal =
+  "00020126470014BR.GOV.BCB.PIX0125goinawlsherarco@gmail.com5204000053039865406149.905802BR5901N6001C62180514HIERARCHYABOVE630470E3";
+const pixPromocional =
+  "00020126470014BR.GOV.BCB.PIX0125goinawlsherarco@gmail.com5204000053039865406134.915802BR5901N6001C62180514HIERARCHYABOVE630467B7";
 
-  const input = inputField.value.toUpperCase();
+function applyCoupon() {
+  const input = document
+    .getElementById("couponInput")
+    .value.toUpperCase()
+    .trim();
   const priceDisplay = document.getElementById("totalPrice");
+  const valorDisplayForm = document.getElementById("valor-display");
+  const qrImage = document.getElementById("pix-qr-img");
+  const pixTextarea = document.getElementById("pixCode"); // Onde fica o Copia e Cola
+  const hiddenValor = document.getElementById("hidden-valor");
 
   if (input === "MILGRAU") {
-    cupomAplicado = true;
+    // --- APLICANDO DESCONTO ---
     priceDisplay.innerHTML =
-      "TOTAL: <strike>R$ 149,90</strike> R$ 134,91 (10% OFF)";
-    priceDisplay.style.color = "green";
+      "TOTAL: <strike>R$ 149,90</strike> <span style='color:var(--vinho)'>R$ 134,91</span>";
+    if (valorDisplayForm) valorDisplayForm.innerText = "134,91";
+    if (hiddenValor) hiddenValor.value = "134.91";
+
+    // Troca para o PIX Promocional
+    if (qrImage) qrImage.src = "assets/pix-promocional.png";
+    if (pixTextarea) pixTextarea.value = pixPromocional;
   } else {
-    cupomAplicado = false;
+    // --- VALOR ORIGINAL ---
     priceDisplay.innerHTML = "TOTAL: R$ 149,90";
-    priceDisplay.style.color = "#000";
+    if (valorDisplayForm) valorDisplayForm.innerText = "149,90";
+    if (hiddenValor) hiddenValor.value = "149.90";
+
+    // Troca para o PIX Original
+    if (qrImage) qrImage.src = "assets/pix-original.png";
+    if (pixTextarea) pixTextarea.value = pixOriginal;
   }
 }
 
-// 5. ENVIO POR E-MAIL (TEXTO ORIGINAL PRESERVADO)
-function sendPurchaseEmail() {
-  const emailDestino = "goinawlsherarco@gmail.com";
+// Função para o botão de Copiar
+function copyPix() {
+  const pixCode = document.getElementById("pixCode");
+  const btn = document.getElementById("btnCopy");
 
-  // Verifica se um tamanho foi selecionado para evitar erro
-  const selectedRadio = document.querySelector('input[name="size"]:checked');
+  pixCode.select();
+  pixCode.setSelectionRange(0, 99999); // Mobile
+  navigator.clipboard.writeText(pixCode.value);
 
-  if (!selectedRadio) {
-    alert("Por favor, selecione um tamanho antes de comprar.");
-    return;
+  // Feedback visual
+  const originalText = btn.innerText;
+  btn.innerText = "COPIADO!";
+  btn.style.background = "var(--vinho)";
+
+  setTimeout(() => {
+    btn.innerText = originalText;
+    btn.style.background = "#000";
+  }, 2000);
+}
+
+// 5. PREPARAR ENVIO (Chamada ao selecionar o tamanho)
+function selectSize(tamanho) {
+  // 1. Grava o tamanho no campo oculto do Formspree
+  const hiddenTamanho = document.getElementById("hidden-tamanho");
+  if (hiddenTamanho) hiddenTamanho.value = tamanho;
+
+  // 2. Mostra a área do PIX (que contém o seu formulário)
+  const pixArea = document.getElementById("pix-area");
+  if (pixArea) {
+    pixArea.classList.remove("hidden"); // Remove o display:none
+    pixArea.scrollIntoView({ behavior: "smooth" }); // Desce a tela suavemente
   }
-
-  const sizeSelected = selectedRadio.value;
-  const valorFinal = cupomAplicado
-    ? "R$ 134,91 (Cupom MILGRAU aplicado)"
-    : "R$ 149,90 (Sem cupom)";
-
-  const assunto = "CONFIRMAÇÃO DE PAGAMENTO PIX - HIERARCHY ABOVE";
-
-  // O seu texto original abaixo:
-  const corpoEmail = `Olá, realizei o pagamento via Pix. Seguem os detalhes:
-
-PRODUTO: Camiseta Hierarchy – “No Bluff”
-TAMANHO: ${sizeSelected}
-VALOR PAGO: ${valorFinal}
-
---- DADOS PARA ENVIO ---
-Nome Completo:
-CPF:
-Endereço Completo:
-CEP:
-Cidade / Estado:
-Telefone de Contato:
-
-(Anexe o comprovante do Pix a este e-mail para agilizar o envio).`;
-
-  const mailtoLink = `mailto:${emailDestino}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
-  window.location.href = mailtoLink;
+  // Garante que o valor atual também esteja no campo hidden
+  applyCoupon();
 }
 
 // 6. EFEITO FADE-IN
@@ -148,3 +164,47 @@ document.addEventListener("DOMContentLoaded", () => {
   triggerFadeIn();
   updateCountdown();
 });
+document
+  .getElementById("checkout-form")
+  .addEventListener("submit", function (event) {
+    event.preventDefault(); // Impede o Formspree de abrir a página deles
+
+    const form = event.target;
+    const data = new FormData(form);
+    const button = form.querySelector('button[type="submit"]');
+
+    // Feedback visual para o cliente saber que está enviando
+    const originalText = button.innerText;
+    button.innerText = "ENVIANDO...";
+    button.disabled = true;
+
+    // Faz o envio via AJAX
+    fetch("https://formspree.io/f/mwvklgdy", {
+      method: "POST",
+      body: data,
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          // SUCESSO! Agora sim redirecionamos para sua página personalizada
+          window.location.href = "obrigado.html";
+        } else {
+          response.json().then((data) => {
+            if (Object.hasOwn(data, "errors")) {
+              alert(data["errors"].map((error) => error["message"]).join(", "));
+            } else {
+              alert("Ops! Houve um erro ao enviar. Tente novamente.");
+            }
+          });
+          button.innerText = originalText;
+          button.disabled = false;
+        }
+      })
+      .catch((error) => {
+        alert("Erro de conexão. Verifique sua internet.");
+        button.innerText = originalText;
+        button.disabled = false;
+      });
+  });

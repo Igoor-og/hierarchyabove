@@ -3,6 +3,7 @@
     --white: #ffffff;
     --gray: #f2f2f2;
     --text-muted: #666;
+    --vinho: #800020; /* Nova cor para detalhes */
 }
 
 * {
@@ -62,7 +63,7 @@ body {
     font-weight: 600;
 }
 .navbar nav a.active {
-    border-bottom: 2px solid var(--black);
+    border-bottom: 2px solid var(--vinho);
 }
 
 /* Typography */
@@ -108,7 +109,7 @@ body {
 
 /* Buttons & Inputs */
 .btn-black {
-    background: var(--black);
+    background: var(--vinho);
     color: var(--white);
     border: none;
     padding: 15px 30px;
@@ -324,11 +325,39 @@ body {
 }
 
 .size-btn input:checked + span {
-    background-color: var(--black);
+    background-color: var(--vinho);
     color: var(--white);
     border-color: var(--black);
 }
+.checkout-form-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
 
+.input-group input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    font-family: inherit;
+    text-transform: uppercase; /* Estética da marca */
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.input-group input:focus {
+    border-color: var(--vinho);
+}
+
+/* Esconder a área do PIX até que tudo esteja selecionado */
+.hidden {
+    display: none !important;
+}
 /* ============================================================
    APENAS O BLOCO DE CELULAR (CORRIGIDO: LOGO E HAMBÚRGUER)
    ============================================================ */
@@ -371,36 +400,34 @@ body {
         background-color: var(--black) !important;
     }
 
-    /* 4. Menu Lateral que Desliza */
-    nav,
-    #nav-menu {
+    nav#nav-menu {
         position: fixed !important;
         top: 0;
         left: -100%;
-        width: 80% !important;
+        width: 100% !important; /* Ocupa a tela toda para centralizar melhor */
         height: 100vh !important;
         background: var(--white);
         display: flex !important;
         flex-direction: column !important;
-        justify-content: center !important;
-        align-items: center !important;
+        justify-content: center !important; /* Centraliza verticalmente */
+        align-items: center !important; /* Centraliza horizontalmente */
         z-index: 10000 !important;
-        transition: 0.4s ease-in-out;
-        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
+        transition: 0.5s ease;
     }
 
-    nav.active,
-    #nav-menu.active {
-        left: 0 !important;
-    }
-
-    nav a,
-    #nav-menu a {
+    nav#nav-menu a {
         margin: 20px 0 !important;
-        font-size: 1.2rem !important;
-        font-weight: 800 !important;
-        margin-left: 0 !important;
-        display: block !important;
+        font-size: 1.5rem !important;
+        font-weight: 900 !important;
+        color: var(--black);
+        text-decoration: none;
+        letter-spacing: 2px;
+    }
+
+    /* Detalhe vinho na página ativa do menu */
+    nav#nav-menu a.active {
+        color: var(--vinho);
+        border-bottom: 3px solid var(--vinho);
     }
 
     /* 5. Ajustes de Layout (Página de Produto e Suporte) */
@@ -452,5 +479,28 @@ body {
     }
     .timer-bold {
         font-size: 2rem !important;
+    }
+    /* Botões e seleções em Vinho */
+    .size-btn input:checked + span {
+        background-color: var(--vinho) !important;
+        border-color: var(--vinho) !important;
+    }
+
+/* Ajuste para campos divididos no formulário */
+.input-group div {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.input-group div input {
+    margin-bottom: 10px;
+}
+
+@media (max-width: 480px) {
+    /* No celular muito pequeno, se ficar apertado, eles voltam a ser um embaixo do outro */
+    .input-group div {
+        flex-direction: column;
+        gap: 0;
     }
 }
