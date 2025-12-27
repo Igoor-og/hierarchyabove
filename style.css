@@ -67,8 +67,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 30px 5%;
+    padding: 20px 5%;
     border-bottom: 1px solid var(--gray);
+    background: var(--white);
 }
 .nav-logo {
     font-size: 1.8rem;
@@ -383,162 +384,124 @@ body {
 /* ============================================================
    APENAS O BLOCO DE CELULAR (CORRIGIDO: LOGO E HAMBÚRGUER)
    ============================================================ */
-   /* Estado inicial (Escondido) */
-   nav#nav-menu {
-       position: fixed !important;
-       top: 0;
-       left: -100%; /* Fora da tela */
-       width: 100% !important;
-       height: 100vh !important;
-       background: white !important; /* Mudei para white só para testar */
-       display: flex !important;
-       flex-direction: column !important;
-       justify-content: center !important;
-       align-items: center !important;
-       z-index: 10000 !important;
-       transition: all 0.5s ease-in-out !important;
-   }
+/* Estado inicial (Escondido) */
+/* Menu no PC */
+nav#nav-menu {
+    display: flex;
+    gap: 25px;
+}
+nav#nav-menu a {
+    text-decoration: none;
+    color: var(--black);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+nav#nav-menu a:hover,
+nav#nav-menu a.active {
+    color: var(--vinho);
+}
 
-   /* Estado Ativo (Visível) - O segredo está aqui! */
-   nav#nav-menu.active {
-       left: 0 !important;
-   }
+.hamburger {
+    display: none; /* Escondido no PC */
+}
+/* ============================================================
+      CONFIGURAÇÕES MOBILE (ATÉ 768px)
+      ============================================================ */
 @media (max-width: 768px) {
-    /* 1. Trava Geral */
-    html,
-    body {
-        overflow-x: hidden !important;
-        width: 100% !important;
-    }
-
-    /* 2. Logo e Navbar (Ajustado para não ficar minúscula) */
     .navbar {
-        padding: 15px 5% !important;
-        height: 70px !important; /* Altura fixa para controle */
+        padding: 15px 5%;
+        height: 70px;
     }
 
-    .navbar img,
-    .nav-logo img {
-        height: 45px !important; /* Aumentado para visibilidade */
-        width: auto !important;
-        display: block !important;
+    .navbar img {
+        height: 45px !important;
     }
 
-    /* 3. MENU HAMBÚRGUER (FORÇADO) */
+    /* MENU HAMBÚRGUER */
     .hamburger {
-        display: flex !important; /* Força o flex */
-        flex-direction: column !important;
-        gap: 5px !important;
-        cursor: pointer !important;
-        z-index: 10001 !important;
-        padding: 10px; /* Área de toque maior */
+        display: flex !important;
+        flex-direction: column;
+        gap: 5px;
+        z-index: 10001;
     }
 
     .hamburger span {
-        display: block !important;
-        width: 28px !important;
-        height: 2px !important;
-        background-color: var(--black) !important;
+        width: 25px;
+        height: 2px;
+        background: var(--black);
+        transition: 0.3s;
     }
 
+    /* NAVEGAÇÃO MOBILE (GAVETA) */
     nav#nav-menu {
         position: fixed !important;
         top: 0;
-        left: -100%;
-        width: 100% !important; /* Ocupa a tela toda para centralizar melhor */
+        left: -100% !important; /* Escondido à esquerda */
+        width: 100% !important;
         height: 100vh !important;
-        background: var(--white);
-        display: flex !important;
+        background: var(--white) !important;
         flex-direction: column !important;
-        justify-content: center !important; /* Centraliza verticalmente */
-        align-items: center !important; /* Centraliza horizontalmente */
+        justify-content: center !important;
+        align-items: center !important;
         z-index: 10000 !important;
-        transition: 0.5s ease;
+        transition: 0.5s ease-in-out !important;
     }
 
-    nav#nav-menu a {
-        margin: 20px 0 !important;
-        font-size: 1.5rem !important;
-        font-weight: 900 !important;
-        color: var(--black);
-        text-decoration: none;
-        letter-spacing: 2px;
-    }
-
-    /* Detalhe vinho na página ativa do menu */
-    nav#nav-menu a.active {
-        color: var(--vinho);
-        border-bottom: 3px solid var(--vinho);
+    /* Ativando o Menu no clique */
+    nav#nav-menu.active {
         left: 0 !important;
     }
 
-    /* 5. Ajustes de Layout (Página de Produto e Suporte) */
-    .container {
-        width: 100% !important;
-        padding: 20px 15px !important;
-        box-sizing: border-box !important;
+    nav#nav-menu a {
+        font-size: 1.5rem !important;
+        margin: 15px 0 !important;
     }
 
-    .product-detail-layout,
+    /* LAYOUT MOBILE */
     .product-grid,
+    .product-detail-layout,
     .product-grid-simple {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100% !important;
-        gap: 25px !important;
+        grid-template-columns: 1fr !important;
+        gap: 30px;
     }
 
-    .product-image-large,
-    .product-image img,
-    .product-image-large img {
-        width: 100% !important;
-        height: auto !important;
-    }
-
-    /* 6. Centralização de Textos */
-    .product-info-checkout,
-    .support-content,
-    .flex-center {
-        text-align: center !important;
-        align-items: center !important;
-        width: 100% !important;
-    }
-
-    .product-description {
-        text-align: center !important;
-        margin: 15px auto !important;
-        max-width: 90% !important;
-    }
-
-    .size-options {
-        justify-content: center !important;
-        margin-bottom: 20px !important;
-    }
-
-    /* 7. Tipografia de Títulos */
     .logo-text {
         font-size: 2.5rem !important;
     }
     .timer-bold {
         font-size: 2rem !important;
     }
-    /* Botões e seleções em Vinho */
-    .size-btn input:checked + span {
-        background-color: var(--vinho) !important;
-        border-color: var(--vinho) !important;
-    }
+}
 
-/* Ajuste para campos divididos no formulário */
-.input-group div {
-    display: flex;
-    gap: 10px;
+/* ============================================================
+      BOTÕES E FORMULÁRIO
+      ============================================================ */
+.btn-black {
+    background: var(--vinho);
+    color: var(--white);
+    border: none;
+    padding: 15px 30px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
     width: 100%;
 }
 
-.input-group div input {
+.input-group input {
+    width: 100%;
+    padding: 15px;
     margin-bottom: 10px;
+    border: 1px solid #ddd;
+    text-transform: uppercase;
 }
 
+.size-btn input:checked + span {
+    background-color: var(--vinho) !important;
+    color: white;
+    border-color: var(--vinho) !important;
+}
 @media (max-width: 480px) {
     /* No celular muito pequeno, se ficar apertado, eles voltam a ser um embaixo do outro */
     .input-group div {
