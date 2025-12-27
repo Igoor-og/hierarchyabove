@@ -273,19 +273,15 @@ body {
     text-decoration: underline;
 }
 
-.hidden {
-    display: none;
-}
-
-/* Estilização da Logo */
+/* Estilização da Logo PC */
 .navbar img {
-    height: 130px; /* Tamanho da logo no menu */
+    height: 130px;
     width: auto;
     display: block;
 }
 
 .main-logo-img {
-    max-width: 250px; /* Tamanho da logo na tela de lançamento */
+    max-width: 250px;
     height: auto;
     margin-bottom: 20px;
     display: block;
@@ -293,21 +289,6 @@ body {
     margin-right: auto;
 }
 
-/* Ajuste para o Fade-in na logo da Home */
-.countdown-container .main-logo-img {
-    animation: fadeInLogo 1.5s ease-out;
-}
-
-@keyframes fadeInLogo {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
 /* Seleção de Tamanhos */
 .size-selection {
     margin-bottom: 25px;
@@ -326,7 +307,7 @@ body {
 }
 
 .size-btn input {
-    display: none; /* Esconde o rádio original */
+    display: none;
 }
 
 .size-btn span {
@@ -342,457 +323,89 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Estilo quando selecionado */
 .size-btn input:checked + span {
     background-color: var(--black);
     color: var(--white);
     border-color: var(--black);
 }
 
-.size-btn span:hover {
-    border-color: var(--black);
-}
-/* Layout da Navbar */
-.nav-left,
-.nav-right {
-    flex: 1;
-    display: flex;
-    align-items: center;
-}
-.nav-right {
-    justify-content: flex-end;
-}
-
-/* Sacola de Compras */
-.cart-icon {
-    position: relative;
-    cursor: pointer;
-}
-#cart-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: var(--black);
-    color: var(--white);
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 10px;
-}
-
-/* Menu Hambúrguer (Escondido no Desktop) */
-.hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-}
-.hamburger span {
-    width: 25px; /* VARIÁVEIS DE CORES */
-    :root {
-        --black: #000000;
-        --white: #ffffff;
-        --gray: #f2f2f2;
-        --text-muted: #666;
-    }
-
-    /* RESET BÁSICO */
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        outline: none;
-    }
-
-    body {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        background-color: var(--white);
-        color: var(--black);
-        line-height: 1.5;
-        text-transform: uppercase; /* Estética Streetwear */
-        overflow-x: hidden;
-    }
-
-    /* EFEITOS DE FADE-IN */
-    .fade-in {
-        opacity: 0;
-        transform: translateY(20px);
-        transition:
-            opacity 1s ease-out,
-            transform 1s ease-out;
-    }
-
-    .fade-in.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    /* HEADER E NAVEGAÇÃO */
-    .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 25px 5%;
-        background: var(--white);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        border-bottom: 1px solid var(--gray);
-    }
-
-    .nav-logo img {
-        height: 30px;
-        width: auto;
-    }
-
-    .nav-container {
-        display: flex;
-        align-items: center;
-    }
-
-    nav a {
-        text-decoration: none;
-        color: var(--black);
-        font-weight: 700;
-        font-size: 0.8rem;
-        margin-left: 30px;
-        letter-spacing: 1px;
-        transition: opacity 0.3s;
-    }
-
-    nav a:hover {
-        opacity: 0.6;
-    }
-    nav a.active {
-        border-bottom: 2px solid var(--black);
-    }
-
-    /* MENU HAMBÚRGUER (MOBILE) */
-    .hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-    }
-    .hamburger span {
-        width: 25px;
-        height: 2px;
-        background: var(--black);
-    }
-
-    /* GRID DE PRODUTOS E VITRINE */
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 40px 20px;
-    }
-    .product-grid-simple {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 40px;
-    }
-    .product-item {
-        cursor: pointer;
-        text-align: left;
-    }
-    .product-image-wrapper {
-        background: #f9f9f9;
-        overflow: hidden;
-        margin-bottom: 15px;
-    }
-    .product-image-wrapper img {
-        width: 100%;
-        transition: transform 0.6s ease;
-    }
-    .product-item:hover img {
-        transform: scale(1.05);
-    }
-
-    /* DETALHES DO PRODUTO */
-    .product-detail-layout {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 60px;
-        align-items: start;
-    }
-    .product-image-large img {
-        width: 100%;
-        height: auto;
-    }
-    .product-title {
-        font-size: 2rem;
-        font-weight: 900;
-        margin-bottom: 10px;
-        letter-spacing: -1px;
-    }
-    .product-price {
-        font-size: 1.3rem;
-        margin-bottom: 25px;
-    }
-    .product-description {
-        text-transform: none;
-        color: var(--text-muted);
-        margin-bottom: 40px;
-        font-size: 1rem;
-        max-width: 450px;
-    }
-
-    /* SELEÇÃO DE TAMANHOS */
-    .size-selection {
-        margin-bottom: 30px;
-    }
-    .section-label {
-        font-size: 0.7rem;
-        font-weight: 800;
-        margin-bottom: 12px;
-    }
-    .size-options {
-        display: flex;
-        gap: 10px;
-    }
-    .size-btn input {
-        display: none;
-    }
-    .size-btn span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        border: 1px solid #ddd;
-        cursor: pointer;
-        font-weight: 700;
-        transition: 0.3s;
-    }
-    .size-btn input:checked + span {
-        background: var(--black);
-        color: var(--white);
-        border-color: var(--black);
-    }
-
-    /* ÁREA DE CHECKOUT E PIX */
-    .checkout-area {
-        border-top: 1px solid var(--gray);
-        pt: 30px;
-    }
-    .coupon-box {
-        display: flex;
-        gap: 10px;
-        margin: 20px 0;
-    }
-    .coupon-box input {
-        border: 1px solid #ddd;
-        padding: 12px;
-        flex: 1;
-        text-transform: uppercase;
-    }
-    .btn-black {
-        background: var(--black);
-        color: var(--white);
-        border: none;
-        padding: 18px;
-        font-weight: 700;
-        cursor: pointer;
-        width: 100%;
-        letter-spacing: 1px;
-        transition: opacity 0.3s;
-    }
-    .pix-info {
-        background: var(--gray);
-        padding: 30px;
-        margin-top: 20px;
-        text-align: center;
-    }
-    .pix-qr-img {
-        width: 200px;
-        height: 200px;
-        margin: 20px 0;
-        background: #fff;
-        padding: 10px;
-    }
-    .pix-key {
-        display: block;
-        font-size: 0.8rem;
-        background: #fff;
-        padding: 10px;
-        margin-bottom: 20px;
-        border: 1px dashed #ccc;
-    }
-
-    /* LOOKBOOK - SEM CORTES */
-    .lookbook-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 80px;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
-    .lookbook-item img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    /* COUNTDOWN PAGE */
-    .flex-center {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        text-align: center;
-    }
-    .main-logo-img {
-        max-width: 300px;
-        margin-bottom: 30px;
-    }
-    .timer-bold {
-        font-size: 4rem;
-        font-weight: 900;
-        letter-spacing: -2px;
-        margin: 20px 0;
-    }
-
-    /* UTILITÁRIOS */
-    .hidden {
-        display: none;
-    }
-    .btn-back {
-        background: none;
-        border: none;
-        cursor: pointer;
-        text-decoration: underline;
-        font-weight: 700;
-        margin-bottom: 30px;
-        display: block;
-    }
-
-
-/* ============================================================
-   APENAS AS CONFIGURAÇÕES DE CELULAR (SUBSTITUA AS ANTIGAS)
-   ============================================================ */
+/* --- BLOCO DE CORREÇÃO APENAS PARA MOBILE (NÃO AFETA PC) --- */
 
 @media (max-width: 768px) {
-    /* 1. Logo e Navbar */
+    /* Logo 25px conforme pedido */
     .navbar img,
     .nav-logo img {
-        height: 25px !important; /* Tamanho exato pedido */
+        height: 25px !important;
         width: auto !important;
     }
 
-    /* 2. Menu Hambúrguer */
-    .hamburger {
+    /* Centralizar suporte e conteúdos bugados */
+    #suporte,
+    .container,
+    .support-content,
+    .flex-center {
         display: flex !important;
-        flex-direction: column;
-        gap: 5px;
-        cursor: pointer;
-        z-index: 1001;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
     }
 
-    .hamburger span {
-        width: 25px;
-        height: 2px;
-        background: var(--black);
-    }
-
-    /* 3. Menu Lateral que desliza */
-    nav,
-    #nav-menu {
-        position: fixed !important;
-        top: 0;
-        left: -100%; /* Escondido à esquerda */
-        width: 80%;
-        height: 100vh;
-        background: var(--white);
+    /* Consertar a página de produto que estava com grid quebrado */
+    .product-detail-layout,
+    .product-grid {
         display: flex !important;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        transition: 0.5s ease;
-        z-index: 1000;
-        box-shadow: 10px 0 20px rgba(0, 0, 0, 0.05);
-    }
-
-    nav.active,
-    #nav-menu.active {
-        left: 0; /* Desliza para dentro da tela */
-    }
-
-    nav a,
-    #nav-menu a {
-        margin: 15px 0 !important;
-        margin-left: 0 !important;
-        font-size: 1.2rem !important;
-        font-weight: 800 !important;
-    }
-
-    /* 4. Ajustes de Layout (Evita imagens gigantes) */
-    .product-grid,
-    .product-grid-simple,
-    .product-detail-layout {
-        grid-template-columns: 1fr !important;
-        gap: 30px !important;
-    }
-
-    .lookbook-grid {
+        flex-direction: column !important;
         gap: 20px !important;
     }
 
-    /* 5. Tipografia Mobile */
-    .logo-text {
-        font-size: 3rem !important;
+    .product-info-checkout,
+    .product-image-large {
+        width: 100% !important;
+        max-width: 100% !important;
     }
 
-    .timer-bold {
-        font-size: 2rem !important;
-        letter-spacing: -1px !important;
+    /* Centralizar textos e botões no mobile */
+    .product-title,
+    .product-price,
+    .product-description,
+    .size-options {
+        text-align: center !important;
+        justify-content: center !important;
     }
 
-    .product-title {
-        font-size: 1.3rem !important;
+    .product-description {
+        margin-left: auto;
+        margin-right: auto;
     }
-    /* Impede a rolagem para os lados e limpa o layout */
-        html, body {
-            overflow-x: hidden;
-            width: 100%;
-        }
 
-        /* Força a página de produto a virar uma coluna única e justa */
-        .product-detail-layout {
-            display: flex !important;
-            flex-direction: column !important;
-            padding: 10px !important;
-            gap: 20px !important;
-        }
-
-        /* Faz a imagem do produto ocupar a largura total sem margens sobrando */
-        .product-image-large, .product-image img {
-            width: 100% !important;
-            max-width: 100% !important;
-            height: auto !important;
-            margin: 0 !important;
-        }
-
-        /* Ajusta as informações do produto (Preço, Botão, Descrição) */
-        .product-info {
-            width: 100% !important;
-            padding: 0 15px !important;
-            text-align: left !important;
-        }
-
-        /* Deixa o botão de compra bem grande e fácil de clicar no dedão */
-        .btn-black {
-            width: 100% !important;
-            padding: 20px !important;
-            font-size: 1.1rem !important;
-        }
-}
-
-/* Mantém o efeito P&B apenas para computadores */
-@media (min-width: 1024px) {
-    .lookbook-item img {
-        filter: grayscale(100%);
+    /* Vitrine (Shop) em uma coluna */
+    .product-grid-simple {
+        grid-template-columns: 1fr !important;
     }
-    .lookbook-item img:hover {
-        filter: grayscale(0%);
+
+    /* Menu Hambúrguer lateral */
+    .hamburger {
+        display: flex !important;
+    }
+
+    nav#nav-menu {
+        position: fixed !important;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background: var(--white);
+        flex-direction: column !important;
+        justify-content: center !important;
+        z-index: 9999;
+        transition: 0.5s ease;
+        box-shadow: 10px 0 20px rgba(0, 0, 0, 0.1);
+    }
+    nav#nav-menu.active {
+        left: 0;
+    }
+    nav#nav-menu a {
+        margin: 15px 0 !important;
+        font-size: 1.2rem !important;
     }
 }
