@@ -330,117 +330,127 @@ body {
 }
 
 /* ============================================================
-   APENAS O BLOCO DE CELULAR (SUBSTITUA O ANTERIOR)
+   APENAS O BLOCO DE CELULAR (CORRIGIDO: LOGO E HAMBÚRGUER)
    ============================================================ */
 
 @media (max-width: 768px) {
-    /* 1. Trava Geral contra transbordamento lateral */
+    /* 1. Trava Geral */
     html,
     body {
         overflow-x: hidden !important;
         width: 100% !important;
-        position: relative;
     }
 
-    /* 2. Logo 25px conforme pedido */
+    /* 2. Logo e Navbar (Ajustado para não ficar minúscula) */
+    .navbar {
+        padding: 15px 5% !important;
+        height: 70px !important; /* Altura fixa para controle */
+    }
+
     .navbar img,
     .nav-logo img {
-        height: 25px !important;
+        height: 45px !important; /* Aumentado para visibilidade */
         width: auto !important;
+        display: block !important;
     }
 
-    /* 3. Ajuste de Containers para não esticarem */
-    .container {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 20px 15px !important; /* Padding interno para não encostar nas bordas */
-        margin: 0 !important;
-        box-sizing: border-box !important;
-    }
-
-    /* 4. Página de Produto (Evita que as fotos fiquem gigantes) */
-    .product-detail-layout,
-    .product-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100% !important;
-        gap: 20px !important;
-    }
-
-    .product-image-large,
-    .product-image img,
-    .product-image-large img {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-    }
-
-    .product-info-checkout {
-        width: 100% !important;
-        padding: 0 !important;
-        text-align: center !important;
-    }
-
-    /* 5. Centralização da Página de Suporte */
-    #suporte,
-    .support-content,
-    .flex-center {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 100% !important;
-        text-align: center !important;
-        min-height: auto !important; /* Evita que ocupe a tela toda se não precisar */
-    }
-
-    /* 6. Tipografia Mobile (Reduzindo o tamanho "gigante") */
-    .logo-text {
-        font-size: 2.5rem !important; /* De 5rem para 2.5rem no celular */
-        letter-spacing: -2px !important;
-    }
-
-    .timer-bold {
-        font-size: 2rem !important;
-    }
-
-    .product-title {
-        font-size: 1.2rem !important;
-    }
-
-    /* 7. Vitrine (Shop) em uma coluna justa */
-    .product-grid-simple {
-        grid-template-columns: 1fr !important;
-        width: 100% !important;
-        padding: 0 !important;
-    }
-
-    /* 8. Menu Hambúrguer lateral */
+    /* 3. MENU HAMBÚRGUER (FORÇADO) */
     .hamburger {
-        display: flex !important;
-        z-index: 10001;
+        display: flex !important; /* Força o flex */
+        flex-direction: column !important;
+        gap: 5px !important;
+        cursor: pointer !important;
+        z-index: 10001 !important;
+        padding: 10px; /* Área de toque maior */
     }
 
-    nav#nav-menu {
+    .hamburger span {
+        display: block !important;
+        width: 28px !important;
+        height: 2px !important;
+        background-color: var(--black) !important;
+    }
+
+    /* 4. Menu Lateral que Desliza */
+    nav,
+    #nav-menu {
         position: fixed !important;
         top: 0;
         left: -100%;
         width: 80% !important;
         height: 100vh !important;
         background: var(--white);
+        display: flex !important;
         flex-direction: column !important;
         justify-content: center !important;
-        z-index: 10000;
-        transition: 0.5s ease;
-        box-shadow: 10px 0 20px rgba(0, 0, 0, 0.1);
+        align-items: center !important;
+        z-index: 10000 !important;
+        transition: 0.4s ease-in-out;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
     }
-    nav#nav-menu.active {
-        left: 0;
+
+    nav.active,
+    #nav-menu.active {
+        left: 0 !important;
     }
-    nav#nav-menu a {
-        margin: 15px 0 !important;
-        font-size: 1.1rem !important;
-        width: 100%;
-        text-align: center;
+
+    nav a,
+    #nav-menu a {
+        margin: 20px 0 !important;
+        font-size: 1.2rem !important;
+        font-weight: 800 !important;
+        margin-left: 0 !important;
+        display: block !important;
+    }
+
+    /* 5. Ajustes de Layout (Página de Produto e Suporte) */
+    .container {
+        width: 100% !important;
+        padding: 20px 15px !important;
+        box-sizing: border-box !important;
+    }
+
+    .product-detail-layout,
+    .product-grid,
+    .product-grid-simple {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 25px !important;
+    }
+
+    .product-image-large,
+    .product-image img,
+    .product-image-large img {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    /* 6. Centralização de Textos */
+    .product-info-checkout,
+    .support-content,
+    .flex-center {
+        text-align: center !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+
+    .product-description {
+        text-align: center !important;
+        margin: 15px auto !important;
+        max-width: 90% !important;
+    }
+
+    .size-options {
+        justify-content: center !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* 7. Tipografia de Títulos */
+    .logo-text {
+        font-size: 2.5rem !important;
+    }
+    .timer-bold {
+        font-size: 2rem !important;
     }
 }
