@@ -1,16 +1,28 @@
 /**
- * HIERARCHY ABOVE - Official Script v3.0
+ * HIERARCHY ABOVE - Official Script v3.1
  */
 
 const targetDate = new Date("January 20, 2026 00:00:00").getTime();
-let precoBase = 149.9;
 
-// 1. CRONÔMETRO
+// 1. NAVEGAÇÃO MOBILE (Movido para o topo para garantir prioridade)
+function toggleMenu() {
+  // Mudamos o ponto (.) por hashtag (#) para encontrar o nav#nav-menu
+  const navMenu = document.querySelector("#nav-menu");
+  const hamburger = document.querySelector(".hamburger");
+
+  if (navMenu) {
+    navMenu.classList.toggle("active");
+  }
+
+  if (hamburger) {
+    hamburger.classList.toggle("open");
+  }
+}
+
+// 2. CRONÔMETRO
 function updateCountdown() {
   const urlParams = new URLSearchParams(window.location.search);
-  const isDev = urlParams.get("dev");
-
-  if (isDev === "true") {
+  if (urlParams.get("dev") === "true") {
     if (!window.location.pathname.includes("produtos.html")) {
       window.location.href = "produtos.html";
     }
@@ -19,31 +31,23 @@ function updateCountdown() {
 
   const now = new Date().getTime();
   const distance = targetDate - now;
+  const countdownEl = document.getElementById("countdown");
 
-  if (document.getElementById("countdown")) {
+  if (countdownEl) {
     if (distance < 0) {
       window.location.href = "produtos.html";
       return;
     }
-
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor(
       (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
     );
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    document.getElementById("countdown").innerHTML =
-      `${days}D ${hours}H ${minutes}M ${seconds}S`;
+    countdownEl.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
   }
 }
 setInterval(updateCountdown, 1000);
-
-// 2. NAVEGAÇÃO MOBILE
-function toggleMenu() {
-  const menu = document.querySelector(".nav-menu"); // ajuste para sua classe
-  menu.classList.toggle("active");
-}
 
 // 3. INTERFACE DE PRODUTO
 function showProductDetail() {
@@ -67,83 +71,107 @@ function hideProductDetail() {
   }
 }
 
-// 4. LÓGICA DE CUPOM (Integrada com Formspree)
-// Códigos PIX Oficiais fornecidos
+// 4. LÓGICA DE PIX E CUPOM
 const pixOriginal =
   "00020126470014BR.GOV.BCB.PIX0125goinawlsherarco@gmail.com5204000053039865406149.905802BR5901N6001C62180514HIERARCHYABOVE630470E3";
 const pixPromocional =
   "00020126470014BR.GOV.BCB.PIX0125goinawlsherarco@gmail.com5204000053039865406134.915802BR5901N6001C62180514HIERARCHYABOVE630467B7";
 
 function applyCoupon() {
-  const input = document
-    .getElementById("couponInput")
-    .value.toUpperCase()
-    .trim();
+  const inputEl = document.getElementById("couponInput");
+  if (!inputEl) return;
+
+  const input = inputEl.value.toUpperCase().trim();
   const priceDisplay = document.getElementById("totalPrice");
   const valorDisplayForm = document.getElementById("valor-display");
   const qrImage = document.getElementById("pix-qr-img");
-  const pixTextarea = document.getElementById("pixCode"); // Onde fica o Copia e Cola
+  const pixTextarea = document.getElementById("pixCode");
   const hiddenValor = document.getElementById("hidden-valor");
 
   if (input === "MILGRAU") {
-    // --- APLICANDO DESCONTO ---
-    priceDisplay.innerHTML =
-      "TOTAL: <strike>R$ 149,90</strike> <span style='color:var(--vinho)'>R$ 134,91</span>";
+    if (priceDisplay)
+      priceDisplay.innerHTML =
+        "TOTAL: <strike>R$ 149,90</strike> <span style='color:var(--vinho)'>R$ 134,91</span>";
     if (valorDisplayForm) valorDisplayForm.innerText = "134,91";
     if (hiddenValor) hiddenValor.value = "134.91";
-
-    // Troca para o PIX Promocional
     if (qrImage) qrImage.src = "assets/pix-promocional.png";
     if (pixTextarea) pixTextarea.value = pixPromocional;
   } else {
-    // --- VALOR ORIGINAL ---
-    priceDisplay.innerHTML = "TOTAL: R$ 149,90";
+    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 149,90";
     if (valorDisplayForm) valorDisplayForm.innerText = "149,90";
     if (hiddenValor) hiddenValor.value = "149.90";
-
-    // Troca para o PIX Original
     if (qrImage) qrImage.src = "assets/pix-original.png";
     if (pixTextarea) pixTextarea.value = pixOriginal;
   }
 }
 
-// Função para o botão de Copiar
 function copyPix() {
   const pixCode = document.getElementById("pixCode");
   const btn = document.getElementById("btnCopy");
+  if (!pixCode) return;
 
   pixCode.select();
-  pixCode.setSelectionRange(0, 99999); // Mobile
+  pixCode.setSelectionRange(0, 99999);
   navigator.clipboard.writeText(pixCode.value);
 
-  // Feedback visual
   const originalText = btn.innerText;
   btn.innerText = "COPIADO!";
   btn.style.background = "var(--vinho)";
-
   setTimeout(() => {
     btn.innerText = originalText;
     btn.style.background = "#000";
   }, 2000);
 }
 
-// 5. PREPARAR ENVIO (Chamada ao selecionar o tamanho)
 function selectSize(tamanho) {
-  // 1. Grava o tamanho no campo oculto do Formspree
   const hiddenTamanho = document.getElementById("hidden-tamanho");
   if (hiddenTamanho) hiddenTamanho.value = tamanho;
 
-  // 2. Mostra a área do PIX (que contém o seu formulário)
   const pixArea = document.getElementById("pix-area");
   if (pixArea) {
-    pixArea.classList.remove("hidden"); // Remove o display:none
-    pixArea.scrollIntoView({ behavior: "smooth" }); // Desce a tela suavemente
+    pixArea.classList.remove("hidden");
+    pixArea.scrollIntoView({ behavior: "smooth" });
   }
-  // Garante que o valor atual também esteja no campo hidden
   applyCoupon();
 }
 
-// 6. EFEITO FADE-IN
+// 5. ENVIO DO FORMULÁRIO (Protegido para não travar o script)
+function setupForm() {
+  const checkoutForm = document.getElementById("checkout-form");
+  if (!checkoutForm) return;
+
+  checkoutForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const data = new FormData(this);
+    const button = this.querySelector('button[type="submit"]');
+    const originalText = button.innerText;
+
+    button.innerText = "ENVIANDO...";
+    button.disabled = true;
+
+    fetch("https://formspree.io/f/mwvklgdy", {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" },
+    })
+      .then((response) => {
+        if (response.ok) {
+          window.location.href = "obrigado.html";
+        } else {
+          alert("Erro ao enviar. Verifique os dados.");
+          button.innerText = originalText;
+          button.disabled = false;
+        }
+      })
+      .catch(() => {
+        alert("Erro de conexão.");
+        button.innerText = originalText;
+        button.disabled = false;
+      });
+  });
+}
+
+// 6. INICIALIZAÇÃO
 function triggerFadeIn() {
   const fadeElements = document.querySelectorAll(".fade-in");
   const observer = new IntersectionObserver(
@@ -157,52 +185,8 @@ function triggerFadeIn() {
   fadeElements.forEach((el) => observer.observe(el));
 }
 
-// INICIALIZAÇÃO
 document.addEventListener("DOMContentLoaded", () => {
   triggerFadeIn();
   updateCountdown();
+  setupForm(); // Inicializa o formulário com segurança
 });
-document
-  .getElementById("checkout-form")
-  .addEventListener("submit", function (event) {
-    event.preventDefault(); // Impede o Formspree de abrir a página deles
-
-    const form = event.target;
-    const data = new FormData(form);
-    const button = form.querySelector('button[type="submit"]');
-
-    // Feedback visual para o cliente saber que está enviando
-    const originalText = button.innerText;
-    button.innerText = "ENVIANDO...";
-    button.disabled = true;
-
-    // Faz o envio via AJAX
-    fetch("https://formspree.io/f/mwvklgdy", {
-      method: "POST",
-      body: data,
-      headers: {
-        Accept: "application/json",
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          // SUCESSO! Agora sim redirecionamos para sua página personalizada
-          window.location.href = "obrigado.html";
-        } else {
-          response.json().then((data) => {
-            if (Object.hasOwn(data, "errors")) {
-              alert(data["errors"].map((error) => error["message"]).join(", "));
-            } else {
-              alert("Ops! Houve um erro ao enviar. Tente novamente.");
-            }
-          });
-          button.innerText = originalText;
-          button.disabled = false;
-        }
-      })
-      .catch((error) => {
-        alert("Erro de conexão. Verifique sua internet.");
-        button.innerText = originalText;
-        button.disabled = false;
-      });
-  });

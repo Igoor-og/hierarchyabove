@@ -383,7 +383,26 @@ body {
 /* ============================================================
    APENAS O BLOCO DE CELULAR (CORRIGIDO: LOGO E HAMBÚRGUER)
    ============================================================ */
+   /* Estado inicial (Escondido) */
+   nav#nav-menu {
+       position: fixed !important;
+       top: 0;
+       left: -100%; /* Fora da tela */
+       width: 100% !important;
+       height: 100vh !important;
+       background: white !important; /* Mudei para white só para testar */
+       display: flex !important;
+       flex-direction: column !important;
+       justify-content: center !important;
+       align-items: center !important;
+       z-index: 10000 !important;
+       transition: all 0.5s ease-in-out !important;
+   }
 
+   /* Estado Ativo (Visível) - O segredo está aqui! */
+   nav#nav-menu.active {
+       left: 0 !important;
+   }
 @media (max-width: 768px) {
     /* 1. Trava Geral */
     html,
@@ -450,6 +469,7 @@ body {
     nav#nav-menu a.active {
         color: var(--vinho);
         border-bottom: 3px solid var(--vinho);
+        left: 0 !important;
     }
 
     /* 5. Ajustes de Layout (Página de Produto e Suporte) */
