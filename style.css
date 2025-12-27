@@ -750,6 +750,41 @@ body {
     .product-title {
         font-size: 1.3rem !important;
     }
+    /* Impede a rolagem para os lados e limpa o layout */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Força a página de produto a virar uma coluna única e justa */
+        .product-detail-layout {
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 10px !important;
+            gap: 20px !important;
+        }
+
+        /* Faz a imagem do produto ocupar a largura total sem margens sobrando */
+        .product-image-large, .product-image img {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto !important;
+            margin: 0 !important;
+        }
+
+        /* Ajusta as informações do produto (Preço, Botão, Descrição) */
+        .product-info {
+            width: 100% !important;
+            padding: 0 15px !important;
+            text-align: left !important;
+        }
+
+        /* Deixa o botão de compra bem grande e fácil de clicar no dedão */
+        .btn-black {
+            width: 100% !important;
+            padding: 20px !important;
+            font-size: 1.1rem !important;
+        }
 }
 
 /* Mantém o efeito P&B apenas para computadores */
