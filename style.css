@@ -329,75 +329,108 @@ body {
     border-color: var(--black);
 }
 
-/* --- BLOCO DE CORREÇÃO APENAS PARA MOBILE (NÃO AFETA PC) --- */
+/* ============================================================
+   APENAS O BLOCO DE CELULAR (SUBSTITUA O ANTERIOR)
+   ============================================================ */
 
 @media (max-width: 768px) {
-    /* Logo 25px conforme pedido */
+    /* 1. Trava Geral contra transbordamento lateral */
+    html,
+    body {
+        overflow-x: hidden !important;
+        width: 100% !important;
+        position: relative;
+    }
+
+    /* 2. Logo 25px conforme pedido */
     .navbar img,
     .nav-logo img {
         height: 25px !important;
         width: auto !important;
     }
 
-    /* Centralizar suporte e conteúdos bugados */
+    /* 3. Ajuste de Containers para não esticarem */
+    .container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 20px 15px !important; /* Padding interno para não encostar nas bordas */
+        margin: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 4. Página de Produto (Evita que as fotos fiquem gigantes) */
+    .product-detail-layout,
+    .product-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 20px !important;
+    }
+
+    .product-image-large,
+    .product-image img,
+    .product-image-large img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    .product-info-checkout {
+        width: 100% !important;
+        padding: 0 !important;
+        text-align: center !important;
+    }
+
+    /* 5. Centralização da Página de Suporte */
     #suporte,
-    .container,
     .support-content,
     .flex-center {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        text-align: center !important;
-    }
-
-    /* Consertar a página de produto que estava com grid quebrado */
-    .product-detail-layout,
-    .product-grid {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 20px !important;
-    }
-
-    .product-info-checkout,
-    .product-image-large {
-        width: 100% !important;
-        max-width: 100% !important;
-    }
-
-    /* Centralizar textos e botões no mobile */
-    .product-title,
-    .product-price,
-    .product-description,
-    .size-options {
-        text-align: center !important;
         justify-content: center !important;
+        width: 100% !important;
+        text-align: center !important;
+        min-height: auto !important; /* Evita que ocupe a tela toda se não precisar */
     }
 
-    .product-description {
-        margin-left: auto;
-        margin-right: auto;
+    /* 6. Tipografia Mobile (Reduzindo o tamanho "gigante") */
+    .logo-text {
+        font-size: 2.5rem !important; /* De 5rem para 2.5rem no celular */
+        letter-spacing: -2px !important;
     }
 
-    /* Vitrine (Shop) em uma coluna */
+    .timer-bold {
+        font-size: 2rem !important;
+    }
+
+    .product-title {
+        font-size: 1.2rem !important;
+    }
+
+    /* 7. Vitrine (Shop) em uma coluna justa */
     .product-grid-simple {
         grid-template-columns: 1fr !important;
+        width: 100% !important;
+        padding: 0 !important;
     }
 
-    /* Menu Hambúrguer lateral */
+    /* 8. Menu Hambúrguer lateral */
     .hamburger {
         display: flex !important;
+        z-index: 10001;
     }
 
     nav#nav-menu {
         position: fixed !important;
         top: 0;
         left: -100%;
-        width: 80%;
-        height: 100vh;
+        width: 80% !important;
+        height: 100vh !important;
         background: var(--white);
         flex-direction: column !important;
         justify-content: center !important;
-        z-index: 9999;
+        z-index: 10000;
         transition: 0.5s ease;
         box-shadow: 10px 0 20px rgba(0, 0, 0, 0.1);
     }
@@ -406,6 +439,8 @@ body {
     }
     nav#nav-menu a {
         margin: 15px 0 !important;
-        font-size: 1.2rem !important;
+        font-size: 1.1rem !important;
+        width: 100%;
+        text-align: center;
     }
 }
