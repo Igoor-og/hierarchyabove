@@ -1,3 +1,9 @@
+@font-face {
+    font-family: "Denominary";
+    src: url("assets/fonts/denominary-bold.otf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
 :root {
     --black: #000000;
     --white: #ffffff;
@@ -519,15 +525,24 @@ nav#nav-menu a.active {
     display: block !important;
 }
 
-/* 2. Ajusta a imagem em si para ocupar a tela e manter a proporção */
-.product-image img,
-.product-image-wrapper img,
-.product-image-large img {
-    width: 100% !important; /* Ocupa toda a largura disponível */
-    height: auto !important; /* Mantém a proporção original da foto */
-    max-height: 500px; /* Evita que a foto fique gigante verticalmente */
-    object-fit: cover; /* Corta levemente as bordas se necessário para não distorcer */
-    border-radius: 0px; /* Mantém a estética streetwear */
+/* Container da imagem */
+.product-image-wrapper {
+    position: relative;
+    width: 100%;
+    /* Define a proporção: 1/1 para Quadrado ou 3/4 para Retangular (estilo moda) */
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #f9f9f9; /* Cor de fundo caso a imagem demore a carregar */
+}
+
+/* A imagem dentro do container */
+.product-image-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    /* O SEGREDO: object-fit cover faz a imagem preencher o espaço sem esticar */
+    object-fit: cover !important;
+    object-position: center; /* Centraliza a foto caso ela seja cortada */
+    display: block;
 }
 
 /* 3. Se houver um link ou div em volta da imagem, trava o tamanho dele também */
@@ -544,4 +559,89 @@ nav#nav-menu a.active {
         padding: 12px 20px;
         font-size: 0.9rem;
     }
+}
+/* Estilização para o item indisponível */
+.unavailable-drop {
+    cursor: not-allowed !important; /* Mostra que não pode clicar */
+    filter: grayscale(0.2); /* Deixa a foto um pouco mais fria/metal */
+}
+
+/* Etiqueta pequena vermelha/vinho no canto da imagem */
+.badge-status {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--vinho);
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 0.6rem;
+    font-weight: 900;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: 1px;
+    z-index: 5;
+}
+
+/* Garante que o título use a fonte Denominary que o cliente pediu */
+.product-title-grid {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.1rem;
+    margin-top: 15px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+.product-price-grid {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+/* --- APLICAÇÃO DA FONTE NOS TÍTULOS --- */
+h1,
+h2,
+h3,
+.logo-text {
+    font-family: "Denominary", Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+/* --- ALINHAMENTO DAS IMAGENS (PARA FOTOS DE TAMANHOS DIFERENTES) --- */
+.product-image-wrapper {
+    position: relative;
+    width: 100%;
+    /* Força todas as fotos a terem a mesma proporção (3:4) */
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+.product-image-wrapper img {
+    width: 100% !important;
+    height: 100% !important;
+    /* Faz a imagem preencher o espaço sem esticar, cortando as sobras */
+    object-fit: cover !important;
+    object-position: center;
+    transition: transform 0.5s ease;
+}
+
+/* Zoom suave ao passar o mouse */
+.product-item:hover .product-image-wrapper img {
+    transform: scale(1.05);
+}
+
+/* --- AJUSTE DOS TEXTOS NA VITRINE --- */
+.product-title-grid {
+    font-size: 1rem !important;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    line-height: 1.2;
+    min-height: 2.4em; /* Reserva espaço para 2 linhas, mantendo o preço alinhado */
+}
+
+.product-price-grid {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.85rem;
+    color: var(--vinho);
+    font-weight: bold;
 }
