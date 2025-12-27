@@ -20,7 +20,29 @@ body {
     line-height: 1.5;
     text-transform: uppercase; /* Estética Streetwear */
 }
+/* Container que envolve todo o PIX */
+.pix-payment-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
 
+/* Garante que o QR Code não fuja do centro */
+#pix-qr-img {
+    display: block;
+    margin: 0 auto 15px auto;
+    max-width: 200px;
+}
+
+/* Ajusta o campo de texto do código */
+#pixCode {
+    width: 100%;
+    max-width: 320px; /* Evita que fique largo demais no PC */
+    margin: 0 auto 10px auto;
+}
 .bg-white {
     background: var(--white);
 }

@@ -41,10 +41,8 @@ setInterval(updateCountdown, 1000);
 
 // 2. NAVEGAÇÃO MOBILE
 function toggleMenu() {
-  const menu = document.getElementById("nav-menu");
-  if (menu) {
-    menu.classList.toggle("active");
-  }
+  const menu = document.querySelector(".nav-menu"); // ajuste para sua classe
+  menu.classList.toggle("active");
 }
 
 // 3. INTERFACE DE PRODUTO
