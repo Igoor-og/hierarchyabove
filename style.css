@@ -405,11 +405,24 @@ nav#nav-menu a.active {
 
 .hamburger {
     display: none; /* Escondido no PC */
-}
-/* ============================================================
-      CONFIGURAÇÕES MOBILE (ATÉ 768px)
+} /* ============================================================
+      CONFIGURAÇÕES MOBILE (ATÉ 768px) - CORRIGIDO
       ============================================================ */
 @media (max-width: 768px) {
+    /* 1. Impede o vazamento lateral */
+    html,
+    body {
+        overflow-x: hidden !important;
+        width: 100%;
+    }
+
+    .container {
+        width: 100% !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        box-sizing: border-box !important;
+    }
+
     .navbar {
         padding: 15px 5%;
         height: 70px;
@@ -438,7 +451,7 @@ nav#nav-menu a.active {
     nav#nav-menu {
         position: fixed !important;
         top: 0;
-        left: -100% !important; /* Escondido à esquerda */
+        left: -100% !important;
         width: 100% !important;
         height: 100vh !important;
         background: var(--white) !important;
@@ -449,7 +462,6 @@ nav#nav-menu a.active {
         transition: 0.5s ease-in-out !important;
     }
 
-    /* Ativando o Menu no clique */
     nav#nav-menu.active {
         left: 0 !important;
     }
@@ -459,53 +471,77 @@ nav#nav-menu a.active {
         margin: 15px 0 !important;
     }
 
-    /* LAYOUT MOBILE */
+    /* SOLUÇÃO PARA O "INDO PRO LADO":
+       Mudamos de GRID para FLEX para forçar a descida dos elementos */
     .product-grid,
     .product-detail-layout,
     .product-grid-simple {
-        grid-template-columns: 1fr !important;
-        gap: 30px;
+        display: flex !important;
+        flex-direction: column !important; /* Força um embaixo do outro */
+        width: 100% !important;
+        gap: 20px !important;
+    }
+
+    /* Garante que as imagens não estourem a largura */
+    .product-image,
+    .product-image img,
+    .product-image-wrapper img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
     }
 
     .logo-text {
-        font-size: 2.5rem !important;
+        font-size: 2.2rem !important;
     }
     .timer-bold {
-        font-size: 2rem !important;
+        font-size: 1.8rem !important;
+    }
+
+    /* Ajuste de formulário e cupons */
+    .coupon-box {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .input-group div {
+        flex-direction: column !important;
+        gap: 0 !important;
     }
 }
-
-/* ============================================================
-      BOTÕES E FORMULÁRIO
-      ============================================================ */
-.btn-black {
-    background: var(--vinho);
-    color: var(--white);
-    border: none;
-    padding: 15px 30px;
-    font-weight: 700;
-    cursor: pointer;
-    text-transform: uppercase;
-    width: 100%;
+/* 1. Garante que o container da imagem não tenha largura fixa */
+.product-image,
+.product-image-wrapper,
+.product-image-large {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    display: block !important;
 }
 
-.input-group input {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    text-transform: uppercase;
+/* 2. Ajusta a imagem em si para ocupar a tela e manter a proporção */
+.product-image img,
+.product-image-wrapper img,
+.product-image-large img {
+    width: 100% !important; /* Ocupa toda a largura disponível */
+    height: auto !important; /* Mantém a proporção original da foto */
+    max-height: 500px; /* Evita que a foto fique gigante verticalmente */
+    object-fit: cover; /* Corta levemente as bordas se necessário para não distorcer */
+    border-radius: 0px; /* Mantém a estética streetwear */
 }
 
-.size-btn input:checked + span {
-    background-color: var(--vinho) !important;
-    color: white;
-    border-color: var(--vinho) !important;
+/* 3. Se houver um link ou div em volta da imagem, trava o tamanho dele também */
+.product-item {
+    width: 100% !important;
+    margin-bottom: 20px !important;
 }
+/* Celulares muito pequenos */
 @media (max-width: 480px) {
-    /* No celular muito pequeno, se ficar apertado, eles voltam a ser um embaixo do outro */
-    .input-group div {
-        flex-direction: column;
-        gap: 0;
+    .product-title {
+        font-size: 1.2rem !important;
+    }
+    .btn-black {
+        padding: 12px 20px;
+        font-size: 0.9rem;
     }
 }
