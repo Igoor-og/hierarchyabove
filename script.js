@@ -190,3 +190,36 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCountdown();
   setupForm(); // Inicializa o formulário com segurança
 });
+
+async function atualizarEstoquePlanilha() {
+  const url =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNgY7qK5tkLpHz0Oi7zjKjiS-TCicyJ9FEaq9fou84IZXmdC-XnCbfUX--9ITN-L9iQmt6vWCvO-5M/pub?output=csv";
+
+  try {
+    const response = await fetch(url);
+    const data = await response.text();
+
+    // Converte o CSV e pega o valor na célula A2
+    const linhas = data.split("\n");
+    const estoque = parseInt(linhas[1].trim());
+
+    const badge = document.getElementById("badge-nobluff");
+
+    if (estoque > 0) {
+      badge.innerText = `${estoque} UNIDADES RESTANTES`;
+      badge.classList.remove("esgotado-badge");
+    } else {
+      badge.innerText = `ESGOTADO`;
+      badge.classList.add("esgotado-badge");
+      // Opcional: desativa o clique se estiver esgotado
+      document.querySelector(".product-item").onclick = null;
+    }
+  } catch (error) {
+    console.error("Erro ao carregar estoque:", error);
+  }
+}
+
+// Inicia a função ao carregar a página
+window.onload = () => {
+  atualizarEstoquePlanilha();
+};
