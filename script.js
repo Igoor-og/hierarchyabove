@@ -2,7 +2,7 @@
  * HIERARCHY ABOVE - Official Script v3.1
  */
 
-const targetDate = new Date("January 30, 2026 00:00:00").getTime();
+const targetDate = new Date("January 20, 2026 00:00:00").getTime();
 
 // 1. NAVEGAÇÃO MOBILE (Movido para o topo para garantir prioridade)
 function toggleMenu() {
@@ -450,14 +450,15 @@ function triggerFadeIn() {
   fadeElements.forEach((el) => observer.observe(el));
 }
 
-triggerFadeIn();
-updateCountdown();
-setupForm();
-setupNewsletter();
-setupCepInput(); // Novo handler de CEP
-updateTotal();
-// Inicia a verificação de estoque
-atualizarEstoquePlanilha();
+document.addEventListener("DOMContentLoaded", () => {
+  triggerFadeIn();
+  updateCountdown();
+  setupForm();
+  setupNewsletter();
+  setupCepInput(); // Novo handler de CEP
+  updateTotal();
+  // Inicia a verificação de estoque
+  atualizarEstoquePlanilha();
 });
 
 function setupCepInput() {
