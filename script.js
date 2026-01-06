@@ -76,7 +76,7 @@ function hideProductDetail() {
 const CONSTANTS = {
   MELHOR_ENVIO_TOKEN: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzI3N2M1ODE0N2FiZTRlODY5MjQ0NTMzMWMwYjMxNTVmNjBmOTM4OGMxMTE2NGJmZDU3YzY4YjNhMWIwZGY2YTQ2ZTNiOTc2NTJkYjE2ODUiLCJpYXQiOjE3Njc3MjgwOTMuOTg1NDksIm5iZiI6MTc2NzcyODA5My45ODU0OTIsImV4cCI6MTc5OTI2NDA5My45NzM2ODgsInN1YiI6ImEwYjgyMjFhLWZiZjMtNDNkMi05NmYyLTdhOTU1N2M5M2JmMCIsInNjb3BlcyI6WyJjYXJ0LXJlYWQiLCJjYXJ0LXdyaXRlIiwiY29tcGFuaWVzLXJlYWQiLCJjb21wYW5pZXMtd3JpdGUiLCJjb3Vwb25zLXJlYWQiLCJjb3Vwb25zLXdyaXRlIiwibm90aWZpY2F0aW9ucy1yZWFkIiwib3JkZXJzLXJlYWQiLCJwcm9kdWN0cy1yZWFkIiwicHJvZHVjdHMtZGVzdHJveSIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwid2ViaG9va3MtZGVsZXRlIiwidGRlYWxlci13ZWJob29rIl19.F46VtAD8bD6ZTq1lf3FqxgAXCeZJcbVetmDBPq15RjQFjRmvBhUZKzdFqtymWcbIMUC52IPwAXDYuk6sI_A0Q7yqNg4kxjehmyqgOjJGlK1KXVCmW3nAYICEmhy2pFP5vXmNLBFO5h5aRtBrwy2bZZDCFYWcFy1GJKkCTtsBGluPxJhdYlPqFersY2d8zfV_i7xjZb11g9lH7KWj8WePVg7K8HKqGE4sL4pDHw-Wm5pr-TEJQ49pVNHARh0N0rs_-9A-w6L2lnnWXCWaEd75bzCilrbcacHu1PPcTlPK2T1_e8X7D6rJXevsDM9zxmXTPIhAO5OlYANlVBq3ofZho8uF1Ok2GsGl1_DleYsMCiF_bjr5yjA5vHvBJ5mTj4jEHILNWUKNivjvgw4LeCzL-bvnwDHIhtPmx_IvCMvKMBZ75fVgSr_eKOCG0zIU8xclEGfY6elV1CtTeHjQwmYo-SicDxx4w64UbwsEL-qeQWgqXblCBM0b1BQ3djcn3i2FW0CV9Gk6Emq_UEEYfEQvH6Lr8dsa6aMnp6T2r-zWbeamSozQcepPcfa59qp9KfNruMuL-xChvywFBmXw9EZ14qe3Nu43huE7-UsfMftA-3dXOmIQZSrcGcfvp3M_pjFHpiXMIYbvoo4uk1fIhYaWV96GxPYO4UfBgtWqPBrl7uU", // SUBSTITUIR PELO TOKEN DO USUÁRIO
   CEP_ORIGEM: "86057055",
-  PRODUTO_PRECO: 149.90,
+  PRODUTO_PRECO: 137.50,
   PRODUTO_PESO: 0.3, // kg
   PRODUTO_DIMS: { w: 20, h: 5, l: 20 }, // cm
   PIX_KEY: "goinalwsherarco@gmail.com",
@@ -159,7 +159,7 @@ async function calculateShipping() {
   try {
     // Usando Proxy CORS Anywhere (necessário solicitar acesso temporário dnv se cair, mas é a melhor opção free rapida)
     // Alternativamente, se o usuário tiver backend, deve ser feito lá.
-    const response = await fetch("https://cors-anywhere.herokuapp.com/https://melhorenvio.com.br/api/v2/me/shipment/calculate", {
+    const response = await fetch("https://hierarchyabove.onrender.com/frete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -237,11 +237,11 @@ function applyCoupon() {
     state.cupom = input;
 
     if (priceDisplay) {
-      priceDisplay.innerHTML = `TOTAL: <strike>R$ 149,90</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
+      priceDisplay.innerHTML = `TOTAL: <strike>R$ 137,50</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
     }
     alert("CUPOM APLICADO COM SUCESSO!");
   } else if (input !== "") {
-    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 149,90";
+    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 137,50";
     alert("CUPOM INVÁLIDO");
   }
 
@@ -394,6 +394,29 @@ function setupForm() {
   });
 }
 
+function setupNewsletter() {
+  const newsletterForm = document.getElementById("newsletter-form");
+  if (newsletterForm) {
+    newsletterForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const btn = newsletterForm.querySelector("button");
+      const originalText = btn.innerText;
+
+      // Visual feedback
+      btn.innerText = "CADASTRADO!";
+      btn.style.background = "#000";
+
+      // Simulação de delay de envio
+      setTimeout(() => {
+        btn.innerText = originalText;
+        btn.style.background = "var(--vinho)";
+        newsletterForm.reset();
+        alert("E-mail cadastrado com sucesso! Em breve novidades.");
+      }, 1500);
+    });
+  }
+}
+
 // 6. INICIALIZAÇÃO
 function triggerFadeIn() {
   const fadeElements = document.querySelectorAll(".fade-in");
@@ -412,6 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
   triggerFadeIn();
   updateCountdown();
   setupForm();
+  setupNewsletter();
   updateTotal();
   // Inicia a verificação de estoque
   atualizarEstoquePlanilha();

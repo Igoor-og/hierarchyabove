@@ -714,7 +714,7 @@ h3,
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: #000;
+    background-color: var(--vinho);
     /* Preto padrão */
     color: #fff;
     padding: 5px 10px;
@@ -728,4 +728,63 @@ h3,
 .esgotado-badge {
     background-color: #ff0000 !important;
     /* Vermelho se acabar */
+}
+
+/* Newsletter Styles */
+.newsletter-section {
+    padding: 60px 20px;
+    background-color: var(--gray);
+    text-align: center;
+    margin-top: 50px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.newsletter-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.newsletter-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.newsletter-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.newsletter-form input {
+    padding: 15px;
+    border: 1px solid #ccc;
+    flex: 1;
+    font-weight: 600;
+    max-width: 300px;
+    text-transform: uppercase;
+}
+
+/* Newsletter Mobile Adjustments */
+@media (max-width: 768px) {
+    .newsletter-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .newsletter-form input {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .newsletter-form button {
+        width: 100%;
+    }
 }

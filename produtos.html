@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>HIERARCHY ABOVE | Shop</title>
+    <title>Hierarchy Above | Shop</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="assets/hieralogo.png" />
 </head>
@@ -54,7 +54,9 @@
                     <h3 class="product-title-grid">
                         Camiseta Boxy Hierarchy - NoBluff
                     </h3>
-                    <p class="product-price-grid">R$ 149,90</p>
+                    <p class="product-price-grid"><span
+                            style="text-decoration: line-through; color: #999; font-size: 0.8em;">R$ 149,90</span> R$
+                        137,50</p>
                 </div>
             </div>
         </section>
@@ -76,7 +78,9 @@
                     <h2 class="product-title">
                         CAMISETA BOXY HIERARCHY - NOBLUFF
                     </h2>
-                    <p class="product-price">R$ 149,90</p>
+                    <p class="product-price"><span
+                            style="text-decoration: line-through; color: #999; font-size: 0.8em; margin-right: 10px;">R$
+                            149,90</span> R$ 137,50</p>
 
                     <div class="product-description">
                         <p>
@@ -84,8 +88,11 @@
                             contemporânea, unindo elementos do design
                             gráfico dos anos 2000 com uma silhueta moderna.
                             É o item ideal para composições que buscam
-                            destacar um visual urbano e sofisticado. Devido
-                            à complexidade visual da estampa, recomenda-se a
+                            destacar um visual urbano e sofisticado.
+                        </p>
+                        <br>
+                        <p>
+                            Devido à complexidade visual da estampa, recomenda-se a
                             combinação com peças inferiores de tons neutros
                             ou alfaiataria moderna para um contraste de
                             texturas equilibrado.
@@ -113,7 +120,7 @@
                         </div>
 
                         <p id="totalPrice" class="final-price">
-                            TOTAL: R$ 149,90
+                            TOTAL: R$ 137,50
                         </p>
 
                         <div id="pix-area" class="hidden">
@@ -155,7 +162,7 @@
                                     <input type="hidden" name="Tamanho" id="hidden-tamanho" />
                                     <input type="hidden" name="Valor_Frete" id="hidden-frete" value="0.00" />
                                     <input type="hidden" name="Cupom_Aplicado" id="hidden-cupom" value="" />
-                                    <input type="hidden" name="Valor_Final" id="hidden-valor" value="149.90" />
+                                    <input type="hidden" name="Valor_Final" id="hidden-valor" value="137.50" />
 
                                     <div class="pix-info" style="
                                             margin-top: 20px;
@@ -192,9 +199,9 @@
                                                 margin: 10px 0;
                                                 color: var(--vinho);
                                             ">
-                                            VALOR A PAGAR: R$ <span id="valor-display">149,90</span>
+                                            VALOR A PAGAR: R$ <span id="valor-display">137,50</span>
                                             <br><small style="font-size: 0.6rem; color: #999;"
-                                                id="detail-display">(Produto: R$ 149,90 + Frete: R$ 0,00)</small>
+                                                id="detail-display">(Produto: R$ 137,50 + Frete: R$ 0,00)</small>
                                         </p>
 
                                         <button type="submit" class="btn-black w-100" style="
@@ -207,6 +214,16 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+        <section class="newsletter-section fade-in">
+            <div class="newsletter-content">
+                <h3 class="newsletter-title">DONT MISS THE DROP</h3>
+                <p class="newsletter-text">CADASTRE-SE PARA RECEBER ATUALIZAÇÕES DE ESTOQUE E EXCLUSIVIDADE.</p>
+                <form id="newsletter-form" class="newsletter-form">
+                    <input type="email" placeholder="SEU MELHOR E-MAIL" required />
+                    <button type="submit" class="btn-black">INSCREVER-SE</button>
+                </form>
             </div>
         </section>
     </main>
