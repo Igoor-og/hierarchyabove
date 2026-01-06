@@ -258,28 +258,17 @@ function removeAccents(str) {
 function generatePixPayload(amount) {
   const amountStr = amount.toFixed(2);
   const key = CONSTANTS.PIX_KEY;
-  // O PIX limita o nome do recebedor em 25 caracteres
-  const name = removeAccents(CONSTANTS.PIX_NAME).substring(0, 25).toUpperCase();
-  // Cidade limita em 15 caracteres
-  const city = removeAccents(CONSTANTS.PIX_CITY).substring(0, 15).toUpperCase();
-  const txtId = "HIERARCHY01"; // Identificador da transação
+  // O PIX limita o nome do recebedor em 25 caracteres e cidade em 15
+  const name = removeAccents(CONSTANTS.PIX_NAME).trim().substring(0, 25).toUpperCase();
+  const city = removeAccents(CONSTANTS.PIX_CITY).trim().substring(0, 15).toUpperCase();
+  // TXID padrão universal para aumentar aceitação nos bancos
+  const txtId = "***";
 
   // Funções auxiliares para montar TLV (Type-Length-Value)
   const format = (id, value) => {
     const len = value.length.toString().padStart(2, "0");
     return `${id}${len}${value}`;
   };
-
-  // Montagem Payload
-  // 00 - Payload Format Indicator
-  // 26 - Merchant Account Information (GUI, Chave)
-  // 52 - Merchant Category Code (0000 - Not used/General)
-  // 53 - Transaction Currency (986 - BRL)
-  // 54 - Transaction Amount
-  // 58 - Country Code (BR)
-  // 59 - Merchant Name
-  // 60 - Merchant City
-  // 62 - Additional Data Field Template (TxID)
 
   // 26: 00(GUI) + 01(Chave)
   const merchantAccount = format("00", "BR.GOV.BCB.PIX") + format("01", key);
@@ -297,13 +286,12 @@ function generatePixPayload(amount) {
     format("59", name) +
     format("60", city) +
     format("62", additionalData) +
-    "6304"; // Adiciona ID do CRC no final
+    "6304"; // ID do CRC no final
 
   // Calcular CRC16
   const crc = crc16ccitt(payload).toUpperCase();
   const finalPayload = `${payload}${crc}`;
 
-  console.log("DEBUG PIX PAYLOAD:", finalPayload); // Debug no console
   return finalPayload;
 }
 
