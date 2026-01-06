@@ -1,277 +1,231 @@
 <!doctype html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
-        <title>HIERARCHY ABOVE | Shop</title>
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <header class="navbar">
-            <a href="index.html?dev=true" class="nav-logo">
-                <img src="assets/logo1.png" alt="HIERARCHY ABOVE" />
-            </a>
 
-            <div class="hamburger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>HIERARCHY ABOVE | Shop</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="assets/hieralogo.png" />
+</head>
 
-            <nav id="nav-menu">
-                <a href="produtos.html" class="active">SHOP</a>
-                <a href="lookbook.html">LOOKBOOK</a>
-                <a href="suporte.html">SUPORTE</a>
-            </nav>
-        </header>
-        <main class="container">
-            <section id="vitrine" class="fade-in">
-                <h1
-                    class="logo-text"
-                    style="font-size: 1.5rem; margin-bottom: 40px"
-                >
-                    COLLECTION 01/25
-                </h1>
-                <div class="product-grid-simple">
-                    <div class="product-item unavailable-drop">
-                        <div class="product-image-wrapper">
-                            <img
-                                src="assets/NEW-WORLD.png"
-                                alt="Camiseta Hierarchy – New World"
-                            />
-                            <div class="image-overlay">EM BREVE</div>
-                            <div class="badge-status">PRÓXIMO DROP</div>
-                        </div>
-                        <h3 class="product-title-grid">
-                            Camiseta Hierarchy – “New World”
-                        </h3>
-                        <p class="product-price-grid">NOVA COLEÇÃO | INDISPONÍVEL</p>
+<body>
+    <header class="navbar">
+        <a href="index.html?dev=true" class="nav-logo">
+            <img src="assets/logo1.png" alt="HIERARCHY ABOVE" />
+        </a>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav id="nav-menu">
+            <a href="produtos.html" class="active">SHOP</a>
+            <a href="lookbook.html">LOOKBOOK</a>
+            <a href="suporte.html">SUPORTE</a>
+        </nav>
+    </header>
+    <main class="container">
+        <section id="vitrine" class="fade-in">
+            <h1 class="logo-text" style="font-size: 1.5rem; margin-bottom: 40px">
+                COLLECTION 01/25
+            </h1>
+            <div class="product-grid-simple">
+                <div class="product-item unavailable-drop">
+                    <div class="product-image-wrapper">
+                        <img src="assets/NEW-WORLD.png" alt="Camiseta Hierarchy – New World" />
+                        <div class="image-overlay">EM BREVE</div>
+                        <div class="badge-status">PRÓXIMO DROP</div>
                     </div>
-                    <div class="product-item" onclick="showProductDetail()">
-                        <div class="product-image-wrapper">
-                            <img src="assets/NOBLUFF.jpg" alt="Camiseta Hierarchy" />
-                            <div class="image-overlay">VER DETALHES</div>
-
-                            <div id="badge-nobluff" class="badge-estoque">CARREGANDO...</div>
-                        </div>
-                        <h3 class="product-title-grid">
-                            Camiseta Hierarchy – “No Bluff”
-                        </h3>
-                        <p class="product-price-grid">R$ 149,90</p>
-                    </div>
+                    <h3 class="product-title-grid">
+                        Camiseta Hierarchy – “New World”
+                    </h3>
+                    <p class="product-price-grid">NOVA COLEÇÃO | INDISPONÍVEL</p>
                 </div>
-            </section>
+                <div class="product-item" onclick="showProductDetail()">
+                    <div class="product-image-wrapper">
+                        <img src="assets/NOBLUFF.jpg" alt="Camiseta Hierarchy" />
+                        <div class="image-overlay">VER DETALHES</div>
 
-            <section id="product-detail" class="hidden">
-
-                <button onclick="hideProductDetail()" id="btn-voltar-vitrine" style="display: flex !important; align-items: center !important; background: none !important; border: none !important; cursor: pointer !important; padding: 20px 0 !important; font-family: sans-serif !important; font-weight: 900 !important; letter-spacing: 2px !important; color: #000 !important; text-transform: uppercase !important; font-size: 0.7rem !important;">
-                    <span style="margin-right: 10px; font-size: 1.2rem;">&lt;</span>
-                    <span style="border-bottom: 1px solid #000;">VITRINE</span>
-                </button>
-
-                <div class="product-detail-layout fade-in">
-                    <div class="product-image-large">
-                        <img
-                            src="assets/NOBLUFF.jpg"
-                            alt="Camiseta Hierarchy"
-                        />
+                        <div id="badge-nobluff" class="badge-estoque">CARREGANDO...</div>
                     </div>
+                    <h3 class="product-title-grid">
+                        Camiseta Hierarchy – “No Bluff”
+                    </h3>
+                    <p class="product-price-grid">R$ 149,90</p>
+                </div>
+            </div>
+        </section>
 
-                    <div class="product-info-checkout">
-                        <h2 class="product-title">
-                            CAMISETA HIERARCHY – “NO BLUFF”
-                        </h2>
-                        <p class="product-price">R$ 149,90</p>
+        <section id="product-detail" class="hidden">
 
-                        <div class="product-description">
-                            <p>
-                                Esta peça apresenta uma estética streetwear
-                                contemporânea, unindo elementos do design
-                                gráfico dos anos 2000 com uma silhueta moderna.
-                                É o item ideal para composições que buscam
-                                destacar um visual urbano e sofisticado. Devido
-                                à complexidade visual da estampa, recomenda-se a
-                                combinação com peças inferiores de tons neutros
-                                ou alfaiataria moderna para um contraste de
-                                texturas equilibrado.
-                            </p>
+            <button onclick="hideProductDetail()" id="btn-voltar-vitrine"
+                style="display: flex !important; align-items: center !important; background: none !important; border: none !important; cursor: pointer !important; padding: 20px 0 !important; font-family: sans-serif !important; font-weight: 900 !important; letter-spacing: 2px !important; color: #000 !important; text-transform: uppercase !important; font-size: 0.7rem !important;">
+                <span style="margin-right: 10px; font-size: 1.2rem;">&lt;</span>
+                <span style="border-bottom: 1px solid #000;">VITRINE</span>
+            </button>
+
+            <div class="product-detail-layout fade-in">
+                <div class="product-image-large">
+                    <img src="assets/NOBLUFF.jpg" alt="Camiseta Hierarchy" />
+                </div>
+
+                <div class="product-info-checkout">
+                    <h2 class="product-title">
+                        CAMISETA HIERARCHY – “NO BLUFF”
+                    </h2>
+                    <p class="product-price">R$ 149,90</p>
+
+                    <div class="product-description">
+                        <p>
+                            Esta peça apresenta uma estética streetwear
+                            contemporânea, unindo elementos do design
+                            gráfico dos anos 2000 com uma silhueta moderna.
+                            É o item ideal para composições que buscam
+                            destacar um visual urbano e sofisticado. Devido
+                            à complexidade visual da estampa, recomenda-se a
+                            combinação com peças inferiores de tons neutros
+                            ou alfaiataria moderna para um contraste de
+                            texturas equilibrado.
+                        </p>
+                    </div>
+                    <div class="size-selection">
+                        <p class="section-label">TAMANHO:</p>
+                        <div class="size-options">
+                            <label class="size-btn">
+                                <input type="radio" name="size" value="M" onclick="selectSize('M')" />
+                                <span>M</span>
+                            </label>
+                            <label class="size-btn">
+                                <input type="radio" name="size" value="G" onclick="selectSize('G')" />
+                                <span>G</span>
+                            </label>
+                            <label class="size-btn">
+                                <input type="radio" name="size" value="GG" onclick="selectSize('GG')"
+                                    onclick="selectSize('GG')" />
+                                <span>GG</span>
+                            </label>
                         </div>
-                        <div class="size-selection">
-                            <p class="section-label">TAMANHO:</p>
-                            <div class="size-options">
-                                <label class="size-btn">
-                                    <input
-                                        type="radio"
-                                        name="size"
-                                        value="M"
-                                        onclick="selectSize('M')"
-                                    />
-                                    <span>M</span>
-                                </label>
-                                <label class="size-btn">
-                                    <input
-                                        type="radio"
-                                        name="size"
-                                        value="G"
-                                        onclick="selectSize('G')"
-                                    />
-                                    <span>G</span>
-                                </label>
-                                <label class="size-btn">
-                                    <input
-                                        type="radio"
-                                        name="size"
-                                        value="GG"
-                                        onclick="selectSize('GG')"
-                                        onclick="selectSize('GG')"
-                                    />
-                                    <span>GG</span>
-                                </label>
-                            </div>
+                    </div>
+                    <div class="checkout-area">
+                        <div class="coupon-box">
+                            <input type="text" id="couponInput" placeholder="CÓDIGO DO CUPOM" />
+                            <button onclick="applyCoupon()" class="btn-black w-100">
+                                APLICAR
+                            </button>
                         </div>
-                        <div class="checkout-area">
-                            <div class="coupon-box">
-                                <input
-                                    type="text"
-                                    id="couponInput"
-                                    placeholder="CÓDIGO DO CUPOM"
-                                />
-                                <button
-                                    onclick="applyCoupon()"
-                                    class="btn-black w-100"
-                                >
-                                    APLICAR
-                                </button>
-                            </div>
 
-                            <p id="totalPrice" class="final-price">
-                                TOTAL: R$ 149,90
-                            </p>
+                        <p id="totalPrice" class="final-price">
+                            TOTAL: R$ 149,90
+                        </p>
 
-                            <div id="pix-area" class="hidden">
-                                <input type="hidden" name="_subject" value="NOVA VENDA - HIERARCHY ABOVE">
-                                <form id="checkout-form" class="checkout-form-container">
-                                    <h3
-                                        class="section-label"
-                                        style="color: var(--vinho)"
-                                    >
-                                        DADOS DE ENTREGA
-                                    </h3>
-                                    <div class="input-group">
-                                        <input type="text" name="Nome" placeholder="NOME COMPLETO" required />
-                                        <input type="email" name="Email" placeholder="E-MAIL DE CONTATO" required />
-                                        <input type="text" name="CPF" placeholder="CPF (PARA EMISSÃO DE ETIQUETA)" required />
+                        <div id="pix-area" class="hidden">
+                            <input type="hidden" name="_subject" value="NOVA VENDA - HIERARCHY ABOVE">
+                            <form id="checkout-form" class="checkout-form-container">
+                                <h3 class="section-label" style="color: var(--vinho)">
+                                    DADOS DE ENTREGA
+                                </h3>
+                                <div class="input-group">
+                                    <input type="text" name="Nome" placeholder="NOME COMPLETO" required />
+                                    <input type="email" name="Email" placeholder="E-MAIL DE CONTATO" required />
+                                    <input type="text" name="CPF" placeholder="CPF (PARA EMISSÃO DE ETIQUETA)"
+                                        required />
 
-                                        <div style="display: flex; gap: 10px;">
-                                            <input type="text" name="CEP" placeholder="CEP" style="flex: 1;" required />
-                                            <input type="text" name="Bairro" placeholder="BAIRRO" style="flex: 1;" required />
+                                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                        <div style="flex: 1;">
+                                            <input type="text" name="CEP" id="cepInput" placeholder="CEP"
+                                                style="width: 100%;" required maxlength="9"
+                                                onblur="calculateShipping()" />
+                                            <div id="loading-frete"
+                                                style="display:none; font-size: 0.6rem; color: #666; margin-top: 5px;">
+                                                CALCULANDO FRETE...</div>
                                         </div>
+                                        <input type="text" name="Bairro" placeholder="BAIRRO" style="flex: 1;"
+                                            required />
+                                    </div>
 
-                                        <input type="text" name="Endereco" placeholder="RUA E NÚMERO" required />
-                                        <input type="text" name="Complemento" placeholder="COMPLEMENTO (APTO, BLOCO, CASA)" />
+                                    <input type="text" name="Endereco" placeholder="RUA E NÚMERO" required />
+                                    <input type="text" name="Complemento"
+                                        placeholder="COMPLEMENTO (APTO, BLOCO, CASA)" />
 
-                                        <div style="display: flex; gap: 10px;">
-                                            <input type="text" name="Cidade" placeholder="CIDADE" style="flex: 2;" required />
-                                            <input type="text" name="Estado" placeholder="UF" style="flex: 1;" required maxlength="2" />
-                                        </div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <input type="text" name="Cidade" placeholder="CIDADE" style="flex: 2;"
+                                            required />
+                                        <input type="text" name="Estado" placeholder="UF" style="flex: 1;" required
+                                            maxlength="2" />
+                                    </div>
 
-                                    <input
-                                        type="hidden"
-                                        name="Tamanho"
-                                        id="hidden-tamanho"
-                                    />
-                                    <input
-                                        type="hidden"
-                                        name="Valor_Final"
-                                        id="hidden-valor"
-                                        value="149.90"
-                                    />
+                                    <input type="hidden" name="Tamanho" id="hidden-tamanho" />
+                                    <input type="hidden" name="Valor_Frete" id="hidden-frete" value="0.00" />
+                                    <input type="hidden" name="Cupom_Aplicado" id="hidden-cupom" value="" />
+                                    <input type="hidden" name="Valor_Final" id="hidden-valor" value="149.90" />
 
-                                    <div
-                                        class="pix-info"
-                                        style="
+                                    <div class="pix-info" style="
                                             margin-top: 20px;
                                             border: 1px solid #eee;
                                             padding: 15px;
-                                        "
-                                    >
-                                        <p
-                                            style="
+                                        ">
+                                        <p style="
                                                 font-weight: 800;
                                                 font-size: 0.8rem;
-                                            "
-                                        >
+                                            ">
                                             PAGAMENTO VIA PIX
                                         </p>
 
-                                        <div
-                                            class="pix-qr-container"
-                                            style="margin: 15px 0"
-                                        >
-                                            <img
-                                                id="pix-qr-img"
-                                                src="assets/pix-original.png"
-                                                alt="QR Code Pix"
-                                                class="pix-qr-img"
-                                                style="width: 200px"
-                                            />
+                                        <div class="pix-qr-container" style="margin: 15px 0; display: none;"
+                                            id="qr-container-visual">
+                                            <!-- QR Code generated dynamically if needed, typically removed per request -->
                                         </div>
 
                                         <div class="pix-copy-section" style="margin-top: 15px; text-align: center;">
-                                            <p style="font-size: 0.7rem; font-weight: 800; margin-bottom: 8px;">PIX COPIA E COLA:</p>
+                                            <p style="font-size: 0.7rem; font-weight: 800; margin-bottom: 8px;">PIX
+                                                COPIA E COLA:</p>
 
-                                            <textarea id="pixCode" readonly style="width: 100%; max-width: 300px; height: 50px; font-size: 0.6rem; padding: 10px; border: 1px solid #ddd; background: #f4f4f4; resize: none; word-break: break-all; font-family: monospace;">00020126470014BR.GOV.BCB.PIX0125goinawlsherarco@gmail.com5204000053039865406149.905802BR5901N6001C62180514HIERARCHYABOVE630470E3</textarea>
+                                            <textarea id="pixCode" readonly
+                                                style="width: 100%; max-width: 300px; height: 50px; font-size: 0.6rem; padding: 10px; border: 1px solid #ddd; background: #f4f4f4; resize: none; word-break: break-all; font-family: monospace;"></textarea>
 
-                                            <button type="button" id="btnCopy" onclick="copyPix()" class="btn-black" style="margin-top: 10px; width: 100%; font-size: 0.7rem;">
+                                            <button type="button" id="btnCopy" onclick="copyPix()" class="btn-black"
+                                                style="margin-top: 10px; width: 100%; font-size: 0.7rem;">
                                                 COPIAR CÓDIGO PIX
                                             </button>
                                         </div>
 
-                                        <p
-                                            style="
+                                        <p style="
                                                 font-size: 0.7rem;
                                                 margin: 10px 0;
                                                 color: var(--vinho);
-                                            "
-                                        >
-                                            VALOR A PAGAR: R$
-                                            <span id="valor-display"
-                                                >149,90</span
-                                            >
+                                            ">
+                                            VALOR A PAGAR: R$ <span id="valor-display">149,90</span>
+                                            <br><small style="font-size: 0.6rem; color: #999;"
+                                                id="detail-display">(Produto: R$ 149,90 + Frete: R$ 0,00)</small>
                                         </p>
 
-                                        <button
-                                            type="submit"
-                                            class="btn-black w-100"
-                                            style="
+                                        <button type="submit" class="btn-black w-100" style="
                                                 background-color: var(--vinho);
-                                            "
-                                        >
+                                            ">
                                             ENVIAR COMPROVANTE E FINALIZAR
                                         </button>
                                     </div>
-                                </form>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-            </section>
-        </main>
-        <footer
-            style="
+            </div>
+        </section>
+    </main>
+    <footer style="
                 text-align: center;
                 padding: 60px 0;
                 border-top: 1px solid #f2f2f2;
                 margin-top: 50px;
-            "
-        >
-            <p style="font-size: 0.7rem; color: #ccc; letter-spacing: 2px">
-                © HIERARCHY ABOVES - ALL RIGHTS RESERVED
-            </p>
-        </footer>
-        <script src="script.js"></script>
-    </body>
+            ">
+        <p style="font-size: 0.7rem; color: #ccc; letter-spacing: 2px">
+            © HIERARCHY ABOVES - ALL RIGHTS RESERVED
+        </p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
 </html>

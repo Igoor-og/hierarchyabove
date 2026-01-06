@@ -71,44 +71,251 @@ function hideProductDetail() {
   }
 }
 
-// 4. LÓGICA DE PIX E CUPOM
-const pixOriginal =
-  "00020126470014BR.GOV.BCB.PIX0125goinawlsherarco@gmail.com5204000053039865406149.905802BR5901N6001C62180514HIERARCHYABOVE630470E3";
-const pixPromocional =
-  "00020126470014BR.GOV.BCB.PIX0125goinawlsherarco@gmail.com5204000053039865406134.915802BR5901N6001C62180514HIERARCHYABOVE630467B7";
+// 4. LÓGICA DE FRETE, CUPOM E PIX (INTEGRAÇÃO COMPLETA)
 
+const CONSTANTS = {
+  MELHOR_ENVIO_TOKEN: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzI3N2M1ODE0N2FiZTRlODY5MjQ0NTMzMWMwYjMxNTVmNjBmOTM4OGMxMTE2NGJmZDU3YzY4YjNhMWIwZGY2YTQ2ZTNiOTc2NTJkYjE2ODUiLCJpYXQiOjE3Njc3MjgwOTMuOTg1NDksIm5iZiI6MTc2NzcyODA5My45ODU0OTIsImV4cCI6MTc5OTI2NDA5My45NzM2ODgsInN1YiI6ImEwYjgyMjFhLWZiZjMtNDNkMi05NmYyLTdhOTU1N2M5M2JmMCIsInNjb3BlcyI6WyJjYXJ0LXJlYWQiLCJjYXJ0LXdyaXRlIiwiY29tcGFuaWVzLXJlYWQiLCJjb21wYW5pZXMtd3JpdGUiLCJjb3Vwb25zLXJlYWQiLCJjb3Vwb25zLXdyaXRlIiwibm90aWZpY2F0aW9ucy1yZWFkIiwib3JkZXJzLXJlYWQiLCJwcm9kdWN0cy1yZWFkIiwicHJvZHVjdHMtZGVzdHJveSIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwid2ViaG9va3MtZGVsZXRlIiwidGRlYWxlci13ZWJob29rIl19.F46VtAD8bD6ZTq1lf3FqxgAXCeZJcbVetmDBPq15RjQFjRmvBhUZKzdFqtymWcbIMUC52IPwAXDYuk6sI_A0Q7yqNg4kxjehmyqgOjJGlK1KXVCmW3nAYICEmhy2pFP5vXmNLBFO5h5aRtBrwy2bZZDCFYWcFy1GJKkCTtsBGluPxJhdYlPqFersY2d8zfV_i7xjZb11g9lH7KWj8WePVg7K8HKqGE4sL4pDHw-Wm5pr-TEJQ49pVNHARh0N0rs_-9A-w6L2lnnWXCWaEd75bzCilrbcacHu1PPcTlPK2T1_e8X7D6rJXevsDM9zxmXTPIhAO5OlYANlVBq3ofZho8uF1Ok2GsGl1_DleYsMCiF_bjr5yjA5vHvBJ5mTj4jEHILNWUKNivjvgw4LeCzL-bvnwDHIhtPmx_IvCMvKMBZ75fVgSr_eKOCG0zIU8xclEGfY6elV1CtTeHjQwmYo-SicDxx4w64UbwsEL-qeQWgqXblCBM0b1BQ3djcn3i2FW0CV9Gk6Emq_UEEYfEQvH6Lr8dsa6aMnp6T2r-zWbeamSozQcepPcfa59qp9KfNruMuL-xChvywFBmXw9EZ14qe3Nu43huE7-UsfMftA-3dXOmIQZSrcGcfvp3M_pjFHpiXMIYbvoo4uk1fIhYaWV96GxPYO4UfBgtWqPBrl7uU", // SUBSTITUIR PELO TOKEN DO USUÁRIO
+  CEP_ORIGEM: "86057055",
+  PRODUTO_PRECO: 149.90,
+  PRODUTO_PESO: 0.3, // kg
+  PRODUTO_DIMS: { w: 20, h: 5, l: 20 }, // cm
+  PIX_KEY: "goinalwsherarco@gmail.com",
+  PIX_NAME: "Moises Eduardo Marques Geronimo",
+  PIX_CITY: "Londrina"
+};
+
+let state = {
+  frete: 0.00,
+  desconto: 0.00,
+  cupom: "",
+  total: CONSTANTS.PRODUTO_PRECO
+};
+
+// --- FUNÇÃO PRINCIPAL DE ATUALIZAÇÃO ---
+function updateTotal() {
+  // Cálculo: (Produto - Desconto) + Frete
+  // Se o cupom for percentual, aplica sobre o produto base
+
+  // Validar se desconto é apenas no produto ou total. Geralmente no produto.
+  let valorComDesconto = CONSTANTS.PRODUTO_PRECO - state.desconto;
+  if (valorComDesconto < 0) valorComDesconto = 0;
+
+  state.total = valorComDesconto + state.frete;
+
+  // Atualizar UI
+  const valorDisplay = document.getElementById("valor-display");
+  const detailDisplay = document.getElementById("detail-display");
+  const pixTextarea = document.getElementById("pixCode");
+
+  // Inputs Hidden
+  const hiddenValor = document.getElementById("hidden-valor");
+  const hiddenFrete = document.getElementById("hidden-frete");
+  const hiddenCupom = document.getElementById("hidden-cupom");
+
+  if (valorDisplay) valorDisplay.innerText = state.total.toFixed(2).replace(".", ",");
+
+  if (detailDisplay) {
+    detailDisplay.innerHTML = `(Produto: R$ ${valorComDesconto.toFixed(2).replace(".", ",")} + Frete: R$ ${state.frete.toFixed(2).replace(".", ",")})`;
+  }
+
+  if (hiddenValor) hiddenValor.value = state.total.toFixed(2);
+  if (hiddenFrete) hiddenFrete.value = state.frete.toFixed(2);
+  if (hiddenCupom) hiddenCupom.value = state.cupom;
+
+  // Gerar Payload Pix
+  const payload = generatePixPayload(state.total);
+  if (pixTextarea) pixTextarea.value = payload;
+}
+
+// --- FRETE (MELHOR ENVIO) ---
+async function calculateShipping() {
+  const cepInput = document.getElementById("cepInput");
+  const loading = document.getElementById("loading-frete");
+
+  if (!cepInput || cepInput.value.length < 8) return;
+
+  const cepDestino = cepInput.value.replace(/\D/g, "");
+  if (cepDestino.length !== 8) return;
+
+  if (loading) loading.style.display = "block";
+
+  // Dados para API
+  const data = {
+    from: { postal_code: CONSTANTS.CEP_ORIGEM },
+    to: { postal_code: cepDestino },
+    products: [
+      {
+        id: "x",
+        width: CONSTANTS.PRODUTO_DIMS.w,
+        height: CONSTANTS.PRODUTO_DIMS.h,
+        length: CONSTANTS.PRODUTO_DIMS.l,
+        weight: CONSTANTS.PRODUTO_PESO,
+        insurance_value: CONSTANTS.PRODUTO_PRECO,
+        quantity: 1
+      }
+    ]
+  };
+
+  try {
+    // Usando Proxy CORS Anywhere (necessário solicitar acesso temporário dnv se cair, mas é a melhor opção free rapida)
+    // Alternativamente, se o usuário tiver backend, deve ser feito lá.
+    const response = await fetch("https://cors-anywhere.herokuapp.com/https://melhorenvio.com.br/api/v2/me/shipment/calculate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "Authorization": `Bearer ${CONSTANTS.MELHOR_ENVIO_TOKEN}`,
+        "User-Agent": "HierarchyAbove/1.0 (igora@example.com)"
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (!response.ok) throw new Error("Erro na API");
+
+    const result = await response.json();
+
+    // Pegar o frete mais barato (PAC ou Mini Envios geralmente) - Exemplo simples pegando o primeiro ou validando
+    // Vamos filtrar por .price ou .custom_price
+    // Na v2 geralmente retorna array de opções. Vamos pegar o menor preço valido.
+
+    // Simulação de Fallback se token invalido ou erro (pra não quebrar a demo)
+    // Se der erro, assume frete fixo ou trata erro
+
+    let menorPreco = Infinity;
+    let achou = false;
+
+    if (Array.isArray(result)) {
+      result.forEach(shipping => {
+        if (shipping.price) {
+          const p = parseFloat(shipping.price);
+          if (p < menorPreco) menorPreco = p;
+          achou = true;
+        }
+      });
+    }
+
+    // SE TOKEN NÃO ESTIVER PREENCHIDO VAI DAR ERRO 401. 
+    // VAMOS FAZER UM MOCK SE NÃO TIVER TOKEN PRA NÃO TRAVAR O USUÁRIO AGORA NO TESTE
+    if (!achou && CONSTANTS.MELHOR_ENVIO_TOKEN === "YOUR_TOKEN_HERE") {
+      console.warn("Token ausente. Usando frete fixo de teste R$ 25,00");
+      state.frete = 25.00;
+    } else if (achou) {
+      state.frete = menorPreco;
+    } else {
+      console.error("Nenhuma opção de frete encontrada");
+      alert("Não foi possível calcular o frete para este CEP. Tente novamente.");
+      state.frete = 0.00;
+    }
+
+  } catch (err) {
+    console.error(err);
+    // Fallback Fixo para teste se API falhar (CORS etc)
+    // state.frete = 25.00; 
+    alert("Erro ao calcular frete. Verifique o CEP ou tente mais tarde.");
+  } finally {
+    if (loading) loading.style.display = "none";
+    updateTotal();
+  }
+}
+
+
+// --- CUPOM ---
 function applyCoupon() {
   const inputEl = document.getElementById("couponInput");
   if (!inputEl) return;
 
   const input = inputEl.value.toUpperCase().trim();
   const priceDisplay = document.getElementById("totalPrice");
-  const valorDisplayForm = document.getElementById("valor-display");
-  const qrImage = document.getElementById("pix-qr-img");
-  const pixTextarea = document.getElementById("pixCode");
-  const hiddenValor = document.getElementById("hidden-valor");
+
+  // Reseta desconto antes de aplicar
+  state.desconto = 0.00;
+  state.cupom = "";
 
   if (input === "MILGRAU") {
-    if (priceDisplay)
-      priceDisplay.innerHTML =
-        "TOTAL: <strike>R$ 149,90</strike> <span style='color:var(--vinho)'>R$ 134,91</span>";
-    if (valorDisplayForm) valorDisplayForm.innerText = "134,91";
-    if (hiddenValor) hiddenValor.value = "134.91";
-    if (qrImage) qrImage.src = "assets/pix-promocional.png";
-    if (pixTextarea) pixTextarea.value = pixPromocional;
-  } else {
+    // 10% de desconto no produto
+    state.desconto = CONSTANTS.PRODUTO_PRECO * 0.10; // R$ 14,99
+    state.cupom = input;
+
+    if (priceDisplay) {
+      priceDisplay.innerHTML = `TOTAL: <strike>R$ 149,90</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
+    }
+    alert("CUPOM APLICADO COM SUCESSO!");
+  } else if (input !== "") {
     if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 149,90";
-    if (valorDisplayForm) valorDisplayForm.innerText = "149,90";
-    if (hiddenValor) hiddenValor.value = "149.90";
-    if (qrImage) qrImage.src = "assets/pix-original.png";
-    if (pixTextarea) pixTextarea.value = pixOriginal;
+    alert("CUPOM INVÁLIDO");
   }
+
+  updateTotal();
+}
+
+
+// --- GERADOR PIX (CRC16) ---
+function generatePixPayload(amount) {
+  const amountStr = amount.toFixed(2);
+  const key = CONSTANTS.PIX_KEY;
+  const name = CONSTANTS.PIX_NAME;
+  const city = CONSTANTS.PIX_CITY;
+  const txtId = "HIERARCHY01"; // Identificador da transação
+
+  // Funções auxiliares para montar TLV (Type-Length-Value)
+  const format = (id, value) => {
+    const len = value.length.toString().padStart(2, "0");
+    return `${id}${len}${value}`;
+  };
+
+  // Montagem Payload
+  // 00 - Payload Format Indicator
+  // 26 - Merchant Account Information (GUI, Chave)
+  // 52 - Merchant Category Code (0000 - Not used/General)
+  // 53 - Transaction Currency (986 - BRL)
+  // 54 - Transaction Amount
+  // 58 - Country Code (BR)
+  // 59 - Merchant Name
+  // 60 - Merchant City
+  // 62 - Additional Data Field Template (TxID)
+
+  // 26: 00(GUI) + 01(Chave)
+  const merchantAccount = format("00", "BR.GOV.BCB.PIX") + format("01", key);
+
+  // 62: 05(Reference Label)
+  const additionalData = format("05", txtId);
+
+  let payload =
+    format("00", "01") +
+    format("26", merchantAccount) +
+    format("52", "0000") +
+    format("53", "986") +
+    format("54", amountStr) +
+    format("58", "BR") +
+    format("59", name) +
+    format("60", city) +
+    format("62", additionalData) +
+    "6304"; // Adiciona ID do CRC no final
+
+  // Calcular CRC16
+  const crc = crc16ccitt(payload).toUpperCase();
+  return `${payload}${crc}`;
+}
+
+function crc16ccitt(str) {
+  let crc = 0xFFFF;
+  for (let c = 0; c < str.length; c++) {
+    crc ^= str.charCodeAt(c) << 8;
+    for (let i = 0; i < 8; i++) {
+      if (crc & 0x8000) crc = (crc << 1) ^ 0x1021;
+      else crc = crc << 1;
+    }
+  }
+  return (crc & 0xFFFF).toString(16).padStart(4, "0");
 }
 
 function copyPix() {
   const pixCode = document.getElementById("pixCode");
   const btn = document.getElementById("btnCopy");
   if (!pixCode) return;
+
+  // Garante que o payload está atualizado
+  updateTotal();
 
   pixCode.select();
   pixCode.setSelectionRange(0, 99999);
@@ -132,7 +339,9 @@ function selectSize(tamanho) {
     pixArea.classList.remove("hidden");
     pixArea.scrollIntoView({ behavior: "smooth" });
   }
-  applyCoupon();
+
+  // Inicializa valor corretor ao abrir area pix
+  updateTotal();
 }
 
 // 5. ENVIO DO FORMULÁRIO (Protegido para não travar o script)
@@ -142,6 +351,10 @@ function setupForm() {
 
   checkoutForm.addEventListener("submit", function (event) {
     event.preventDefault();
+
+    // Força update dos hidden
+    updateTotal();
+
     const data = new FormData(this);
     const button = this.querySelector('button[type="submit"]');
     const originalText = button.innerText;
@@ -188,9 +401,12 @@ function triggerFadeIn() {
 document.addEventListener("DOMContentLoaded", () => {
   triggerFadeIn();
   updateCountdown();
-  setupForm(); // Inicializa o formulário com segurança
+  setupForm();
+  // Initial calculation check
+  updateTotal();
 });
 
+// Estoque logic remains below... 
 async function atualizarEstoquePlanilha() {
   const url =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNgY7qK5tkLpHz0Oi7zjKjiS-TCicyJ9FEaq9fou84IZXmdC-XnCbfUX--9ITN-L9iQmt6vWCvO-5M/pub?output=csv";
@@ -199,20 +415,41 @@ async function atualizarEstoquePlanilha() {
     const response = await fetch(url);
     const data = await response.text();
 
-    // Converte o CSV e pega o valor na célula A2
     const linhas = data.split("\n");
     const estoque = parseInt(linhas[1].trim());
 
     const badge = document.getElementById("badge-nobluff");
+    const cardProduto = document.querySelector(".product-item"); // O card na vitrine
+    const areaCheckout = document.querySelector(".checkout-area"); // A área do botão de compra
 
     if (estoque > 0) {
-      badge.innerText = `${estoque} UNIDADES RESTANTES`;
-      badge.classList.remove("esgotado-badge");
+      // PRODUTO DISPONÍVEL
+      if (badge) {
+        badge.innerText = `${estoque} UNIDADES RESTANTES`;
+        badge.classList.remove("esgotado-badge");
+      }
     } else {
-      badge.innerText = `ESGOTADO`;
-      badge.classList.add("esgotado-badge");
-      // Opcional: desativa o clique se estiver esgotado
-      document.querySelector(".product-item").onclick = null;
+      // PRODUTO ESGOTADO
+      if (badge) {
+        badge.innerText = `ESGOTADO`;
+        badge.classList.add("esgotado-badge");
+      }
+
+      // 1. Bloqueia o clique na vitrine e deixa visualmente desativado
+      if (cardProduto) {
+        cardProduto.onclick = null;
+        cardProduto.style.cursor = "not-allowed";
+        cardProduto.style.filter = "grayscale(0.5)"; // Opcional: deixa a foto meio cinza
+      }
+
+      // 2. Remove o botão de compra e a área de PIX para ninguém conseguir pagar
+      if (areaCheckout) {
+        areaCheckout.innerHTML = `
+          <div style="background: #f8d7da; color: #721c24; padding: 20px; text-align: center; font-weight: bold; border: 1px solid #f5c6cb; margin-top: 20px;">
+            ESTE PRODUTO ESTÁ ESGOTADO
+          </div>
+        `;
+      }
     }
   } catch (error) {
     console.error("Erro ao carregar estoque:", error);
