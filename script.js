@@ -159,7 +159,7 @@ async function calculateShipping() {
   try {
     // Usando Proxy CORS Anywhere (necessário solicitar acesso temporário dnv se cair, mas é a melhor opção free rapida)
     // Alternativamente, se o usuário tiver backend, deve ser feito lá.
-    const response = await fetch("/frete", {
+    const response = await fetch("https://hierarchyabove.onrender.com/frete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
