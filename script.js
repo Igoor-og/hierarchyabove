@@ -250,11 +250,18 @@ function applyCoupon() {
 
 
 // --- GERADOR PIX (CRC16) ---
+// Função helper para remover acentos
+function removeAccents(str) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 function generatePixPayload(amount) {
   const amountStr = amount.toFixed(2);
   const key = CONSTANTS.PIX_KEY;
-  const name = CONSTANTS.PIX_NAME;
-  const city = CONSTANTS.PIX_CITY;
+  // O PIX limita o nome do recebedor em 25 caracteres
+  const name = removeAccents(CONSTANTS.PIX_NAME).substring(0, 25).toUpperCase();
+  // Cidade limita em 15 caracteres
+  const city = removeAccents(CONSTANTS.PIX_CITY).substring(0, 15).toUpperCase();
   const txtId = "HIERARCHY01"; // Identificador da transação
 
   // Funções auxiliares para montar TLV (Type-Length-Value)
@@ -294,7 +301,10 @@ function generatePixPayload(amount) {
 
   // Calcular CRC16
   const crc = crc16ccitt(payload).toUpperCase();
-  return `${payload}${crc}`;
+  const finalPayload = `${payload}${crc}`;
+
+  console.log("DEBUG PIX PAYLOAD:", finalPayload); // Debug no console
+  return finalPayload;
 }
 
 function crc16ccitt(str) {

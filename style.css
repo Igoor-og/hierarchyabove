@@ -4,12 +4,14 @@
     font-weight: bold;
     font-style: normal;
 }
+
 :root {
     --black: #000000;
     --white: #ffffff;
     --gray: #f2f2f2;
     --text-muted: #666;
-    --vinho: #800020; /* Nova cor para detalhes */
+    --vinho: #800020;
+    /* Nova cor para detalhes */
 }
 
 * {
@@ -24,13 +26,16 @@ body {
     background-color: var(--white);
     color: var(--black);
     line-height: 1.5;
-    text-transform: uppercase; /* Estética Streetwear */
+    text-transform: uppercase;
+    /* Estética Streetwear */
 }
+
 /* Container que envolve todo o PIX */
 .pix-payment-box {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centraliza horizontalmente */
+    align-items: center;
+    /* Centraliza horizontalmente */
     justify-content: center;
     text-align: center;
     width: 100%;
@@ -46,12 +51,15 @@ body {
 /* Ajusta o campo de texto do código */
 #pixCode {
     width: 100%;
-    max-width: 320px; /* Evita que fique largo demais no PC */
+    max-width: 320px;
+    /* Evita que fique largo demais no PC */
     margin: 0 auto 10px auto;
 }
+
 .bg-white {
     background: var(--white);
 }
+
 .flex-center {
     display: flex;
     align-items: center;
@@ -59,11 +67,13 @@ body {
     min-height: 100vh;
     text-align: center;
 }
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
+
 .hidden {
     display: none;
 }
@@ -71,23 +81,31 @@ body {
 /* Navbar */
 .navbar {
     display: flex;
-    justify-content: flex-end; /* Alinha menu/hamburger à direita */
+    justify-content: flex-end;
+    /* Alinha menu/hamburger à direita */
     align-items: center;
     padding: 20px 5%;
     border-bottom: 1px solid var(--gray);
     background: var(--white);
-    position: relative; /* Para centralizar logo absoluto */
+    position: relative;
+    /* Para centralizar logo absoluto */
+    min-height: 150px;
+    /* Garante espaço para o logo de 130px no PC */
 }
+
 .nav-logo {
     font-size: 1.8rem;
     font-weight: 900;
     text-decoration: none;
     color: var(--black);
     letter-spacing: -1px;
-    position: absolute; /* Centralização absoluta */
+    position: absolute;
+    /* Centralização absoluta */
     left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
+
 .navbar nav a {
     text-decoration: none;
     color: var(--black);
@@ -95,6 +113,7 @@ body {
     font-size: 0.9rem;
     font-weight: 600;
 }
+
 .navbar nav a.active {
     border-bottom: 2px solid var(--vinho);
 }
@@ -106,6 +125,7 @@ body {
     letter-spacing: -4px;
     margin-bottom: 10px;
 }
+
 .timer-bold {
     font-size: 3rem;
     font-weight: 700;
@@ -119,20 +139,24 @@ body {
     gap: 40px;
     margin-top: 40px;
 }
+
 .product-image img {
     width: 100%;
     height: auto;
     display: block;
 }
+
 .product-title {
     font-size: 1.5rem;
     font-weight: 800;
     margin-bottom: 10px;
 }
+
 .product-price {
     font-size: 1.2rem;
     margin-bottom: 20px;
 }
+
 .product-description {
     text-transform: none;
     color: var(--text-muted);
@@ -152,9 +176,11 @@ body {
     text-decoration: none;
     display: inline-block;
 }
+
 .btn-black:hover {
     opacity: 0.8;
 }
+
 .w-100 {
     width: 100%;
 }
@@ -164,17 +190,20 @@ body {
     gap: 10px;
     margin-bottom: 20px;
 }
+
 .coupon-box input {
     border: 1px solid #ccc;
     padding: 10px;
     flex: 1;
     font-weight: 600;
 }
+
 .pix-info {
     background: var(--gray);
     padding: 20px;
     margin-top: 20px;
 }
+
 .pix-key {
     display: block;
     background: #ddd;
@@ -191,7 +220,8 @@ body {
 
 .lookbook-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 colunas */
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 colunas */
     gap: 20px;
 }
 
@@ -205,7 +235,8 @@ body {
     height: 100%;
     object-fit: cover;
     display: block;
-    filter: grayscale(100%); /* Estética streetwear clássica */
+    filter: grayscale(100%);
+    /* Estética streetwear clássica */
     transition:
         filter 0.5s ease,
         transform 0.5s ease;
@@ -218,7 +249,8 @@ body {
 
 /* Itens de tamanhos diferentes para quebrar a monotonia */
 .lookbook-item.large {
-    grid-column: span 2; /* Ocupa a largura toda */
+    grid-column: span 2;
+    /* Ocupa a largura toda */
     height: 600px;
 }
 
@@ -284,6 +316,7 @@ body {
 .product-item:hover .image-overlay {
     opacity: 1;
 }
+
 .product-item:hover img {
     transform: scale(1.05);
 }
@@ -357,11 +390,12 @@ body {
     transition: all 0.3s ease;
 }
 
-.size-btn input:checked + span {
+.size-btn input:checked+span {
     background-color: var(--vinho);
     color: var(--white);
     border-color: var(--black);
 }
+
 .checkout-form-container {
     max-width: 500px;
     margin: 0 auto;
@@ -378,7 +412,8 @@ body {
     border: 1px solid #ddd;
     background: #fff;
     font-family: inherit;
-    text-transform: uppercase; /* Estética da marca */
+    text-transform: uppercase;
+    /* Estética da marca */
     font-size: 0.8rem;
     font-weight: 600;
 }
@@ -391,6 +426,7 @@ body {
 .hidden {
     display: none !important;
 }
+
 /* ============================================================
    APENAS O BLOCO DE CELULAR (CORRIGIDO: LOGO E HAMBÚRGUER)
    ============================================================ */
@@ -400,6 +436,7 @@ nav#nav-menu {
     display: flex;
     gap: 25px;
 }
+
 nav#nav-menu a {
     text-decoration: none;
     color: var(--black);
@@ -408,17 +445,22 @@ nav#nav-menu a {
     letter-spacing: 1px;
     transition: color 0.3s;
 }
+
 nav#nav-menu a:hover,
 nav#nav-menu a.active {
     color: var(--vinho);
 }
 
 .hamburger {
-    display: none; /* Escondido no PC */
-} /* ============================================================
+    display: none;
+    /* Escondido no PC */
+}
+
+/* ============================================================
       CONFIGURAÇÕES MOBILE (ATÉ 768px) - CORRIGIDO
       ============================================================ */
 @media (max-width: 768px) {
+
     /* 1. Impede o vazamento lateral */
     html,
     body {
@@ -436,6 +478,8 @@ nav#nav-menu a.active {
     .navbar {
         padding: 15px 5%;
         height: 70px;
+        min-height: 70px;
+        /* Reset do tamanho PC */
     }
 
     .navbar img {
@@ -480,22 +524,28 @@ nav#nav-menu a.active {
         font-size: 1.5rem !important;
         margin: 15px 0 !important;
     }
+
     .product-image-large,
     .product-image-large img {
         width: 100% !important;
-        max-width: 100% !important; /* Impede de vazar lateralmente */
+        max-width: 100% !important;
+        /* Impede de vazar lateralmente */
         height: auto !important;
-        max-height: 450px !important; /* Limita o tamanho vertical no celular */
-        object-fit: contain !important; /* Garante que a foto apareça inteira sem cortes */
+        max-height: 450px !important;
+        /* Limita o tamanho vertical no celular */
+        object-fit: contain !important;
+        /* Garante que a foto apareça inteira sem cortes */
         margin-bottom: 20px !important;
     }
+
     /* SOLUÇÃO PARA O "INDO PRO LADO":
        Mudamos de GRID para FLEX para forçar a descida dos elementos */
     .product-grid,
     .product-detail-layout,
     .product-grid-simple {
         display: flex !important;
-        flex-direction: column !important; /* Força um embaixo do outro */
+        flex-direction: column !important;
+        /* Força um embaixo do outro */
         width: 100% !important;
         gap: 20px !important;
     }
@@ -512,6 +562,7 @@ nav#nav-menu a.active {
     .logo-text {
         font-size: 2.2rem !important;
     }
+
     .timer-bold {
         font-size: 1.8rem !important;
     }
@@ -535,7 +586,8 @@ nav#nav-menu a.active {
     /* Define a proporção: 1/1 para Quadrado ou 3/4 para Retangular (estilo moda) */
     aspect-ratio: 3 / 4;
     overflow: hidden;
-    background: #f9f9f9; /* Cor de fundo caso a imagem demore a carregar */
+    background: #f9f9f9;
+    /* Cor de fundo caso a imagem demore a carregar */
 }
 
 /* A imagem dentro do container */
@@ -544,7 +596,8 @@ nav#nav-menu a.active {
     height: 100% !important;
     /* O SEGREDO: object-fit cover faz a imagem preencher o espaço sem esticar */
     object-fit: cover !important;
-    object-position: center; /* Centraliza a foto caso ela seja cortada */
+    object-position: center;
+    /* Centraliza a foto caso ela seja cortada */
     display: block;
 }
 
@@ -553,20 +606,25 @@ nav#nav-menu a.active {
     width: 100% !important;
     margin-bottom: 20px !important;
 }
+
 /* Celulares muito pequenos */
 @media (max-width: 480px) {
     .product-title {
         font-size: 1.2rem !important;
     }
+
     .btn-black {
         padding: 12px 20px;
         font-size: 0.9rem;
     }
 }
+
 /* Estilização para o item indisponível */
 .unavailable-drop {
-    cursor: not-allowed !important; /* Mostra que não pode clicar */
-    filter: grayscale(0.2); /* Deixa a foto um pouco mais fria/metal */
+    cursor: not-allowed !important;
+    /* Mostra que não pode clicar */
+    filter: grayscale(0.2);
+    /* Deixa a foto um pouco mais fria/metal */
 }
 
 /* Etiqueta pequena vermelha/vinho no canto da imagem */
@@ -598,6 +656,7 @@ nav#nav-menu a.active {
     font-size: 0.8rem;
     color: var(--text-muted);
 }
+
 /* --- APLICAÇÃO DA FONTE NOS TÍTULOS --- */
 h1,
 h2,
@@ -639,7 +698,8 @@ h3,
     margin-top: 15px;
     margin-bottom: 5px;
     line-height: 1.2;
-    min-height: 2.4em; /* Reserva espaço para 2 linhas, mantendo o preço alinhado */
+    min-height: 2.4em;
+    /* Reserva espaço para 2 linhas, mantendo o preço alinhado */
 }
 
 .product-price-grid {
@@ -654,7 +714,8 @@ h3,
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: #000; /* Preto padrão */
+    background-color: #000;
+    /* Preto padrão */
     color: #fff;
     padding: 5px 10px;
     font-size: 0.6rem;
@@ -665,5 +726,6 @@ h3,
 }
 
 .esgotado-badge {
-    background-color: #ff0000 !important; /* Vermelho se acabar */
+    background-color: #ff0000 !important;
+    /* Vermelho se acabar */
 }
