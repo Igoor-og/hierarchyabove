@@ -459,6 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
   updateTotal();
   // Inicia a verificação de estoque
   atualizarEstoquePlanilha();
+  wakeUpServer();
 });
 
 function setupCepInput() {
@@ -548,4 +549,12 @@ async function atualizarEstoquePlanilha() {
   } catch (error) {
     console.error("Erro ao carregar estoque:", error);
   }
+}
+
+// Wake Up Render Server
+function wakeUpServer() {
+  // Faz um ping silencioso para acordar o container do Render quando o site abre
+  fetch("https://hierarchyabove.onrender.com/frete")
+    .then(() => console.log("Keeping Server Alive..."))
+    .catch(e => console.log("Wake up ping sent"));
 }
