@@ -483,11 +483,18 @@ function setupCepInput() {
     }
   });
 
-  // Garante que o autofill dispare também
+  // Garante que o autofill dispare também e limpe sujeira (. ou -)
   cepInput.addEventListener("change", function () {
-    const cleanValue = this.value.replace(/\D/g, "");
-    if (cleanValue.length === 8) {
+    let value = this.value.replace(/\D/g, "");
+
+    // Reaplica mascara correta
+    if (value.length >= 8) {
+      // Garante que pegamos apenas os 8 primeiros digitos se vier lixo extra
+      value = value.substring(0, 8);
+      this.value = value.substring(0, 5) + "-" + value.substring(5, 8);
       calculateShipping();
+    } else {
+      this.value = value;
     }
   });
 }
