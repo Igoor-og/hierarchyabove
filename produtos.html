@@ -138,8 +138,7 @@
                                     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                                         <div style="flex: 1;">
                                             <input type="text" name="CEP" id="cepInput" placeholder="CEP"
-                                                style="width: 100%;" required maxlength="9"
-                                                onblur="calculateShipping()" />
+                                                style="width: 100%;" required maxlength="9" />
                                             <div id="loading-frete"
                                                 style="display:none; font-size: 0.6rem; color: #666; margin-top: 5px;">
                                                 CALCULANDO FRETE...</div>
@@ -220,8 +219,10 @@
             <div class="newsletter-content">
                 <h3 class="newsletter-title">DONT MISS THE DROP</h3>
                 <p class="newsletter-text">CADASTRE-SE PARA RECEBER ATUALIZAÇÕES DE ESTOQUE E EXCLUSIVIDADE.</p>
-                <form id="newsletter-form" class="newsletter-form">
-                    <input type="email" placeholder="SEU MELHOR E-MAIL" required />
+                <form id="newsletter-form" class="newsletter-form" action="https://formspree.io/f/mwvklgdy"
+                    method="POST">
+                    <input type="hidden" name="_subject" value="NOVO INSCRITO - NEWSLETTER">
+                    <input type="email" name="email" placeholder="SEU MELHOR E-MAIL" required />
                     <button type="submit" class="btn-black">INSCREVER-SE</button>
                 </form>
             </div>

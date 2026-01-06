@@ -159,7 +159,7 @@ async function calculateShipping() {
   try {
     // Usando Proxy CORS Anywhere (necessário solicitar acesso temporário dnv se cair, mas é a melhor opção free rapida)
     // Alternativamente, se o usuário tiver backend, deve ser feito lá.
-    const response = await fetch("https://hierarchyabove.onrender.com/frete", {
+    const response = await fetch("/frete", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -397,22 +397,41 @@ function setupForm() {
 function setupNewsletter() {
   const newsletterForm = document.getElementById("newsletter-form");
   if (newsletterForm) {
-    newsletterForm.addEventListener("submit", (e) => {
+    newsletterForm.addEventListener("submit", function (e) {
       e.preventDefault();
       const btn = newsletterForm.querySelector("button");
       const originalText = btn.innerText;
+      const data = new FormData(this);
 
-      // Visual feedback
-      btn.innerText = "CADASTRADO!";
-      btn.style.background = "#000";
+      btn.innerText = "ENVIANDO...";
+      btn.disabled = true;
 
-      // Simulação de delay de envio
-      setTimeout(() => {
+      fetch("https://formspree.io/f/mwvklgdy", {
+        method: "POST",
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(response => {
+        if (response.ok) {
+          btn.innerText = "CADASTRADO!";
+          btn.style.background = "#000";
+          newsletterForm.reset();
+          setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.background = "var(--vinho)";
+            btn.disabled = false;
+          }, 3000);
+        } else {
+          alert("Erro ao cadastrar. Tente novamente.");
+          btn.innerText = originalText;
+          btn.disabled = false;
+        }
+      }).catch(error => {
+        alert("Erro de conexão.");
         btn.innerText = originalText;
-        btn.style.background = "var(--vinho)";
-        newsletterForm.reset();
-        alert("E-mail cadastrado com sucesso! Em breve novidades.");
-      }, 1500);
+        btn.disabled = false;
+      });
     });
   }
 }
@@ -431,15 +450,46 @@ function triggerFadeIn() {
   fadeElements.forEach((el) => observer.observe(el));
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  triggerFadeIn();
-  updateCountdown();
-  setupForm();
-  setupNewsletter();
-  updateTotal();
-  // Inicia a verificação de estoque
-  atualizarEstoquePlanilha();
+triggerFadeIn();
+updateCountdown();
+setupForm();
+setupNewsletter();
+setupCepInput(); // Novo handler de CEP
+updateTotal();
+// Inicia a verificação de estoque
+atualizarEstoquePlanilha();
 });
+
+function setupCepInput() {
+  const cepInput = document.getElementById("cepInput");
+  if (!cepInput) return;
+
+  // Monitora qualquer mudança no input (digitação, colar, autofill)
+  cepInput.addEventListener("input", function (e) {
+    let value = e.target.value.replace(/\D/g, ""); // Remove não-números
+
+    // Máscara visual (XXXXX-XXX)
+    if (value.length > 5) {
+      value = value.substring(0, 5) + "-" + value.substring(5, 8);
+    }
+    e.target.value = value;
+
+    // Se tiver 8 dígitos numéricos (com ou sem traço dá 9 chars), calcula
+    const cleanValue = value.replace("-", "");
+    if (cleanValue.length === 8) {
+      calculateShipping();
+      cepInput.blur(); // Remove foco para fechar teclado no mobile
+    }
+  });
+
+  // Garante que o autofill dispare também
+  cepInput.addEventListener("change", function () {
+    const cleanValue = this.value.replace(/\D/g, "");
+    if (cleanValue.length === 8) {
+      calculateShipping();
+    }
+  });
+}
 
 // Estoque logic
 async function atualizarEstoquePlanilha() {
