@@ -33,18 +33,18 @@
                 COLLECTION 01/25
             </h1>
             <div class="product-grid-simple">
-                <div class="product-item unavailable-drop">
+                <div class="product-item unavailable-drop" style="display: none;">
                     <div class="product-image-wrapper">
                         <img src="assets/NEW-WORLD.png" alt="Camiseta Hierarchy – New World" />
                         <div class="image-overlay">EM BREVE</div>
                         <div class="badge-status">PRÓXIMO DROP</div>
                     </div>
                     <h3 class="product-title-grid">
-                        Camiseta Hierarchy – “New World”
+                        Camiseta hierarchy – “New World”
                     </h3>
                     <p class="product-price-grid">NOVA COLEÇÃO | INDISPONÍVEL</p>
                 </div>
-                <div class="product-item" onclick="showProductDetail()">
+                <div class="product-item" onclick="showProductDetail()" id="card-nobluff">
                     <div class="product-image-wrapper">
                         <img src="assets/NOBLUFF.jpg" alt="Camiseta Hierarchy" />
                         <div class="image-overlay">VER DETALHES</div>
@@ -52,7 +52,7 @@
                         <div id="badge-nobluff" class="badge-estoque">CARREGANDO...</div>
                     </div>
                     <h3 class="product-title-grid">
-                        Camiseta Hierarchy – “No Bluff”
+                        Camiseta Boxy Hierarchy - NoBluff
                     </h3>
                     <p class="product-price-grid">R$ 149,90</p>
                 </div>
@@ -74,7 +74,7 @@
 
                 <div class="product-info-checkout">
                     <h2 class="product-title">
-                        CAMISETA HIERARCHY – “NO BLUFF”
+                        CAMISETA BOXY HIERARCHY - NOBLUFF
                     </h2>
                     <p class="product-price">R$ 149,90</p>
 
@@ -101,11 +101,6 @@
                             <label class="size-btn">
                                 <input type="radio" name="size" value="G" onclick="selectSize('G')" />
                                 <span>G</span>
-                            </label>
-                            <label class="size-btn">
-                                <input type="radio" name="size" value="GG" onclick="selectSize('GG')"
-                                    onclick="selectSize('GG')" />
-                                <span>GG</span>
                             </label>
                         </div>
                     </div>

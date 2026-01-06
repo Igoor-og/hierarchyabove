@@ -402,11 +402,12 @@ document.addEventListener("DOMContentLoaded", () => {
   triggerFadeIn();
   updateCountdown();
   setupForm();
-  // Initial calculation check
   updateTotal();
+  // Inicia a verificação de estoque
+  atualizarEstoquePlanilha();
 });
 
-// Estoque logic remains below... 
+// Estoque logic
 async function atualizarEstoquePlanilha() {
   const url =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNgY7qK5tkLpHz0Oi7zjKjiS-TCicyJ9FEaq9fou84IZXmdC-XnCbfUX--9ITN-L9iQmt6vWCvO-5M/pub?output=csv";
@@ -416,33 +417,34 @@ async function atualizarEstoquePlanilha() {
     const data = await response.text();
 
     const linhas = data.split("\n");
+    // Assume que a Célula de estoque está na linha 2 (índice 1), primeira coluna
     const estoque = parseInt(linhas[1].trim());
 
-    const badge = document.getElementById("badge-nobluff");
-    const cardProduto = document.querySelector(".product-item"); // O card na vitrine
-    const areaCheckout = document.querySelector(".checkout-area"); // A área do botão de compra
+    console.log("Estoque carregado:", estoque); // Debug
 
-    if (estoque > 0) {
+    const badge = document.getElementById("badge-nobluff");
+    const cardProduto = document.getElementById("card-nobluff");
+    const areaCheckout = document.querySelector(".checkout-area");
+
+    if (!isNaN(estoque) && estoque > 0) {
       // PRODUTO DISPONÍVEL
       if (badge) {
         badge.innerText = `${estoque} UNIDADES RESTANTES`;
         badge.classList.remove("esgotado-badge");
       }
-    } else {
+    } else if (!isNaN(estoque)) {
       // PRODUTO ESGOTADO
       if (badge) {
         badge.innerText = `ESGOTADO`;
         badge.classList.add("esgotado-badge");
       }
 
-      // 1. Bloqueia o clique na vitrine e deixa visualmente desativado
       if (cardProduto) {
         cardProduto.onclick = null;
         cardProduto.style.cursor = "not-allowed";
-        cardProduto.style.filter = "grayscale(0.5)"; // Opcional: deixa a foto meio cinza
+        cardProduto.style.filter = "grayscale(0.5)";
       }
 
-      // 2. Remove o botão de compra e a área de PIX para ninguém conseguir pagar
       if (areaCheckout) {
         areaCheckout.innerHTML = `
           <div style="background: #f8d7da; color: #721c24; padding: 20px; text-align: center; font-weight: bold; border: 1px solid #f5c6cb; margin-top: 20px;">
@@ -455,8 +457,3 @@ async function atualizarEstoquePlanilha() {
     console.error("Erro ao carregar estoque:", error);
   }
 }
-
-// Inicia a função ao carregar a página
-window.onload = () => {
-  atualizarEstoquePlanilha();
-};

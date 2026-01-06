@@ -71,11 +71,12 @@ body {
 /* Navbar */
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; /* Alinha menu/hamburger à direita */
     align-items: center;
     padding: 20px 5%;
     border-bottom: 1px solid var(--gray);
     background: var(--white);
+    position: relative; /* Para centralizar logo absoluto */
 }
 .nav-logo {
     font-size: 1.8rem;
@@ -83,6 +84,9 @@ body {
     text-decoration: none;
     color: var(--black);
     letter-spacing: -1px;
+    position: absolute; /* Centralização absoluta */
+    left: 50%;
+    transform: translateX(-50%);
 }
 .navbar nav a {
     text-decoration: none;
