@@ -249,62 +249,138 @@ function applyCoupon() {
 }
 
 
-// --- GERADOR PIX (CRC16) ---
-// Função helper para remover acentos
+// ========================================
+// GERADOR PIX BRCODE ROBUSTO (CRC16 CCITT)
+// ========================================
+
+/**
+ * Remove acentos e caracteres especiais de strings
+ * Essencial para garantir compatibilidade com o padrão BRCode
+ */
 function removeAccents(str) {
-  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  if (!str) return "";
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Remove diacríticos
+    .replace(/[^\x00-\x7F]/g, ""); // Remove caracteres não-ASCII
 }
 
-function generatePixPayload(amount) {
-  const amountStr = amount.toFixed(2);
-  const key = CONSTANTS.PIX_KEY;
-  // O PIX limita o nome do recebedor em 25 caracteres e cidade em 15
-  const name = removeAccents(CONSTANTS.PIX_NAME).trim().substring(0, 25).toUpperCase();
-  const city = removeAccents(CONSTANTS.PIX_CITY).trim().substring(0, 15).toUpperCase();
-  // TXID padrão universal para aumentar aceitação nos bancos
-  const txtId = "***";
-
-  // Funções auxiliares para montar TLV (Type-Length-Value)
-  const format = (id, value) => {
-    const len = value.length.toString().padStart(2, "0");
-    return `${id}${len}${value}`;
-  };
-
-  // 26: 00(GUI) + 01(Chave)
-  const merchantAccount = format("00", "BR.GOV.BCB.PIX") + format("01", key);
-
-  // 62: 05(Reference Label)
-  const additionalData = format("05", txtId);
-
-  let payload =
-    format("00", "01") +
-    format("26", merchantAccount) +
-    format("52", "0000") +
-    format("53", "986") +
-    format("54", amountStr) +
-    format("58", "BR") +
-    format("59", name) +
-    format("60", city) +
-    format("62", additionalData) +
-    "6304"; // ID do CRC no final
-
-  // Calcular CRC16
-  const crc = crc16ccitt(payload).toUpperCase();
-  const finalPayload = `${payload}${crc}`;
-
-  return finalPayload;
+/**
+ * Formata campo no padrão TLV (Type-Length-Value)
+ * @param {string} id - ID do campo (2 dígitos)
+ * @param {string} value - Valor do campo
+ * @returns {string} Campo formatado no padrão TLV
+ */
+function formatTLV(id, value) {
+  const length = value.length.toString().padStart(2, "0");
+  return `${id}${length}${value}`;
 }
 
-function crc16ccitt(str) {
+/**
+ * Calcula CRC16 CCITT (polinômio 0x1021, inicial 0xFFFF)
+ * Padrão obrigatório para validação de códigos PIX
+ * @param {string} payload - String do payload sem o CRC
+ * @returns {string} CRC16 em hexadecimal (4 caracteres)
+ */
+function crc16ccitt(payload) {
   let crc = 0xFFFF;
-  for (let c = 0; c < str.length; c++) {
-    crc ^= str.charCodeAt(c) << 8;
-    for (let i = 0; i < 8; i++) {
-      if (crc & 0x8000) crc = (crc << 1) ^ 0x1021;
-      else crc = crc << 1;
+
+  for (let i = 0; i < payload.length; i++) {
+    crc ^= payload.charCodeAt(i) << 8;
+
+    for (let j = 0; j < 8; j++) {
+      if (crc & 0x8000) {
+        crc = (crc << 1) ^ 0x1021;
+      } else {
+        crc = crc << 1;
+      }
     }
   }
-  return (crc & 0xFFFF).toString(16).padStart(4, "0");
+
+  // Garante que o resultado seja um número de 16 bits
+  crc = crc & 0xFFFF;
+
+  // Converte para hexadecimal com 4 dígitos
+  return crc.toString(16).toUpperCase().padStart(4, "0");
+}
+
+/**
+ * Gera o payload PIX (BRCode) completo com CRC16
+ * @param {number} amount - Valor da transação
+ * @returns {string} Código PIX Copia e Cola válido
+ */
+function generatePixPayload(amount) {
+  // Validação do valor
+  if (!amount || amount <= 0) {
+    console.error("Valor inválido para PIX:", amount);
+    return "";
+  }
+
+  // Formata o valor com 2 casas decimais (padrão BRCode)
+  const amountStr = amount.toFixed(2);
+
+  // Dados do beneficiário
+  const pixKey = CONSTANTS.PIX_KEY.trim();
+
+  // Remove acentos e limita tamanhos conforme especificação BRCode
+  // Nome: máximo 25 caracteres
+  // Cidade: máximo 15 caracteres
+  const beneficiaryName = removeAccents(CONSTANTS.PIX_NAME)
+    .trim()
+    .toUpperCase()
+    .substring(0, 25);
+
+  const beneficiaryCity = removeAccents(CONSTANTS.PIX_CITY)
+    .trim()
+    .toUpperCase()
+    .substring(0, 15);
+
+  // Transaction ID (pode ser usado para reconciliação)
+  const txId = "***";
+
+  // Log para debug
+  console.log("=== GERANDO PIX ===");
+  console.log("Valor:", amountStr);
+  console.log("Chave:", pixKey);
+  console.log("Beneficiário:", beneficiaryName);
+  console.log("Cidade:", beneficiaryCity);
+
+  // Monta o campo 26 (Merchant Account Information)
+  // 00 = GUI do PIX
+  // 01 = Chave PIX
+  const gui = formatTLV("00", "BR.GOV.BCB.PIX");
+  const key = formatTLV("01", pixKey);
+  const merchantAccount = formatTLV("26", gui + key);
+
+  // Monta o campo 62 (Additional Data Field)
+  const referenceLabel = formatTLV("05", txId);
+  const additionalData = formatTLV("62", referenceLabel);
+
+  // Monta o payload sem o CRC
+  let payload = "";
+  payload += formatTLV("00", "01");              // 00: Payload Format Indicator
+  payload += merchantAccount;                     // 26: Merchant Account Information
+  payload += formatTLV("52", "0000");            // 52: Merchant Category Code
+  payload += formatTLV("53", "986");             // 53: Transaction Currency (986 = BRL)
+  payload += formatTLV("54", amountStr);         // 54: Transaction Amount
+  payload += formatTLV("58", "BR");              // 58: Country Code
+  payload += formatTLV("59", beneficiaryName);   // 59: Merchant Name
+  payload += formatTLV("60", beneficiaryCity);   // 60: Merchant City
+  payload += additionalData;                      // 62: Additional Data
+  payload += "6304";                              // 63: CRC16 (placeholder)
+
+  // Calcula o CRC16 do payload
+  const crc = crc16ccitt(payload);
+
+  // Monta o payload final
+  const finalPayload = payload + crc;
+
+  console.log("Payload gerado (length):", finalPayload.length);
+  console.log("CRC16 calculado:", crc);
+  console.log("Payload completo:", finalPayload);
+  console.log("===================");
+
+  return finalPayload;
 }
 
 function copyPix() {
