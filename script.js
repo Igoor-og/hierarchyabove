@@ -79,7 +79,7 @@ const CONSTANTS = {
   PRODUTO_PRECO: 137.50,
   PRODUTO_PESO: 0.3, // kg
   PRODUTO_DIMS: { w: 20, h: 5, l: 20 }, // cm
-  PIX_KEY: "goinalwsherarco@gmail.com",
+  PIX_KEY: "goinawlsherarco@gmail.com",
   PIX_NAME: "Moises Eduardo Marques Geronimo",
   PIX_CITY: "Londrina"
 };
