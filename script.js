@@ -458,46 +458,119 @@ function setupForm() {
   });
 }
 
-function setupNewsletter() {
-  const newsletterForm = document.getElementById("newsletter-form");
-  if (newsletterForm) {
-    newsletterForm.addEventListener("submit", function (e) {
+
+// Newsletter Popup Logic
+function showNewsletterPopup() {
+  const popup = document.getElementById('newsletter-popup');
+  if (!popup) return;
+
+  // Check if user has previously interacted with the popup
+  const popupStatus = getCookie('newsletter_popup');
+
+  // Don't show if user dismissed or subscribed
+  if (popupStatus === 'dismissed' || popupStatus === 'subscribed') {
+    return;
+  }
+
+  // Show popup after 3 seconds
+  setTimeout(() => {
+    popup.classList.remove('hidden');
+  }, 3000);
+}
+
+function closeNewsletterPopup(userDismissed) {
+  const popup = document.getElementById('newsletter-popup');
+  if (!popup) return;
+
+  popup.classList.add('hidden');
+
+  // If user clicked "Não, obrigado", set cookie to not show for 7 days
+  if (userDismissed) {
+    setCookie('newsletter_popup', 'dismissed', 7);
+  }
+}
+
+function acceptNewsletter() {
+  // Hide action buttons
+  const actionsDiv = document.querySelector('.popup-actions');
+  const popupText = document.querySelector('.popup-text');
+
+  if (actionsDiv) actionsDiv.style.display = 'none';
+  if (popupText) popupText.style.display = 'none';
+
+  // Show email form
+  const emailForm = document.getElementById('popup-newsletter-form');
+  if (emailForm) {
+    emailForm.classList.remove('hidden');
+  }
+}
+
+function setupPopupNewsletter() {
+  const popupForm = document.getElementById('popup-newsletter-form');
+  if (popupForm) {
+    popupForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      const btn = newsletterForm.querySelector("button");
+      const btn = popupForm.querySelector('button[type="submit"]');
       const originalText = btn.innerText;
       const data = new FormData(this);
 
-      btn.innerText = "ENVIANDO...";
+      btn.innerText = 'ENVIANDO...';
       btn.disabled = true;
 
-      fetch("https://formspree.io/f/mwvklgdy", {
-        method: "POST",
+      fetch('https://formspree.io/f/mwvklgdy', {
+        method: 'POST',
         body: data,
         headers: {
           'Accept': 'application/json'
         }
       }).then(response => {
         if (response.ok) {
-          btn.innerText = "CADASTRADO!";
-          btn.style.background = "#000";
-          newsletterForm.reset();
+          // Success - hide popup and set cookie to never show again
+          setCookie('newsletter_popup', 'subscribed', 365);
+
+          // Show success message
+          const popup = document.getElementById('newsletter-popup');
+          const popupTitle = document.querySelector('.popup-title');
+          const emailForm = document.getElementById('popup-newsletter-form');
+
+          if (popupTitle) popupTitle.innerText = 'CADASTRO REALIZADO!';
+          if (emailForm) emailForm.innerHTML = '<p style="color: var(--vinho); font-weight: bold; margin: 20px 0;">Obrigado! Você receberá nossas atualizações em breve.</p>';
+
+          // Hide popup after 3 seconds
           setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.background = "var(--vinho)";
-            btn.disabled = false;
+            if (popup) popup.classList.add('hidden');
           }, 3000);
         } else {
-          alert("Erro ao cadastrar. Tente novamente.");
+          alert('Erro ao cadastrar. Tente novamente.');
           btn.innerText = originalText;
           btn.disabled = false;
         }
       }).catch(error => {
-        alert("Erro de conexão.");
+        alert('Erro de conexão.');
         btn.innerText = originalText;
         btn.disabled = false;
       });
     });
   }
+}
+
+// Cookie Helper Functions
+function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+function getCookie(name) {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
 }
 
 // 6. INICIALIZAÇÃO
@@ -518,7 +591,8 @@ document.addEventListener("DOMContentLoaded", () => {
   triggerFadeIn();
   updateCountdown();
   setupForm();
-  setupNewsletter();
+  setupPopupNewsletter(); // Setup popup newsletter instead of old form
+  showNewsletterPopup(); // Show popup after delay if user hasn't dismissed
   setupCepInput(); // Novo handler de CEP
   updateTotal();
   // Inicia a verificação de estoque

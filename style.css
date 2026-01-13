@@ -730,61 +730,214 @@ h3,
     /* Vermelho se acabar */
 }
 
-/* Newsletter Styles */
-.newsletter-section {
-    padding: 60px 20px;
-    background-color: var(--gray);
+/* Newsletter Popup Notification Styles */
+.newsletter-popup {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 9999;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation: slideInUp 0.6s ease-out;
+}
+
+.newsletter-popup.hidden {
+    opacity: 0;
+    transform: translateY(100px) scale(0.8);
+    pointer-events: none;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(100px) scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.popup-content {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 28px 24px;
+    max-width: 400px;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.25),
+        0 8px 24px rgba(0, 0, 0, 0.12),
+        0 0 1px rgba(0, 0, 0, 0.08);
+    position: relative;
     text-align: center;
-    margin-top: 50px;
-    border-top: 1px solid #e0e0e0;
 }
 
-.newsletter-content {
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.newsletter-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-}
-
-.newsletter-text {
-    font-size: 0.85rem;
+.popup-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
     color: var(--text-muted);
-    margin-bottom: 20px;
-}
-
-.newsletter-form {
+    transition: all 0.3s ease;
+    border-radius: 8px;
     display: flex;
-    gap: 10px;
+    align-items: center;
     justify-content: center;
 }
 
-.newsletter-form input {
-    padding: 15px;
-    border: 1px solid #ccc;
-    flex: 1;
-    font-weight: 600;
-    max-width: 300px;
-    text-transform: uppercase;
+.popup-close:hover {
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--black);
+    transform: rotate(90deg);
 }
 
-/* Newsletter Mobile Adjustments */
+.popup-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--vinho), #a00030);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 8px 24px rgba(128, 0, 32, 0.3);
+}
+
+.popup-icon svg {
+    stroke: white;
+    stroke-width: 2;
+}
+
+.popup-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    color: var(--black);
+}
+
+.popup-text {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+    text-transform: none;
+}
+
+.popup-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 0;
+}
+
+.btn-popup {
+    padding: 14px 24px;
+    border: none;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-family: inherit;
+}
+
+.btn-accept {
+    background: var(--vinho);
+    color: white;
+    box-shadow: 0 4px 16px rgba(128, 0, 32, 0.2);
+}
+
+.btn-accept:hover {
+    background: #a00030;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(128, 0, 32, 0.3);
+}
+
+.btn-decline {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid #ddd;
+}
+
+.btn-decline:hover {
+    background: rgba(0, 0, 0, 0.03);
+    color: var(--black);
+    border-color: var(--black);
+}
+
+/* Email Form (Shown After Accept) */
+.popup-email-form {
+    animation: fadeInDown 0.4s ease-out;
+    margin-top: 20px;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.email-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.email-input-group input {
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-family: inherit;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.email-input-group input:focus {
+    border-color: var(--vinho);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.1);
+}
+
+.email-input-group .btn-black {
+    width: 100%;
+    border-radius: 8px;
+    padding: 14px;
+    font-size: 0.8rem;
+}
+
+/* Mobile Adjustments */
 @media (max-width: 768px) {
-    .newsletter-form {
-        flex-direction: column;
-        align-items: center;
+    .newsletter-popup {
+        bottom: 20px;
+        right: 20px;
+        left: 20px;
     }
 
-    .newsletter-form input {
-        width: 100%;
+    .popup-content {
         max-width: 100%;
+        padding: 24px 20px;
     }
 
-    .newsletter-form button {
-        width: 100%;
+    .popup-title {
+        font-size: 1.1rem;
+    }
+
+    .popup-text {
+        font-size: 0.8rem;
     }
 }
