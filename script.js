@@ -166,7 +166,7 @@ function applyCoupon() {
   state.desconto = 0.00;
   state.cupom = "";
 
-  if (input === "MILGRAU") {
+  if (input === "YOUNG") {
     // 10% de desconto no produto
     state.desconto = CONSTANTS.PRODUTO_PRECO * 0.10; // R$ 14,99
     state.cupom = input;
