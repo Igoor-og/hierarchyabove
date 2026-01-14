@@ -76,7 +76,7 @@ function hideProductDetail() {
 const CONSTANTS = {
   MELHOR_ENVIO_TOKEN: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzI3N2M1ODE0N2FiZTRlODY5MjQ0NTMzMWMwYjMxNTVmNjBmOTM4OGMxMTE2NGJmZDU3YzY4YjNhMWIwZGY2YTQ2ZTNiOTc2NTJkYjE2ODUiLCJpYXQiOjE3Njc3MjgwOTMuOTg1NDksIm5iZiI6MTc2NzcyODA5My45ODU0OTIsImV4cCI6MTc5OTI2NDA5My45NzM2ODgsInN1YiI6ImEwYjgyMjFhLWZiZjMtNDNkMi05NmYyLTdhOTU1N2M5M2JmMCIsInNjb3BlcyI6WyJjYXJ0LXJlYWQiLCJjYXJ0LXdyaXRlIiwiY29tcGFuaWVzLXJlYWQiLCJjb21wYW5pZXMtd3JpdGUiLCJjb3Vwb25zLXJlYWQiLCJjb3Vwb25zLXdyaXRlIiwibm90aWZpY2F0aW9ucy1yZWFkIiwib3JkZXJzLXJlYWQiLCJwcm9kdWN0cy1yZWFkIiwicHJvZHVjdHMtZGVzdHJveSIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwid2ViaG9va3MtZGVsZXRlIiwidGRlYWxlci13ZWJob29rIl19.F46VtAD8bD6ZTq1lf3FqxgAXCeZJcbVetmDBPq15RjQFjRmvBhUZKzdFqtymWcbIMUC52IPwAXDYuk6sI_A0Q7yqNg4kxjehmyqgOjJGlK1KXVCmW3nAYICEmhy2pFP5vXmNLBFO5h5aRtBrwy2bZZDCFYWcFy1GJKkCTtsBGluPxJhdYlPqFersY2d8zfV_i7xjZb11g9lH7KWj8WePVg7K8HKqGE4sL4pDHw-Wm5pr-TEJQ49pVNHARh0N0rs_-9A-w6L2lnnWXCWaEd75bzCilrbcacHu1PPcTlPK2T1_e8X7D6rJXevsDM9zxmXTPIhAO5OlYANlVBq3ofZho8uF1Ok2GsGl1_DleYsMCiF_bjr5yjA5vHvBJ5mTj4jEHILNWUKNivjvgw4LeCzL-bvnwDHIhtPmx_IvCMvKMBZ75fVgSr_eKOCG0zIU8xclEGfY6elV1CtTeHjQwmYo-SicDxx4w64UbwsEL-qeQWgqXblCBM0b1BQ3djcn3i2FW0CV9Gk6Emq_UEEYfEQvH6Lr8dsa6aMnp6T2r-zWbeamSozQcepPcfa59qp9KfNruMuL-xChvywFBmXw9EZ14qe3Nu43huE7-UsfMftA-3dXOmIQZSrcGcfvp3M_pjFHpiXMIYbvoo4uk1fIhYaWV96GxPYO4UfBgtWqPBrl7uU", // SUBSTITUIR PELO TOKEN DO USUÁRIO
   CEP_ORIGEM: "86057055",
-  PRODUTO_PRECO: 137.50,
+  PRODUTO_PRECO: 157.00,
   PRODUTO_PESO: 0.3, // kg
   PRODUTO_DIMS: { w: 20, h: 5, l: 20 }, // cm
   PIX_KEY: "goinawlsherarco@gmail.com",
@@ -128,94 +128,29 @@ function updateTotal() {
 }
 
 // --- FRETE (MELHOR ENVIO) ---
+// --- FRETE (COM MOCK FRETE GRÁTIS) ---
 async function calculateShipping() {
   const cepInput = document.getElementById("cepInput");
-  const loading = document.getElementById("loading-frete");
+  const freteStatus = document.getElementById("frete-status");
 
   if (!cepInput || cepInput.value.length < 8) return;
 
   const cepDestino = cepInput.value.replace(/\D/g, "");
   if (cepDestino.length !== 8) return;
 
-  if (loading) loading.style.display = "block";
+  // Como estamos oferecendo FRETE GRÁTIS, pulamos a consulta à API
+  // e apenas mostramos visualmente que o frete foi calculado/aplicado.
 
-  // Dados para API
-  const data = {
-    from: { postal_code: CONSTANTS.CEP_ORIGEM },
-    to: { postal_code: cepDestino },
-    products: [
-      {
-        id: "x",
-        width: CONSTANTS.PRODUTO_DIMS.w,
-        height: CONSTANTS.PRODUTO_DIMS.h,
-        length: CONSTANTS.PRODUTO_DIMS.l,
-        weight: CONSTANTS.PRODUTO_PESO,
-        insurance_value: CONSTANTS.PRODUTO_PRECO,
-        quantity: 1
-      }
-    ]
-  };
+  state.frete = 0.00;
 
-  try {
-    // Usando Proxy CORS Anywhere (necessário solicitar acesso temporário dnv se cair, mas é a melhor opção free rapida)
-    // Alternativamente, se o usuário tiver backend, deve ser feito lá.
-    const response = await fetch("https://hierarchyabove.onrender.com/frete", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "Authorization": `Bearer ${CONSTANTS.MELHOR_ENVIO_TOKEN}`,
-        "User-Agent": "HierarchyAbove/1.0 (igora@example.com)"
-      },
-      body: JSON.stringify(data)
-    });
-
-    if (!response.ok) throw new Error("Erro na API");
-
-    const result = await response.json();
-
-    // Pegar o frete mais barato (PAC ou Mini Envios geralmente) - Exemplo simples pegando o primeiro ou validando
-    // Vamos filtrar por .price ou .custom_price
-    // Na v2 geralmente retorna array de opções. Vamos pegar o menor preço valido.
-
-    // Simulação de Fallback se token invalido ou erro (pra não quebrar a demo)
-    // Se der erro, assume frete fixo ou trata erro
-
-    let menorPreco = Infinity;
-    let achou = false;
-
-    if (Array.isArray(result)) {
-      result.forEach(shipping => {
-        if (shipping.price) {
-          const p = parseFloat(shipping.price);
-          if (p < menorPreco) menorPreco = p;
-          achou = true;
-        }
-      });
-    }
-
-    // SE TOKEN NÃO ESTIVER PREENCHIDO VAI DAR ERRO 401. 
-    // VAMOS FAZER UM MOCK SE NÃO TIVER TOKEN PRA NÃO TRAVAR O USUÁRIO AGORA NO TESTE
-    if (!achou && CONSTANTS.MELHOR_ENVIO_TOKEN === "YOUR_TOKEN_HERE") {
-      console.warn("Token ausente. Usando frete fixo de teste R$ 25,00");
-      state.frete = 25.00;
-    } else if (achou) {
-      state.frete = menorPreco;
-    } else {
-      console.error("Nenhuma opção de frete encontrada");
-      alert("Não foi possível calcular o frete para este CEP. Tente novamente.");
-      state.frete = 0.00;
-    }
-
-  } catch (err) {
-    console.error(err);
-    // Fallback Fixo para teste se API falhar (CORS etc)
-    // state.frete = 25.00; 
-    alert("Erro ao calcular frete. Verifique o CEP ou tente mais tarde.");
-  } finally {
-    if (loading) loading.style.display = "none";
-    updateTotal();
+  if (freteStatus) {
+    freteStatus.style.display = "block";
+    freteStatus.innerText = "FRETE GRÁTIS APLICADO ✓";
   }
+
+  updateTotal();
+  // Se quiser simular um delay visual:
+  // setTimeout(() => updateTotal(), 500);
 }
 
 
@@ -237,11 +172,11 @@ function applyCoupon() {
     state.cupom = input;
 
     if (priceDisplay) {
-      priceDisplay.innerHTML = `TOTAL: <strike>R$ 137,50</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
+      priceDisplay.innerHTML = `TOTAL: <strike>R$ 157,00</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
     }
     alert("CUPOM APLICADO COM SUCESSO!");
   } else if (input !== "") {
-    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 137,50";
+    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 157,00";
     alert("CUPOM INVÁLIDO");
   }
 
@@ -405,17 +340,25 @@ function copyPix() {
 }
 
 function selectSize(tamanho) {
-  const hiddenTamanho = document.getElementById("hidden-tamanho");
-  if (hiddenTamanho) hiddenTamanho.value = tamanho;
+  // Salva o tamanho selecionado na sessionStorage
+  sessionStorage.setItem('tamanho_selecionado', tamanho);
 
-  const pixArea = document.getElementById("pix-area");
-  if (pixArea) {
-    pixArea.classList.remove("hidden");
-    pixArea.scrollIntoView({ behavior: "smooth" });
+  // Mostra o botão de comprar em vez do formulário
+  const buyButtonContainer = document.getElementById("buy-button-container");
+  if (buyButtonContainer) {
+    buyButtonContainer.classList.remove("hidden");
+    buyButtonContainer.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
+}
 
-  // Inicializa valor corretor ao abrir area pix
-  updateTotal();
+// Nova função para redirecionar ao checkout
+function goToCheckout() {
+  const tamanho = sessionStorage.getItem('tamanho_selecionado');
+  if (!tamanho) {
+    alert('Por favor, selecione um tamanho primeiro.');
+    return;
+  }
+  window.location.href = 'checkout.html';
 }
 
 // 5. ENVIO DO FORMULÁRIO (Protegido para não travar o script)
@@ -441,8 +384,13 @@ function setupForm() {
       body: data,
       headers: { Accept: "application/json" },
     })
-      .then((response) => {
+      .then(async (response) => {
         if (response.ok) {
+          // BAIXA NO ESTOQUE ANTES DE IR PARA OBRIGADO
+          const tamanhoSelecionado = sessionStorage.getItem('tamanho_selecionado');
+          if (tamanhoSelecionado) {
+            await baixarEstoquePlanilha(tamanhoSelecionado);
+          }
           window.location.href = "obrigado.html";
         } else {
           alert("Erro ao enviar. Verifique os dados.");
@@ -596,9 +544,46 @@ document.addEventListener("DOMContentLoaded", () => {
   setupCepInput(); // Novo handler de CEP
   updateTotal();
   // Inicia a verificação de estoque
+  // Inicia a verificação de estoque
   atualizarEstoquePlanilha();
-  wakeUpServer();
+  // wakeUpServer(); // Desativado pois não usaremos API de frete
 });
+
+// Funções de Navegação Checkout
+function goToPaymentStep() {
+  const step1 = document.getElementById('step-1-dados');
+  const step2 = document.getElementById('step-2-pagamento');
+  const nome = document.querySelector('input[name="Nome"]');
+  const cpf = document.querySelector('input[name="CPF"]');
+
+  // Validação simples
+  if (!nome.value || !cpf.value) {
+    alert('Por favor, preencha os campos obrigatórios.');
+    return;
+  }
+
+  if (step1 && step2) {
+    step1.classList.remove('step-visible');
+    step1.classList.add('step-hidden');
+    step2.classList.remove('step-hidden');
+    step2.classList.add('step-visible');
+
+    // Gera o PIX ao entrar na etapa de pagamento
+    updateTotal();
+  }
+}
+
+function backToDataStep() {
+  const step1 = document.getElementById('step-1-dados');
+  const step2 = document.getElementById('step-2-pagamento');
+
+  if (step1 && step2) {
+    step2.classList.remove('step-visible');
+    step2.classList.add('step-hidden');
+    step1.classList.remove('step-hidden');
+    step1.classList.add('step-visible');
+  }
+}
 
 function setupCepInput() {
   const cepInput = document.getElementById("cepInput");
@@ -638,54 +623,82 @@ function setupCepInput() {
   });
 }
 
-// Estoque logic
+// --- CONFIGURAÇÃO DO ESTOQUE AUTOMATIZADO ---
+// Substitua pelo seu URL do Google Apps Script após implantar
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0OoNegWpGTjoQZY0KpV93vIhEMR0ETk2fS1Yb9-yx2d-RHfMP4lMTfbHcDMXEnWv6/exec";
+
 async function atualizarEstoquePlanilha() {
-  const url =
-    "https://docs.google.com/spreadsheets/d/e/2PACX-1vSNgY7qK5tkLpHz0Oi7zjKjiS-TCicyJ9FEaq9fou84IZXmdC-XnCbfUX--9ITN-L9iQmt6vWCvO-5M/pub?output=csv";
+  const badge = document.getElementById("badge-nobluff");
+  const sizeButtons = document.querySelectorAll('.size-btn');
 
   try {
-    const response = await fetch(url);
-    const data = await response.text();
+    // Agora pedimos especificamente pelo produto "NoBluff"
+    const response = await fetch(`${GOOGLE_SCRIPT_URL}?produto=NoBluff`);
+    const estoque = await response.json();
 
-    const linhas = data.split("\n");
-    // Assume que a Célula de estoque está na linha 2 (índice 1), primeira coluna
-    const estoque = parseInt(linhas[1].trim());
+    console.log("Estoque NoBluff:", estoque);
 
-    console.log("Estoque carregado:", estoque); // Debug
+    let totalDisponivel = 0;
 
-    const badge = document.getElementById("badge-nobluff");
-    const cardProduto = document.getElementById("card-nobluff");
-    const areaCheckout = document.querySelector(".checkout-area");
+    sizeButtons.forEach(label => {
+      const input = label.querySelector('input');
+      const size = input.value;
+      const qtd = estoque[size] || 0;
+      totalDisponivel += (qtd > 0 ? qtd : 0);
 
-    if (!isNaN(estoque) && estoque > 0) {
-      // PRODUTO DISPONÍVEL
-      if (badge) {
-        badge.innerText = `${estoque} UNIDADES RESTANTES`;
-        badge.classList.remove("esgotado-badge");
+      if (qtd <= 0) {
+        label.classList.add('out-of-stock');
+        input.disabled = true;
+        label.style.opacity = "0.3";
+        label.style.cursor = "not-allowed";
+        label.title = "Tamanho esgotado";
+      } else {
+        label.classList.remove('out-of-stock');
+        input.disabled = false;
+        label.style.opacity = "1";
+        label.style.cursor = "pointer";
       }
-    } else if (!isNaN(estoque)) {
-      // PRODUTO ESGOTADO
-      if (badge) {
+    });
+
+    if (badge) {
+      if (totalDisponivel > 0) {
+        badge.innerText = `${totalDisponivel} UNIDADES RESTANTES`;
+        badge.classList.remove("esgotado-badge");
+      } else {
         badge.innerText = `ESGOTADO`;
         badge.classList.add("esgotado-badge");
-      }
-
-      if (cardProduto) {
-        cardProduto.onclick = null;
-        cardProduto.style.cursor = "not-allowed";
-        cardProduto.style.filter = "grayscale(0.5)";
-      }
-
-      if (areaCheckout) {
-        areaCheckout.innerHTML = `
-          <div style="background: #f8d7da; color: #721c24; padding: 20px; text-align: center; font-weight: bold; border: 1px solid #f5c6cb; margin-top: 20px;">
-            ESTE PRODUTO ESTÁ ESGOTADO
-          </div>
-        `;
+        desativarBotaoCompra();
       }
     }
   } catch (error) {
-    console.error("Erro ao carregar estoque:", error);
+    console.error("Erro ao carregar estoque da API:", error);
+    if (badge) badge.innerText = "ESTOQUE LIMITADO";
+  }
+}
+
+function desativarBotaoCompra() {
+  const buyBtn = document.querySelector("#buy-button-container button");
+  if (buyBtn) {
+    buyBtn.disabled = true;
+    buyBtn.innerText = "PRODUTO ESGOTADO";
+    buyBtn.style.background = "#ccc";
+  }
+}
+
+async function baixarEstoquePlanilha(tamanho) {
+  try {
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        produto: "NoBluff",
+        tamanho: tamanho
+      })
+    });
+    console.log("Baixa de estoque enviada: NoBluff -", tamanho);
+  } catch (e) {
+    console.error("Erro ao baixar estoque:", e);
   }
 }
 

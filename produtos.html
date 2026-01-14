@@ -45,18 +45,17 @@
                     <p class="product-price-grid">NOVA COLEÇÃO | INDISPONÍVEL</p>
                 </div>
                 <div class="product-item" onclick="showProductDetail()" id="card-nobluff">
-                    <div class="product-image-wrapper">
-                        <img src="assets/NOBLUFF.jpg" alt="Camiseta Hierarchy" />
+                    <div class="product-image-wrapper square-image-container">
+                        <img src="assets/NOBLUFF_NEW.jpg" alt="Camiseta Hierarchy" />
                         <div class="image-overlay">VER DETALHES</div>
 
                         <div id="badge-nobluff" class="badge-estoque">CARREGANDO...</div>
+                        <div class="badge-frete-vitrine">FRETE GRÁTIS</div>
                     </div>
                     <h3 class="product-title-grid">
                         Camiseta Hierarchy - NoBluff
                     </h3>
-                    <p class="product-price-grid"><span
-                            style="text-decoration: line-through; color: #999; font-size: 0.8em;">R$ 149,90</span> R$
-                        137,50</p>
+                    <p class="product-price-grid">R$ 157,00</p>
                 </div>
             </div>
         </section>
@@ -70,33 +69,29 @@
             </button>
 
             <div class="product-detail-layout fade-in">
-                <div class="product-image-large">
-                    <img src="assets/NOBLUFF.jpg" alt="Camiseta Hierarchy" />
+                <div class="product-image-large square-image-container">
+                    <img src="assets/NOBLUFF_NEW.jpg" alt="Camiseta Hierarchy" />
                 </div>
 
                 <div class="product-info-checkout">
                     <h2 class="product-title">
                         CAMISETA HIERARCHY - NOBLUFF
                     </h2>
-                    <p class="product-price"><span
-                            style="text-decoration: line-through; color: #999; font-size: 0.8em; margin-right: 10px;">R$
-                            149,90</span> R$ 137,50</p>
+                    <p class="product-price">R$ 157,00</p>
+                    <div class="badge-frete">
+                        FRETE GRÁTIS
+                    </div>
 
                     <div class="product-description">
-                        <p>
-                            Esta peça apresenta uma estética streetwear
-                            contemporânea, unindo elementos do design
-                            gráfico dos anos 2000 com uma silhueta moderna.
-                            É o item ideal para composições que buscam
-                            destacar um visual urbano e sofisticado.
-                        </p>
+                        <p>Modelagem Semi-boxy com design autoral exclusivo. Uma peça que transcende o vestuário, sendo
+                            uma verdadeira obra de arte.</p> <br>
+
+                        <p>Seu pedido inclui embalagem premium, mimos exclusivos e envio seguro por nossa conta.</p>
                         <br>
-                        <p>
-                            Devido à complexidade visual da estampa, recomenda-se a
-                            combinação com peças inferiores de tons neutros
-                            ou alfaiataria moderna para um contraste de
-                            texturas equilibrado.
-                        </p>
+
+                        <p><strong>DROP 0:</strong> Edição ultralimitada de apenas 10 unidades. <br> O frete é grátis
+                            para
+                            todo o Brasil.</p>
                     </div>
                     <div class="size-selection">
                         <p class="section-label">TAMANHO:</p>
@@ -111,107 +106,15 @@
                             </label>
                         </div>
                     </div>
-                    <div class="checkout-area">
-                        <div class="coupon-box">
-                            <input type="text" id="couponInput" placeholder="CÓDIGO DO CUPOM" />
-                            <button onclick="applyCoupon()" class="btn-black w-100">
-                                APLICAR
-                            </button>
-                        </div>
 
-                        <p id="totalPrice" class="final-price">
-                            TOTAL: R$ 137,50
-                        </p>
-
-                        <div id="pix-area" class="hidden">
-                            <input type="hidden" name="_subject" value="NOVA VENDA - HIERARCHY ABOVE">
-                            <form id="checkout-form" class="checkout-form-container">
-                                <h3 class="section-label" style="color: var(--vinho)">
-                                    DADOS DE ENTREGA
-                                </h3>
-                                <div class="input-group">
-                                    <input type="text" name="Nome" placeholder="NOME COMPLETO" required />
-                                    <input type="email" name="Email" placeholder="E-MAIL DE CONTATO" required />
-                                    <input type="text" name="CPF" placeholder="CPF (PARA EMISSÃO DE ETIQUETA)"
-                                        required />
-
-                                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                        <div style="flex: 1;">
-                                            <input type="text" name="CEP" id="cepInput" placeholder="CEP"
-                                                style="width: 100%;" required />
-                                            <div id="loading-frete"
-                                                style="display:none; font-size: 0.6rem; color: #666; margin-top: 5px;">
-                                                CALCULANDO FRETE...</div>
-                                        </div>
-                                        <input type="text" name="Bairro" placeholder="BAIRRO" style="flex: 1;"
-                                            required />
-                                    </div>
-
-                                    <input type="text" name="Endereco" placeholder="RUA E NÚMERO" required />
-                                    <input type="text" name="Complemento"
-                                        placeholder="COMPLEMENTO (APTO, BLOCO, CASA)" />
-
-                                    <div style="display: flex; gap: 10px;">
-                                        <input type="text" name="Cidade" placeholder="CIDADE" style="flex: 2;"
-                                            required />
-                                        <input type="text" name="Estado" placeholder="UF" style="flex: 1;" required
-                                            maxlength="2" />
-                                    </div>
-
-                                    <input type="hidden" name="Tamanho" id="hidden-tamanho" />
-                                    <input type="hidden" name="Valor_Frete" id="hidden-frete" value="0.00" />
-                                    <input type="hidden" name="Cupom_Aplicado" id="hidden-cupom" value="" />
-                                    <input type="hidden" name="Valor_Final" id="hidden-valor" value="137.50" />
-
-                                    <div class="pix-info" style="
-                                            margin-top: 20px;
-                                            border: 1px solid #eee;
-                                            padding: 15px;
-                                        ">
-                                        <p style="
-                                                font-weight: 800;
-                                                font-size: 0.8rem;
-                                            ">
-                                            PAGAMENTO VIA PIX
-                                        </p>
-
-                                        <div class="pix-qr-container" style="margin: 15px 0; display: none;"
-                                            id="qr-container-visual">
-                                            <!-- QR Code generated dynamically if needed, typically removed per request -->
-                                        </div>
-
-                                        <div class="pix-copy-section" style="margin-top: 15px; text-align: center;">
-                                            <p style="font-size: 0.7rem; font-weight: 800; margin-bottom: 8px;">PIX
-                                                COPIA E COLA:</p>
-
-                                            <textarea id="pixCode" readonly
-                                                style="width: 100%; max-width: 300px; height: 50px; font-size: 0.6rem; padding: 10px; border: 1px solid #ddd; background: #f4f4f4; resize: none; word-break: break-all; font-family: monospace;"></textarea>
-
-                                            <button type="button" id="btnCopy" onclick="copyPix()" class="btn-black"
-                                                style="margin-top: 10px; width: 100%; font-size: 0.7rem;">
-                                                COPIAR CÓDIGO PIX
-                                            </button>
-                                        </div>
-
-                                        <p style="
-                                                font-size: 0.7rem;
-                                                margin: 10px 0;
-                                                color: var(--vinho);
-                                            ">
-                                            VALOR A PAGAR: R$ <span id="valor-display">137,50</span>
-                                            <br><small style="font-size: 0.6rem; color: #999;"
-                                                id="detail-display">(Produto: R$ 137,50 + Frete: R$ 0,00)</small>
-                                        </p>
-
-                                        <button type="submit" class="btn-black w-100" style="
-                                                background-color: var(--vinho);
-                                            ">
-                                            ENVIAR COMPROVANTE E FINALIZAR
-                                        </button>
-                                    </div>
-                            </form>
-                        </div>
+                    <!-- Botão de Comprar (aparece após selecionar tamanho) -->
+                    <div id="buy-button-container" class="hidden" style="margin-top: 20px;">
+                        <button onclick="goToCheckout()" class="btn-black w-100"
+                            style="background-color: var(--vinho); font-size: 1rem; padding: 18px;">
+                            COMPRAR
+                        </button>
                     </div>
+                    <!-- Área de checkout foi movida para checkout.html -->
                 </div>
             </div>
         </section>

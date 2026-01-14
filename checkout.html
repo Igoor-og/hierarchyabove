@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Finalizar Compra | Hierarchy Above</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="assets/hieralogo.png" />
+</head>
+
+<body>
+    <header class="navbar">
+        <a href="index.html?dev=true" class="nav-logo">
+            <img src="assets/logo1.png" alt="HIERARCHY ABOVE" />
+        </a>
+
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav id="nav-menu">
+            <a href="produtos.html" class="active">SHOP</a>
+            <a href="lookbook.html">LOOKBOOK</a>
+            <a href="suporte.html">SUPORTE</a>
+        </nav>
+    </header>
+    <main class="container">
+        <section id="checkout-section" class="fade-in" style="max-width: 600px; margin: 60px auto;">
+
+            <button onclick="window.history.back()" id="btn-voltar-produto"
+                style="display: flex !important; align-items: center !important; background: none !important; border: none !important; cursor: pointer !important; padding: 20px 0 !important; font-family: sans-serif !important; font-weight: 900 !important; letter-spacing: 2px !important; color: #000 !important; text-transform: uppercase !important; font-size: 0.7rem !important;">
+                <span style="margin-right: 10px; font-size: 1.2rem;">&lt;</span>
+                <span style="border-bottom: 1px solid #000;">VOLTAR</span>
+            </button>
+
+            <h2 class="product-title" style="margin-bottom: 30px; text-align: center;">
+                FINALIZAR COMPRA
+            </h2>
+
+            <div class="checkout-info-box"
+                style="background: #f9f9f9; padding: 20px; margin-bottom: 30px; border-radius: 8px; text-align: center;">
+                <p style="font-size: 0.9rem; font-weight: 800; margin-bottom: 10px;">RESUMO DO PEDIDO</p>
+                <p style="font-size: 0.8rem; color: #666;">
+                    <strong>Produto:</strong> CAMISETA HIERARCHY - NOBLUFF<br>
+                    <strong>Tamanho:</strong> <span id="tamanho-selecionado">-</span><br>
+                    <strong>Valor:</strong> R$ 157,00
+                </p>
+            </div>
+
+            <div class="checkout-area">
+                <div class="coupon-box">
+                    <input type="text" id="couponInput" placeholder="CÓDIGO DO CUPOM" />
+                    <button onclick="applyCoupon()" class="btn-black w-100">
+                        APLICAR
+                    </button>
+                </div>
+
+                <p id="totalPrice" class="final-price">
+                    TOTAL: R$ 157,00
+                </p>
+
+                <div id="pix-area">
+                    <input type="hidden" name="_subject" value="NOVA VENDA - HIERARCHY ABOVE">
+                    <form id="checkout-form" class="checkout-form-container">
+
+                        <!-- STEP 1: DADOS -->
+                        <div id="step-1-dados" class="step-visible">
+                            <h3 class="section-label" style="color: var(--vinho)">
+                                1. DADOS DE ENTREGA
+                            </h3>
+                            <div class="input-group">
+                                <input type="text" name="Nome" placeholder="NOME COMPLETO" required />
+                                <input type="email" name="Email" placeholder="E-MAIL DE CONTATO" required />
+                                <input type="text" name="CPF" placeholder="CPF (PARA EMISSÃO DE ETIQUETA)" required />
+
+                                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <div style="flex: 1;">
+                                        <input type="text" name="CEP" id="cepInput" placeholder="CEP"
+                                            style="width: 100%;" required />
+                                        <div id="frete-status"
+                                            style="display:none; font-size: 0.7rem; color: var(--vinho); margin-top: 5px; font-weight: bold;">
+                                            FRETE GRÁTIS APLICADO
+                                        </div>
+                                    </div>
+                                    <input type="text" name="Bairro" placeholder="BAIRRO" style="flex: 1;" required />
+                                </div>
+
+                                <input type="text" name="Endereco" placeholder="RUA E NÚMERO" required />
+                                <input type="text" name="Complemento" placeholder="COMPLEMENTO (APTO, BLOCO, CASA)" />
+
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="text" name="Cidade" placeholder="CIDADE" style="flex: 2;" required />
+                                    <input type="text" name="Estado" placeholder="UF" style="flex: 1;" required
+                                        maxlength="2" />
+                                </div>
+                            </div>
+
+                            <button type="button" onclick="goToPaymentStep()" class="btn-black w-100"
+                                style="margin-top: 20px;">
+                                CONTINUAR PARA PAGAMENTO
+                            </button>
+                        </div>
+
+                        <!-- HIDDEN INPUTS (ALWAYS PRESENT) -->
+                        <input type="hidden" name="Tamanho" id="hidden-tamanho" />
+                        <input type="hidden" name="Valor_Frete" id="hidden-frete" value="0.00" />
+                        <input type="hidden" name="Cupom_Aplicado" id="hidden-cupom" value="" />
+                        <input type="hidden" name="Valor_Final" id="hidden-valor" value="157.00" />
+
+                        <!-- STEP 2: PIX -->
+                        <div id="step-2-pagamento" class="step-hidden"
+                            style="margin-top: 20px; border: 1px solid #eee; padding: 15px;">
+                            <div
+                                style="display:flex; align-items:center; justify-content:space-between; margin-bottom:15px;">
+                                <h3 class="section-label" style="color: var(--vinho); margin:0;">
+                                    2. PAGAMENTO VIA PIX
+                                </h3>
+                                <button type="button" onclick="backToDataStep()"
+                                    style="border:none; background:none; text-decoration:underline; cursor:pointer; font-size:0.7rem;">
+                                    (Editar Dados)
+                                </button>
+                            </div>
+
+                            <p style="font-weight: 800; font-size: 0.8rem; margin-bottom: 20px;">
+                                RESUMO DO VALOR:
+                                <br>
+                                <span style="font-size: 1.2rem; color: var(--vinho);">R$ <span
+                                        id="valor-display">157,00</span></span>
+                                <br><small style="font-size: 0.6rem; color: #999;">(Frete Grátis)</small>
+                            </p>
+
+                            <div class="pix-copy-section" style="text-align: center;">
+                                <p style="font-size: 0.7rem; font-weight: 800; margin-bottom: 8px;">PIX COPIA E COLA:
+                                </p>
+
+                                <textarea id="pixCode" readonly
+                                    style="width: 100%; max-width: 300px; height: 50px; font-size: 0.6rem; padding: 10px; border: 1px solid #ddd; background: #f4f4f4; resize: none; word-break: break-all; font-family: monospace;"></textarea>
+
+                                <button type="button" id="btnCopy" onclick="copyPix()" class="btn-black"
+                                    style="margin-top: 10px; width: 100%; font-size: 0.7rem;">
+                                    COPIAR CÓDIGO PIX
+                                </button>
+                            </div>
+
+                            <button type="submit" class="btn-black w-100"
+                                style="background-color: var(--vinho); margin-top: 25px;">
+                                ENVIAR COMPROVANTE E FINALIZAR
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer style="
+                text-align: center;
+                padding: 60px 0;
+                border-top: 1px solid #f2f2f2;
+                margin-top: 50px;
+            ">
+        <p style="font-size: 0.7rem; color: #ccc; letter-spacing: 2px">
+            © HIERARCHY ABOVES - ALL RIGHTS RESERVED
+        </p>
+    </footer>
+    <script src="script.js"></script>
+    <script>
+        // Recupera o tamanho selecionado da sessionStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            const tamanho = sessionStorage.getItem('tamanho_selecionado');
+            if (tamanho) {
+                document.getElementById('tamanho-selecionado').innerText = tamanho;
+                document.getElementById('hidden-tamanho').value = tamanho;
+            } else {
+                // Se não tiver tamanho, redireciona de volta
+                alert('Por favor, selecione um tamanho primeiro.');
+                // window.location.href = 'produtos.html'; // Removido para teste
+            }
+        });
+    </script>
+</body>
+
+</html>
