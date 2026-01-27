@@ -2,7 +2,7 @@
 
 🛍 Loja de roupa (1 produto)
 
-🎟 Cupom MILGRAU (10% OFF)
+🎟 Cupom YOUNG (10% OFF)
 
 💸 Pagamento 100% Pix (manual)
 

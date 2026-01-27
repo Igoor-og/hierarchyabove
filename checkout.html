@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Finalizar Compra | Hierarchy Above</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="notification.css" />
+    <link rel="stylesheet" href="mobile-image-fix.css" />
+    <link rel="stylesheet" href="performance-fix.css" />
+    <link rel="stylesheet" href="position-fix.css" />
     <link rel="icon" href="assets/hieralogo.png" />
 </head>
 
@@ -165,6 +169,7 @@
             © HIERARCHY ABOVES - ALL RIGHTS RESERVED
         </p>
     </footer>
+    <script src="notification.js"></script>
     <script src="script.js"></script>
     <script>
         // Recupera o tamanho selecionado da sessionStorage
@@ -175,7 +180,7 @@
                 document.getElementById('hidden-tamanho').value = tamanho;
             } else {
                 // Se não tiver tamanho, redireciona de volta
-                alert('Por favor, selecione um tamanho primeiro.');
+                showWarning('Por favor, selecione um tamanho (M ou G) antes de continuar para o checkout.', 'SELECIONE UM TAMANHO');
                 // window.location.href = 'produtos.html'; // Removido para teste
             }
         });

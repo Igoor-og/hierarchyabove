@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Notificações - Hierarchy Above</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="notification.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 100px auto;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .test-title {
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-weight: 900;
+            letter-spacing: 2px;
+        }
+
+        .test-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .test-btn {
+            padding: 20px;
+            border: none;
+            border-radius: 8px;
+            font-family: sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            color: white;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .test-btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+        }
+
+        .btn-error {
+            background: linear-gradient(135deg, #f44336, #e53935);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ff9800, #fb8c00);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+        }
+
+        .description {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            text-align: left;
+            font-size: 0.85rem;
+            line-height: 1.8;
+        }
+
+        .description h3 {
+            margin-bottom: 15px;
+            color: #800020;
+        }
+
+        .description ul {
+            margin-left: 20px;
+        }
+
+        .description li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test-container">
+        <h1 class="test-title">TESTE DE NOTIFICAÇÕES</h1>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 30px;">
+            Clique nos botões abaixo para testar os diferentes tipos de notificações personalizadas
+        </p>
+
+        <div class="test-buttons">
+            <button class="test-btn btn-success" onclick="testSuccess()">
+                ✓ Sucesso
+            </button>
+
+            <button class="test-btn btn-error" onclick="testError()">
+                ✕ Erro
+            </button>
+
+            <button class="test-btn btn-warning" onclick="testWarning()">
+                ⚠ Aviso
+            </button>
+
+            <button class="test-btn btn-info" onclick="testInfo()">
+                ℹ Informação
+            </button>
+        </div>
+
+        <div class="description">
+            <h3>📋 SOBRE AS NOTIFICAÇÕES</h3>
+            <ul>
+                <li><strong>Não-bloqueantes:</strong> Diferente do alert(), as notificações não travam a página</li>
+                <li><strong>Responsivas:</strong> Adaptam-se perfeitamente a mobile e desktop</li>
+                <li><strong>Acessíveis:</strong> Podem ser fechadas com ESC, clique no overlay ou botão</li>
+                <li><strong>Animadas:</strong> Transições suaves com GPU acceleration</li>
+                <li><strong>Personalizadas:</strong> Design alinhado com a identidade visual do site</li>
+                <li><strong>4 Tipos:</strong> Success (verde), Error (vermelho), Warning (laranja), Info (azul)</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">🎨 DESIGN</h3>
+            <ul>
+                <li>Backdrop blur de 5px (com fallback)</li>
+                <li>Animação de scale + translateY</li>
+                <li>Ícones grandes e coloridos</li>
+                <li>Tipografia bold e uppercase</li>
+                <li>Botões com hover effects</li>
+            </ul>
+
+            <h3 style="margin-top: 25px;">💻 IMPLEMENTAÇÃO</h3>
+            <ul>
+                <li><code>showSuccess(mensagem, titulo)</code> - Notificação de sucesso</li>
+                <li><code>showError(mensagem, titulo)</code> - Notificação de erro</li>
+                <li><code>showWarning(mensagem, titulo)</code> - Notificação de aviso</li>
+                <li><code>showInfo(mensagem, titulo)</code> - Notificação de informação</li>
+                <li><code>closeNotification()</code> - Fecha a notificação atual</li>
+            </ul>
+        </div>
+
+        <div
+            style="margin-top: 40px; padding: 20px; background: #fff3cd; border-left: 4px solid #ff9800; border-radius: 4px;">
+            <p style="font-size: 0.85rem; color: #856404; text-align: left;">
+                <strong>⚠️ NOTA:</strong> Todos os alert() do projeto foram substituídos por estas notificações
+                personalizadas.
+                O código está pronto para produção e não apresenta travamentos.
+            </p>
+        </div>
+    </div>
+
+    <script src="notification.js"></script>
+    <script>
+        function testSuccess() {
+            showSuccess(
+                'Cupom YOUNG aplicado com sucesso! Você ganhou 10% de desconto no seu pedido.',
+                'CUPOM APLICADO!'
+            );
+        }
+
+        function testError() {
+            showError(
+                'O cupom informado não é válido. Verifique o código e tente novamente.',
+                'CUPOM INVÁLIDO'
+            );
+        }
+
+        function testWarning() {
+            showWarning(
+                'Por favor, selecione um tamanho (M ou G) antes de continuar para o checkout.',
+                'SELECIONE UM TAMANHO'
+            );
+        }
+
+        function testInfo() {
+            showInfo(
+                'Seu pedido foi registrado com sucesso! Você receberá um e-mail de confirmação em breve.',
+                'PEDIDO CONFIRMADO'
+            );
+        }
+    </script>
+</body>
+
+</html>

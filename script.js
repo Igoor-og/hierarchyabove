@@ -174,10 +174,10 @@ function applyCoupon() {
     if (priceDisplay) {
       priceDisplay.innerHTML = `TOTAL: <strike>R$ 157,00</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
     }
-    alert("CUPOM APLICADO COM SUCESSO!");
+    showSuccess("Cupom YOUNG aplicado! Você ganhou 10% de desconto.", "CUPOM APLICADO!");
   } else if (input !== "") {
     if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 157,00";
-    alert("CUPOM INVÁLIDO");
+    showError("O cupom informado não é válido. Verifique e tente novamente.", "CUPOM INVÁLIDO");
   }
 
   updateTotal();
@@ -355,7 +355,7 @@ function selectSize(tamanho) {
 function goToCheckout() {
   const tamanho = sessionStorage.getItem('tamanho_selecionado');
   if (!tamanho) {
-    alert('Por favor, selecione um tamanho primeiro.');
+    showWarning('Por favor, selecione um tamanho (M ou G) antes de continuar.', 'SELECIONE UM TAMANHO');
     return;
   }
   window.location.href = 'checkout.html';
@@ -393,13 +393,13 @@ function setupForm() {
           }
           window.location.href = "obrigado.html";
         } else {
-          alert("Erro ao enviar. Verifique os dados.");
+          showError("Não foi possível enviar seu pedido. Verifique os dados e tente novamente.", "ERRO AO ENVIAR");
           button.innerText = originalText;
           button.disabled = false;
         }
       })
       .catch(() => {
-        alert("Erro de conexão.");
+        showError("Erro de conexão com o servidor. Verifique sua internet e tente novamente.", "ERRO DE CONEXÃO");
         button.innerText = originalText;
         button.disabled = false;
       });
@@ -489,12 +489,12 @@ function setupPopupNewsletter() {
             if (popup) popup.classList.add('hidden');
           }, 3000);
         } else {
-          alert('Erro ao cadastrar. Tente novamente.');
+          showError('Não foi possível realizar o cadastro. Tente novamente.', 'ERRO AO CADASTRAR');
           btn.innerText = originalText;
           btn.disabled = false;
         }
       }).catch(error => {
-        alert('Erro de conexão.');
+        showError('Erro de conexão. Verifique sua internet e tente novamente.', 'ERRO DE CONEXÃO');
         btn.innerText = originalText;
         btn.disabled = false;
       });
@@ -558,7 +558,7 @@ function goToPaymentStep() {
 
   // Validação simples
   if (!nome.value || !cpf.value) {
-    alert('Por favor, preencha os campos obrigatórios.');
+    showWarning('Por favor, preencha todos os campos obrigatórios antes de continuar.', 'CAMPOS OBRIGATÓRIOS');
     return;
   }
 

@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Hierarchy Above | Shop</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="notification.css" />
+    <link rel="stylesheet" href="mobile-image-fix.css" />
+    <link rel="stylesheet" href="position-fix.css" />
     <link rel="icon" href="assets/hieralogo.png" />
+
 </head>
 
 <body>
@@ -119,7 +123,8 @@
             </div>
         </section>
         <!-- Newsletter Popup Notification -->
-        <div id="newsletter-popup" class="newsletter-popup hidden">
+        <div id="newsletter-popup" class="newsletter-popup hidden"
+            style="position: fixed !important; z-index: 9999 !important; contain: none !important;">
             <div class="popup-content">
                 <button class="popup-close" onclick="closeNewsletterPopup(false)">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
@@ -169,6 +174,7 @@
             © HIERARCHY ABOVES - ALL RIGHTS RESERVED
         </p>
     </footer>
+    <script src="notification.js"></script>
     <script src="script.js"></script>
 </body>
 
