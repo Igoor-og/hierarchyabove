@@ -1,4 +1,4 @@
-@font-face {
+ï»¿@font-face {
     font-family: "Denominary";
     src: url("assets/fonts/denominary-bold.otf") format("truetype");
     font-weight: bold;
@@ -175,6 +175,7 @@ body {
     transition: opacity 0.3s;
     text-decoration: none;
     display: inline-block;
+    border-radius: 12px;
 }
 
 .btn-black:hover {
@@ -196,6 +197,7 @@ body {
     padding: 10px;
     flex: 1;
     font-weight: 600;
+    border-radius: 8px;
 }
 
 .pix-info {
@@ -386,6 +388,7 @@ body {
     border: 1px solid #ddd;
     cursor: pointer;
     font-weight: 700;
+    border-radius: 8px;
     font-size: 0.8rem;
     transition: all 0.3s ease;
 }
@@ -416,6 +419,7 @@ body {
     /* EstÃ©tica da marca */
     font-size: 0.8rem;
     font-weight: 600;
+    border-radius: 8px;
 }
 
 .input-group input:focus {
@@ -505,8 +509,8 @@ nav#nav-menu a.active {
     nav#nav-menu {
         position: fixed !important;
         top: 0;
-        left: -100% !important;
-        width: 100% !important;
+        right: -65% !important;
+        width: 65% !important;
         height: 100vh !important;
         background: var(--white) !important;
         flex-direction: column !important;
@@ -517,7 +521,7 @@ nav#nav-menu a.active {
     }
 
     nav#nav-menu.active {
-        left: 0 !important;
+        right: 0 !important;
     }
 
     nav#nav-menu a {
@@ -723,6 +727,7 @@ h3,
     letter-spacing: 1px;
     text-transform: uppercase;
     z-index: 10;
+    border-radius: 8px;
 }
 
 .esgotado-badge {
@@ -941,25 +946,27 @@ h3,
         font-size: 0.8rem;
     }
 }
+
 /* =========================================
-   NOVAS ADIÇÕES (FIX)
+   NOVAS ADIï¿½ï¿½ES (FIX)
    ========================================= */
 
-/* Badge Frete Grátis na Vitrine */
+/* Badge Frete GrÃ¡tis na Vitrine */
 .badge-frete-vitrine {
     position: absolute;
-    top: 40px; 
+    top: 40px;
     right: 10px;
-    background-color: #000; 
+    background-color: #000;
     color: #fff;
     padding: 5px 10px;
     font-size: 0.6rem;
     font-weight: 900;
     letter-spacing: 1px;
     z-index: 10;
+    border-radius: 8px;
 }
 
-/* Badge Frete Grátis na Página do Produto (Estilo Loja) */
+/* Badge Frete GrÃ¡tis na PÃ¡gina do Produto (Estilo Loja) */
 .badge-frete {
     background-color: var(--vinho);
     color: #fff;
@@ -970,6 +977,7 @@ h3,
     letter-spacing: 1px;
     display: inline-block;
     margin: 10px 0;
+    border-radius: 8px;
 }
 
 /* Imagem Quadrada Fix */
@@ -983,6 +991,7 @@ h3,
     overflow: hidden;
     position: relative;
 }
+
 .square-image-container img {
     width: 100% !important;
     height: 100% !important;
@@ -994,22 +1003,27 @@ h3,
 .step-hidden {
     display: none !important;
 }
+
 .step-visible {
     display: block !important;
     animation: fadeIn 0.5s ease-in;
 }
 
-/* Correção Texto Amassado */
+/* Correï¿½ï¿½o Texto Amassado */
 @media (min-width: 769px) {
     .product-detail-layout {
-        gap: 60px; /* Aumentar espaço entre imagem e texto */
+        gap: 60px;
+        /* Aumentar espaï¿½o entre imagem e texto */
     }
+
     .product-info-checkout {
         padding-left: 20px;
     }
+
     .product-description {
         font-size: 1rem;
-        line-height: 1.6; /* Melhorar leitura */
+        line-height: 1.6;
+        /* Melhorar leitura */
     }
 }
 
@@ -1022,6 +1036,7 @@ h3,
     color: #999 !important;
     pointer-events: none !important;
 }
+
 .size-btn.out-of-stock span {
     text-decoration: line-through;
 }
