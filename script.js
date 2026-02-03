@@ -2,7 +2,7 @@
  * HIERARCHY ABOVE - Official Script v3.1
  */
 
-const targetDate = new Date("February 1, 2026 00:00:00").getTime();
+const targetDate = new Date("February 6, 2026 00:00:00").getTime();
 
 // 1. NAVEGAÇÃO MOBILE (Movido para o topo para garantir prioridade)
 function toggleMenu() {
