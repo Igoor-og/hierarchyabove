@@ -1,6 +1,19 @@
 /**
  * HIERARCHY ABOVE - Official Script v3.1
  */
+function updateCountdown() {
+  const now = new Date().getTime();
+  const distance = targetDate - now;
+
+  if (distance > 0) {
+    // AINDA NÃO CHEGOU O DIA: Bloqueia a visualização
+    document.body.classList.add("bloqueado"); 
+    // Exibe o contador
+  } else {
+    // CHEGOU O DIA: Libera o site
+    document.body.classList.remove("bloqueado");
+  }
+}
 
 const targetDate = new Date("February 6, 2026 00:00:00").getTime();
 
