@@ -1,21 +1,50 @@
 /**
  * HIERARCHY ABOVE - Official Script v3.1
+ *//**
+ * HIERARCHY ABOVE - Official Script v3.1
  */
+
+// 1. DATA ALVO AJUSTADA PARA 6 DE FEVEREIRO
+const targetDate = new Date("February 6, 2026 00:00:00").getTime();
+
 function updateCountdown() {
+  // Ignorar bloqueio se estiver em modo desenvolvedor
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("dev") === "true") return;
+
   const now = new Date().getTime();
   const distance = targetDate - now;
+  
+  const countdownEl = document.getElementById("countdown");
 
+  // 2. LÓGICA DE BLOQUEIO ATIVO
   if (distance > 0) {
-    // AINDA NÃO CHEGOU O DIA: Bloqueia a visualização
-    document.body.classList.add("bloqueado"); 
-    // Exibe o contador
+    // Se ainda NÃO CHEGOU dia 6:
+    // Se o usuário tentar entrar na produtos.html antes da hora, manda de volta pra index
+    if (window.location.pathname.includes("produtos.html")) {
+      window.location.href = "index.html"; 
+    }
+    
+    // Atualiza o contador na tela (se ele existir)
+    if (countdownEl) {
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      countdownEl.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
+    }
   } else {
-    // CHEGOU O DIA: Libera o site
-    document.body.classList.remove("bloqueado");
+    // 3. SE JÁ PASSOU DO DIA 6: Libera e Redireciona
+    if (!window.location.pathname.includes("produtos.html")) {
+      window.location.href = "produtos.html";
+    }
   }
 }
 
-const targetDate = new Date("February 6, 2026 00:00:00").getTime();
+// Executa o check assim que carregar
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
 
 // 1. NAVEGAÇÃO MOBILE (Movido para o topo para garantir prioridade)
 function toggleMenu() {
