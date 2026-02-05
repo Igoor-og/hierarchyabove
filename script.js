@@ -5,7 +5,7 @@
  */
 
 // 1. DATA ALVO AJUSTADA PARA 6 DE FEVEREIRO
-const targetDate = new Date("February 6, 2026 00:00:00").getTime();
+const targetDate = new Date("February 14, 2026 00:00:00").getTime();
 
 function updateCountdown() {
   // Ignorar bloqueio se estiver em modo desenvolvedor
