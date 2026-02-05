@@ -1,95 +1,48 @@
 /**
- * HIERARCHY ABOVE - Official Script v3.1
- *//**
- * HIERARCHY ABOVE - Official Script v3.1
+ * HIERARCHY ABOVE - Official Script v3.1 (CORRIGIDO)
  */
 
-// 1. DATA ALVO AJUSTADA PARA 6 DE FEVEREIRO
+// 1. DATA ALVO: 14 DE FEVEREIRO
+// Certifique-se de que o mês está escrito corretamente em inglês: February
 const targetDate = new Date("February 14, 2026 00:00:00").getTime();
 
 function updateCountdown() {
-  // Ignorar bloqueio se estiver em modo desenvolvedor
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get("dev") === "true") return;
 
   const now = new Date().getTime();
   const distance = targetDate - now;
-  
   const countdownEl = document.getElementById("countdown");
 
-  // 2. LÓGICA DE BLOQUEIO ATIVO
+  // Se ainda NÃO chegou a data
   if (distance > 0) {
-    // Se ainda NÃO CHEGOU dia 6:
-    // Se o usuário tentar entrar na produtos.html antes da hora, manda de volta pra index
     if (window.location.pathname.includes("produtos.html")) {
       window.location.href = "index.html"; 
     }
     
-    // Atualiza o contador na tela (se ele existir)
     if (countdownEl) {
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+      
+      // Corrigido para mostrar os Dias corretamente
       countdownEl.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
     }
   } else {
-    // 3. SE JÁ PASSOU DO DIA 6: Libera e Redireciona
+    // Se JÁ PASSOU da data: Libera o site
     if (!window.location.pathname.includes("produtos.html")) {
       window.location.href = "produtos.html";
     }
   }
 }
 
-// Executa o check assim que carregar
+// Inicializa e define o intervalo APENAS UMA VEZ
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
+// ... (resto do seu código: toggleMenu, showProductDetail, etc.)
 
-// 1. NAVEGAÇÃO MOBILE (Movido para o topo para garantir prioridade)
-function toggleMenu() {
-  // Mudamos o ponto (.) por hashtag (#) para encontrar o nav#nav-menu
-  const navMenu = document.querySelector("#nav-menu");
-  const hamburger = document.querySelector(".hamburger");
-
-  if (navMenu) {
-    navMenu.classList.toggle("active");
-  }
-
-  if (hamburger) {
-    hamburger.classList.toggle("open");
-  }
-}
-
-// 2. CRONÔMETRO
-function updateCountdown() {
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get("dev") === "true") {
-    if (!window.location.pathname.includes("produtos.html")) {
-      window.location.href = "produtos.html";
-    }
-    return;
-  }
-
-  const now = new Date().getTime();
-  const distance = targetDate - now;
-  const countdownEl = document.getElementById("countdown");
-
-  if (countdownEl) {
-    if (distance < 0) {
-      window.location.href = "produtos.html";
-      return;
-    }
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-    );
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    countdownEl.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
-  }
-}
-setInterval(updateCountdown, 1000);
 
 // 3. INTERFACE DE PRODUTO
 function showProductDetail() {
