@@ -1,56 +1,70 @@
 /**
- * HIERARCHY ABOVE - Official Script v3.1 (CORRIGIDO)
+ * HIERARCHY ABOVE - Official Script v3.1
  */
 
-// 1. DATA ALVO: 14 DE FEVEREIRO
-// Certifique-se de que o mês está escrito corretamente em inglês: February
-const targetDate = new Date("February 14, 2026 00:00:00").getTime();
+const targetDate = new Date("February 27, 2026 00:00:00").getTime();
 
+// 1. NAVEGAÇÃO MOBILE (Movido para o topo para garantir prioridade)
+function toggleMenu() {
+  // Mudamos o ponto (.) por hashtag (#) para encontrar o nav#nav-menu
+  const navMenu = document.querySelector("#nav-menu");
+  const hamburger = document.querySelector(".hamburger");
+
+  if (navMenu) {
+    navMenu.classList.toggle("active");
+  }
+
+  if (hamburger) {
+    hamburger.classList.toggle("open");
+  }
+}
+
+// 2. CRONÔMETRO
 function updateCountdown() {
   const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get("dev") === "true") return;
+  // DEV MODE - só redireciona da página index.html
+  if (urlParams.get("dev") === "true") {
+    if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
+      window.location.href = "produtos.html";
+    }
+    return;
+  }
 
   const now = new Date().getTime();
   const distance = targetDate - now;
   const countdownEl = document.getElementById("countdown");
 
-  // Se ainda NÃO chegou a data
-  if (distance > 0) {
-    if (window.location.pathname.includes("produtos.html")) {
-      window.location.href = "index.html"; 
-    }
-    
-    if (countdownEl) {
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-      // Corrigido para mostrar os Dias corretamente
-      countdownEl.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
-    }
-  } else {
-    // Se JÁ PASSOU da data: Libera o site
-    if (!window.location.pathname.includes("produtos.html")) {
+  if (countdownEl) {
+    if (distance < 0) {
       window.location.href = "produtos.html";
+      return;
     }
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor(
+      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+    );
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    countdownEl.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
   }
 }
-
-// Inicializa e define o intervalo APENAS UMA VEZ
-updateCountdown();
 setInterval(updateCountdown, 1000);
-
-// ... (resto do seu código: toggleMenu, showProductDetail, etc.)
-
 
 // 3. INTERFACE DE PRODUTO
 function showProductDetail() {
   const vitrine = document.getElementById("vitrine");
   const detail = document.getElementById("product-detail");
+  const promoCarousel = document.getElementById("promo-carousel");
+
   if (vitrine && detail) {
     vitrine.classList.add("hidden");
     detail.classList.remove("hidden");
+
+    // Esconde o carrossel promocional
+    if (promoCarousel) {
+      promoCarousel.classList.add("hidden");
+    }
+
     window.scrollTo(0, 0);
     triggerFadeIn();
   }
@@ -59,9 +73,17 @@ function showProductDetail() {
 function hideProductDetail() {
   const vitrine = document.getElementById("vitrine");
   const detail = document.getElementById("product-detail");
+  const promoCarousel = document.getElementById("promo-carousel");
+
   if (vitrine && detail) {
     detail.classList.add("hidden");
     vitrine.classList.remove("hidden");
+
+    // Mostra o carrossel promocional novamente
+    if (promoCarousel) {
+      promoCarousel.classList.remove("hidden");
+    }
+
     window.scrollTo(0, 0);
   }
 }
@@ -374,7 +396,7 @@ function setupForm() {
     button.innerText = "ENVIANDO...";
     button.disabled = true;
 
-    fetch("https://formspree.io/f/mwvklgdy", {
+    fetch("https://formspree.io/f/xdalodkv", {
       method: "POST",
       body: data,
       headers: { Accept: "application/json" },
@@ -460,7 +482,7 @@ function setupPopupNewsletter() {
       btn.innerText = 'ENVIANDO...';
       btn.disabled = true;
 
-      fetch('https://formspree.io/f/mwvklgdy', {
+      fetch('https://formspree.io/f/xdalodkv', {
         method: 'POST',
         body: data,
         headers: {
@@ -536,9 +558,15 @@ document.addEventListener("DOMContentLoaded", () => {
   setupForm();
   setupPopupNewsletter(); // Setup popup newsletter instead of old form
   showNewsletterPopup(); // Show popup after delay if user hasn't dismissed
-  setupCepInput(); // Novo handler de CEP
+  setupCepInput(); // Novo handler de CEP com ViaCEP
   updateTotal();
-  // Inicia a verificação de estoque
+
+  // LocalStorage: Recupera dados salvos anteriormente
+  recuperarDadosFormulario();
+
+  // LocalStorage: Configura salvamento automático ao digitar
+  configurarAutoSave();
+
   // Inicia a verificação de estoque
   atualizarEstoquePlanilha();
   // wakeUpServer(); // Desativado pois não usaremos API de frete
@@ -594,26 +622,153 @@ function setupCepInput() {
     }
     e.target.value = value;
 
-    // Se tiver 8 dígitos numéricos (com ou sem traço dá 9 chars), calcula
+    // Se tiver 8 dígitos numéricos, busca na API ViaCEP
     const cleanValue = value.replace("-", "");
     if (cleanValue.length === 8) {
-      calculateShipping();
-      cepInput.blur(); // Remove foco para fechar teclado no mobile
+      buscarCEP(cleanValue);
     }
   });
 
-  // Garante que o autofill dispare também e limpe sujeira (. ou -)
+  // Garante que o autofill dispare também
   cepInput.addEventListener("change", function () {
     let value = this.value.replace(/\D/g, "");
-
-    // Reaplica mascara correta
     if (value.length >= 8) {
-      // Garante que pegamos apenas os 8 primeiros digitos se vier lixo extra
       value = value.substring(0, 8);
       this.value = value.substring(0, 5) + "-" + value.substring(5, 8);
-      calculateShipping();
-    } else {
-      this.value = value;
+      buscarCEP(value);
+    }
+  });
+}
+
+// --- INTEGRAÇÃO COM VIACEP API ---
+async function buscarCEP(cep) {
+  const freteStatus = document.getElementById("frete-status");
+  const enderecoInput = document.querySelector('input[name="Endereco"]');
+  const bairroInput = document.querySelector('input[name="Bairro"]');
+  const cidadeInput = document.querySelector('input[name="Cidade"]');
+  const estadoInput = document.querySelector('input[name="Estado"]');
+
+  if (!enderecoInput) return; // Se não estiver na página de checkout, ignora
+
+  try {
+    // Mostra loading
+    if (freteStatus) {
+      freteStatus.style.display = "block";
+      freteStatus.innerText = "BUSCANDO ENDEREÇO...";
+      freteStatus.style.color = "#666";
+    }
+
+    // Chama API ViaCEP
+    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+    const data = await response.json();
+
+    if (data.erro) {
+      throw new Error("CEP não encontrado");
+    }
+
+    // Preenche os campos automaticamente
+    if (enderecoInput) enderecoInput.value = data.logradouro || "";
+    if (bairroInput) bairroInput.value = data.bairro || "";
+    if (cidadeInput) cidadeInput.value = data.localidade || "";
+    if (estadoInput) estadoInput.value = data.uf || "";
+
+    // Calcula frete (grátis)
+    state.frete = 0.00;
+    if (freteStatus) {
+      freteStatus.style.display = "block";
+      freteStatus.innerText = "FRETE GRÁTIS APLICADO ✓";
+      freteStatus.style.color = "var(--vinho)";
+    }
+
+    updateTotal();
+
+    // Foca no campo de número (que geralmente está junto com endereço)
+    if (enderecoInput && !enderecoInput.value.includes(",")) {
+      // Se o campo endereço não tem vírgula (número), foca nele para o usuário completar
+      enderecoInput.focus();
+    }
+
+  } catch (error) {
+    console.error("Erro ao buscar CEP:", error);
+    if (freteStatus) {
+      freteStatus.style.display = "block";
+      freteStatus.innerText = "CEP NÃO ENCONTRADO";
+      freteStatus.style.color = "#ff0000";
+    }
+  }
+}
+
+// --- SALVAMENTO E RECUPERAÇÃO DE DADOS (LOCALSTORAGE) ---
+function salvarDadosFormulario() {
+  const formData = {
+    nome: document.querySelector('input[name="Nome"]')?.value || '',
+    email: document.querySelector('input[name="Email"]')?.value || '',
+    cpf: document.querySelector('input[name="CPF"]')?.value || '',
+    cep: document.querySelector('input[name="CEP"]')?.value || '',
+    bairro: document.querySelector('input[name="Bairro"]')?.value || '',
+    endereco: document.querySelector('input[name="Endereco"]')?.value || '',
+    complemento: document.querySelector('input[name="Complemento"]')?.value || '',
+    cidade: document.querySelector('input[name="Cidade"]')?.value || '',
+    estado: document.querySelector('input[name="Estado"]')?.value || ''
+  };
+
+  localStorage.setItem('hierarchyAbove_userData', JSON.stringify(formData));
+}
+
+function recuperarDadosFormulario() {
+  const savedData = localStorage.getItem('hierarchyAbove_userData');
+
+  if (!savedData) return;
+
+  try {
+    const formData = JSON.parse(savedData);
+
+    // Preenche os campos se eles existirem
+    const nomeInput = document.querySelector('input[name="Nome"]');
+    const emailInput = document.querySelector('input[name="Email"]');
+    const cpfInput = document.querySelector('input[name="CPF"]');
+    const cepInput = document.querySelector('input[name="CEP"]');
+    const bairroInput = document.querySelector('input[name="Bairro"]');
+    const enderecoInput = document.querySelector('input[name="Endereco"]');
+    const complementoInput = document.querySelector('input[name="Complemento"]');
+    const cidadeInput = document.querySelector('input[name="Cidade"]');
+    const estadoInput = document.querySelector('input[name="Estado"]');
+
+    if (nomeInput && formData.nome) nomeInput.value = formData.nome;
+    if (emailInput && formData.email) emailInput.value = formData.email;
+    if (cpfInput && formData.cpf) cpfInput.value = formData.cpf;
+    if (cepInput && formData.cep) cepInput.value = formData.cep;
+    if (bairroInput && formData.bairro) bairroInput.value = formData.bairro;
+    if (enderecoInput && formData.endereco) enderecoInput.value = formData.endereco;
+    if (complementoInput && formData.complemento) complementoInput.value = formData.complemento;
+    if (cidadeInput && formData.cidade) cidadeInput.value = formData.cidade;
+    if (estadoInput && formData.estado) estadoInput.value = formData.estado;
+
+  } catch (e) {
+    console.error("Erro ao recuperar dados salvos:", e);
+  }
+}
+
+function configurarAutoSave() {
+  // Lista de campos para monitorar
+  const campos = [
+    'input[name="Nome"]',
+    'input[name="Email"]',
+    'input[name="CPF"]',
+    'input[name="CEP"]',
+    'input[name="Bairro"]',
+    'input[name="Endereco"]',
+    'input[name="Complemento"]',
+    'input[name="Cidade"]',
+    'input[name="Estado"]'
+  ];
+
+  // Adiciona listener de mudança em todos os campos
+  campos.forEach(seletor => {
+    const campo = document.querySelector(seletor);
+    if (campo) {
+      campo.addEventListener('blur', salvarDadosFormulario); // Salva ao sair do campo
+      campo.addEventListener('change', salvarDadosFormulario); // Salva ao mudar
     }
   });
 }

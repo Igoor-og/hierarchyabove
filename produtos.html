@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="mobile-image-fix.css" />
     <link rel="stylesheet" href="position-fix.css" />
     <link rel="icon" href="assets/hieralogo.png" />
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 </head>
 
@@ -32,6 +34,29 @@
         </nav>
     </header>
     <main class="container">
+        <!-- Carousel Promocional -->
+        <section class="promo-carousel-section" id="promo-carousel">
+            <div class="swiper promo-swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="assets/look1.webp" alt="Promoção 1" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="assets/look2.webp" alt="Promoção 2" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="assets/look3.webp" alt="Promoção 3" />
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="assets/look4.webp" alt="Promoção 4" />
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
         <section id="vitrine" class="fade-in">
             <h1 class="logo-text" style="font-size: 1.5rem; margin-bottom: 40px">
                 COLLECTION 02/26
@@ -44,13 +69,30 @@
                         <div class="badge-status">PRÓXIMO DROP</div>
                     </div>
                     <h3 class="product-title-grid">
-                        Camiseta hierarchy – “New World”
+                        Camiseta hierarchy – "New World"
                     </h3>
                     <p class="product-price-grid">NOVA COLEÇÃO | INDISPONÍVEL</p>
                 </div>
                 <div class="product-item" onclick="showProductDetail()" id="card-nobluff">
                     <div class="product-image-wrapper square-image-container">
-                        <img src="assets/NOBLUFF.png" alt="Camiseta Hierarchy" />
+                        <!-- Swiper para a vitrine -->
+                        <div class="swiper product-vitrine-swiper">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="assets/NOBLUFF.png" alt="Camiseta Hierarchy" />
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="assets/Substituir (2).jpeg" alt="Camiseta Hierarchy - Vista 2" />
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="assets/Substituir (3).jpeg" alt="Camiseta Hierarchy - Vista 3" />
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="assets/Substituir (1).jpeg" alt="Tabela de Tamanhos" />
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
                         <div class="image-overlay">VER DETALHES</div>
 
                         <div id="badge-nobluff" class="badge-estoque">CARREGANDO...</div>
@@ -74,7 +116,26 @@
 
             <div class="product-detail-layout fade-in">
                 <div class="product-image-large square-image-container">
-                    <img src="assets/NOBLUFF.png" alt="Camiseta Hierarchy" />
+                    <!-- Swiper para a página de detalhes -->
+                    <div class="swiper product-detail-swiper">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="assets/NOBLUFF.png" alt="Camiseta Hierarchy" />
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="assets/Substituir (2).jpeg" alt="Camiseta Hierarchy - Vista 2" />
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="assets/Substituir (3).jpeg" alt="Camiseta Hierarchy - Vista 3" />
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="assets/Substituir (1).jpeg" alt="Tabela de Tamanhos" />
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
                 </div>
 
                 <div class="product-info-checkout">
@@ -87,8 +148,9 @@
                     </div>
 
                     <div class="product-description">
-                        <p>Modelagem Semi-boxy com design autoral exclusivo. Uma peça que transcende o vestuário, sendo
-                            uma verdadeira obra de arte.</p> <br>
+                        <p>Confeccionada em tecido de alta qualidade na cor branca, a peça apresenta uma estampa frontal
+                            exclusiva que une tipografia estilizada e fotografia artística de impacto. Com modelagem
+                            confortável.</p> <br>
 
                         <p>Seu pedido inclui embalagem premium, mimos exclusivos e envio seguro por nossa conta.</p>
                         <br>
@@ -107,6 +169,10 @@
                             <label class="size-btn">
                                 <input type="radio" name="size" value="G" onclick="selectSize('G')" />
                                 <span>G</span>
+                            </label>
+                            <label class="size-btn">
+                                <input type="radio" name="size" value="GG" onclick="selectSize('GG')" />
+                                <span>GG</span>
                             </label>
                         </div>
                     </div>
@@ -154,7 +220,7 @@
 
                 <!-- Email Input Form (Initially Hidden) -->
                 <form id="popup-newsletter-form" class="popup-email-form hidden"
-                    action="https://formspree.io/f/mwvklgdy" method="POST">
+                    action="https://formspree.io/f/xdalodkv" method="POST">
                     <input type="hidden" name="_subject" value="NOVO INSCRITO - NEWSLETTER">
                     <div class="email-input-group">
                         <input type="email" name="email" placeholder="SEU MELHOR E-MAIL" required />
@@ -176,6 +242,49 @@
     </footer>
     <script src="notification.js"></script>
     <script src="script.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // Inicialização do Swiper Promocional
+        const promoSwiper = new Swiper('.promo-swiper', {
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        // Inicialização do Swiper da Vitrine (hover para ativar)
+        const vitrineSwiper = new Swiper('.product-vitrine-swiper', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            allowTouchMove: true,
+        });
+
+        // Inicialização do Swiper da Página de Detalhes
+        const detailSwiper = new Swiper('.product-detail-swiper', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
 </body>
 
 </html>

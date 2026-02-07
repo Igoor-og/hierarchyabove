@@ -1040,3 +1040,153 @@ h3,
 .size-btn.out-of-stock span {
     text-decoration: line-through;
 }
+
+/* =========================================
+   SWIPER CAROUSEL STYLES
+   ========================================= */
+
+/* Carousel Promocional no Topo */
+.promo-carousel-section {
+    margin: 40px 0;
+    width: 100%;
+}
+
+.promo-swiper {
+    width: 100%;
+    height: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.promo-swiper .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f9f9f9;
+}
+
+.promo-swiper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.promo-swiper .swiper-pagination-bullet {
+    background: #fff;
+    opacity: 0.7;
+}
+
+.promo-swiper .swiper-pagination-bullet-active {
+    background: var(--vinho);
+    opacity: 1;
+}
+
+.promo-swiper .swiper-button-next,
+.promo-swiper .swiper-button-prev {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.promo-swiper .swiper-button-next:after,
+.promo-swiper .swiper-button-prev:after {
+    font-size: 20px;
+}
+
+/* Swiper da Vitrine */
+.product-vitrine-swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.product-vitrine-swiper .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-vitrine-swiper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.product-vitrine-swiper .swiper-pagination {
+    bottom: 10px;
+}
+
+.product-vitrine-swiper .swiper-pagination-bullet {
+    background: #000;
+    opacity: 0.5;
+}
+
+.product-vitrine-swiper .swiper-pagination-bullet-active {
+    background: var(--vinho);
+    opacity: 1;
+}
+
+/* Swiper da Página de Detalhes */
+.product-detail-swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.product-detail-swiper .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-detail-swiper .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.product-detail-swiper .swiper-pagination {
+    bottom: 10px;
+}
+
+.product-detail-swiper .swiper-pagination-bullet {
+    background: #000;
+    opacity: 0.5;
+}
+
+.product-detail-swiper .swiper-pagination-bullet-active {
+    background: var(--vinho);
+    opacity: 1;
+}
+
+.product-detail-swiper .swiper-button-next,
+.product-detail-swiper .swiper-button-prev {
+    color: #000;
+    background: rgba(255, 255, 255, 0.8);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.product-detail-swiper .swiper-button-next:after,
+.product-detail-swiper .swiper-button-prev:after {
+    font-size: 16px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .promo-swiper {
+        height: 300px;
+    }
+
+    .promo-swiper .swiper-button-next,
+    .promo-swiper .swiper-button-prev {
+        width: 40px;
+        height: 40px;
+    }
+
+    .promo-swiper .swiper-button-next:after,
+    .promo-swiper .swiper-button-prev:after {
+        font-size: 16px;
+    }
+}
