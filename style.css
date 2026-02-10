@@ -509,15 +509,23 @@ nav#nav-menu a.active {
     nav#nav-menu {
         position: fixed !important;
         top: 0;
-        right: -65% !important;
-        width: 65% !important;
+        right: -100vw !important;
+        /* Move completely off-screen */
+        width: auto !important;
+        /* Only take necessary width */
+        min-width: 140px;
+        /* Minimum width to look good but tight */
         height: 100vh !important;
         background: var(--white) !important;
         flex-direction: column !important;
         justify-content: center !important;
-        align-items: center !important;
+        align-items: flex-end !important;
+        padding-right: 30px;
+        padding-left: 20px;
+        /* Adds some spacing on the left */
         z-index: 10000 !important;
-        transition: 0.5s ease-in-out !important;
+        transition: right 0.5s ease-in-out !important;
+        /* Transition 'right' property */
     }
 
     nav#nav-menu.active {
@@ -534,12 +542,15 @@ nav#nav-menu a.active {
         width: 100% !important;
         max-width: 100% !important;
         /* Impede de vazar lateralmente */
-        height: auto !important;
-        max-height: 450px !important;
-        /* Limita o tamanho vertical no celular */
-        object-fit: contain !important;
-        /* Garante que a foto apareça inteira sem cortes */
+        height: 100% !important;
+        /* Force height to fill container */
+        max-height: none !important;
+        /* Remove limit */
+        object-fit: cover !important;
+        /* Force cover */
         margin-bottom: 20px !important;
+        aspect-ratio: 1 / 1;
+        /* Ensure square */
     }
 
     /* SOLUÇÃO PARA O "INDO PRO LADO":
@@ -588,14 +599,25 @@ nav#nav-menu a.active {
     position: relative;
     width: 100%;
     /* Define a proporção: 1/1 para Quadrado ou 3/4 para Retangular (estilo moda) */
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     background: #f9f9f9;
     /* Cor de fundo caso a imagem demore a carregar */
 }
 
+/* Garante que o Swiper ocupe todo o espaço do container quadrado */
+.product-vitrine-swiper,
+.product-detail-swiper,
+.swiper-wrapper,
+.swiper-slide {
+    width: 100% !important;
+    height: 100% !important;
+}
+
 /* A imagem dentro do container */
-.product-image-wrapper img {
+.product-image-wrapper img,
+.swiper-slide img,
+.swiper-zoom-container img {
     width: 100% !important;
     height: 100% !important;
     /* O SEGREDO: object-fit cover faz a imagem preencher o espaço sem esticar */
@@ -677,7 +699,7 @@ h3,
     position: relative;
     width: 100%;
     /* Força todas as fotos a terem a mesma proporção (3:4) */
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     overflow: hidden;
     background: #f0f0f0;
 }

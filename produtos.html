@@ -78,9 +78,7 @@
                         <!-- Swiper para a vitrine -->
                         <div class="swiper product-vitrine-swiper">
                             <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="assets/NOBLUFF.png" alt="Camiseta Hierarchy" />
-                                </div>
+
                                 <div class="swiper-slide">
                                     <img src="assets/Substituir (2).jpeg" alt="Camiseta Hierarchy - Vista 2" />
                                 </div>
@@ -99,7 +97,7 @@
                         <div class="badge-frete-vitrine">FRETE GRÁTIS</div>
                     </div>
                     <h3 class="product-title-grid">
-                        Camiseta Hierarchy - NoBluff
+                        Camiseta Hierarchy - Substituir
                     </h3>
                     <p class="product-price-grid">R$ 157,00</p>
                 </div>
@@ -120,16 +118,19 @@
                     <div class="swiper product-detail-swiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
-                                <img src="assets/NOBLUFF.png" alt="Camiseta Hierarchy" />
+                                <div class="swiper-zoom-container">
+                                    <img src="assets/Substituir (2).jpeg" alt="Camiseta Hierarchy - Vista 2" />
+                                </div>
                             </div>
                             <div class="swiper-slide">
-                                <img src="assets/Substituir (2).jpeg" alt="Camiseta Hierarchy - Vista 2" />
+                                <div class="swiper-zoom-container">
+                                    <img src="assets/Substituir (3).jpeg" alt="Camiseta Hierarchy - Vista 3" />
+                                </div>
                             </div>
                             <div class="swiper-slide">
-                                <img src="assets/Substituir (3).jpeg" alt="Camiseta Hierarchy - Vista 3" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="assets/Substituir (1).jpeg" alt="Tabela de Tamanhos" />
+                                <div class="swiper-zoom-container">
+                                    <img src="assets/Substituir (1).jpeg" alt="Tabela de Tamanhos" />
+                                </div>
                             </div>
                         </div>
                         <div class="swiper-pagination"></div>
@@ -140,7 +141,7 @@
 
                 <div class="product-info-checkout">
                     <h2 class="product-title">
-                        CAMISETA HIERARCHY - NOBLUFF
+                        CAMISETA HIERARCHY - SUBSTITUIR
                     </h2>
                     <p class="product-price">R$ 157,00</p>
                     <div class="badge-frete">
@@ -275,6 +276,7 @@
         // Inicialização do Swiper da Página de Detalhes
         const detailSwiper = new Swiper('.product-detail-swiper', {
             loop: true,
+            zoom: true,
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
