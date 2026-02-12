@@ -513,19 +513,26 @@ nav#nav-menu a.active {
         /* Move completely off-screen */
         width: auto !important;
         /* Only take necessary width */
-        min-width: 140px;
+        min-width: 180px;
         /* Minimum width to look good but tight */
-        height: 100vh !important;
+        height: auto !important;
+        /* Auto height to fit content */
+        min-height: 200px;
         background: var(--white) !important;
         flex-direction: column !important;
-        justify-content: center !important;
+        justify-content: flex-start !important;
+        /* Align items to top */
         align-items: flex-end !important;
+        padding-top: 80px;
+        /* Space for close button */
         padding-right: 30px;
         padding-left: 20px;
         /* Adds some spacing on the left */
         z-index: 10000 !important;
         transition: right 0.5s ease-in-out !important;
         /* Transition 'right' property */
+        border-bottom-left-radius: 20px;
+        box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.1);
     }
 
     nav#nav-menu.active {

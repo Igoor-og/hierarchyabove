@@ -96,7 +96,7 @@ const CONSTANTS = {
   PRODUTO_PRECO: 146.00,
   PRODUTO_PESO: 0.3, // kg
   PRODUTO_DIMS: { w: 20, h: 5, l: 20 }, // cm
-  PIX_KEY: "goinawlsherarco@gmail.com",
+  PIX_KEY: "+554396802158",
   PIX_NAME: "Moises Eduardo Marques Geronimo",
   PIX_CITY: "Londrina"
 };
@@ -136,7 +136,17 @@ function updateTotal() {
   }
 
   if (hiddenValor) hiddenValor.value = state.total.toFixed(2);
-  if (hiddenFrete) hiddenFrete.value = state.frete.toFixed(2);
+
+  // LOGICA DE FRETE GRATIS NO FORMSPREE
+  if (hiddenFrete) {
+    if (state.frete === 0) {
+      hiddenFrete.type = "text"; // Muda para text para aceitar string se necessário, embora value aceite string
+      hiddenFrete.value = "Gratis";
+    } else {
+      hiddenFrete.value = state.frete.toFixed(2);
+    }
+  }
+
   if (hiddenCupom) hiddenCupom.value = state.cupom;
 
   // Gerar Payload Pix
