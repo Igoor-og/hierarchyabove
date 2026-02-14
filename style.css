@@ -132,6 +132,19 @@ body {
     margin: 20px 0;
 }
 
+/* Checkout Pix Timer */
+#pix-countdown.expired {
+    color: #999 !important;
+    text-decoration: line-through;
+}
+
+#pix-timer-container {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
 /* Product Page */
 .product-grid {
     display: grid;
@@ -230,6 +243,9 @@ body {
 .lookbook-item {
     background-color: var(--gray);
     overflow: hidden;
+    aspect-ratio: 1 / 1;
+    /* Força quadrado */
+    position: relative;
 }
 
 .lookbook-item img {
@@ -238,15 +254,17 @@ body {
     object-fit: cover;
     display: block;
     filter: grayscale(100%);
-    /* Estética streetwear clássica */
-    transition:
-        filter 0.5s ease,
-        transform 0.5s ease;
+    transition: filter 1.5s ease-out, transform 0.5s ease;
 }
 
-.lookbook-item img:hover {
-    filter: grayscale(0%);
+/* Classe que será adicionada via JS quando entrar na tela */
+.reveal-active {
+    filter: grayscale(0%) !important;
+}
+
+.lookbook-item:hover img {
     transform: scale(1.05);
+    /* Zoom leve ao passar o mouse */
 }
 
 /* Itens de tamanhos diferentes para quebrar a monotonia */
@@ -564,7 +582,9 @@ nav#nav-menu a.active {
        Mudamos de GRID para FLEX para forçar a descida dos elementos */
     .product-grid,
     .product-detail-layout,
-    .product-grid-simple {
+    .product-grid-simple,
+    .lookbook-grid {
+        /* Adicionado lookbook-grid aqui */
         display: flex !important;
         flex-direction: column !important;
         /* Força um embaixo do outro */

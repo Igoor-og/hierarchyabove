@@ -1,0 +1,8 @@
+feat: update pricing, visual layout and payment fixes
+
+- Update product price to R$ 136,00
+- Fix PIX key format to E.164 (+55)
+- Enhance mobile layout for Lookbook (single column)
+- Adjust banner images
+- Implement scroll reveal effect for Lookbook
+- Fix checkout "Gratis" text visibility

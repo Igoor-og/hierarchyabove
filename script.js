@@ -93,10 +93,10 @@ function hideProductDetail() {
 const CONSTANTS = {
   MELHOR_ENVIO_TOKEN: "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYzI3N2M1ODE0N2FiZTRlODY5MjQ0NTMzMWMwYjMxNTVmNjBmOTM4OGMxMTE2NGJmZDU3YzY4YjNhMWIwZGY2YTQ2ZTNiOTc2NTJkYjE2ODUiLCJpYXQiOjE3Njc3MjgwOTMuOTg1NDksIm5iZiI6MTc2NzcyODA5My45ODU0OTIsImV4cCI6MTc5OTI2NDA5My45NzM2ODgsInN1YiI6ImEwYjgyMjFhLWZiZjMtNDNkMi05NmYyLTdhOTU1N2M5M2JmMCIsInNjb3BlcyI6WyJjYXJ0LXJlYWQiLCJjYXJ0LXdyaXRlIiwiY29tcGFuaWVzLXJlYWQiLCJjb21wYW5pZXMtd3JpdGUiLCJjb3Vwb25zLXJlYWQiLCJjb3Vwb25zLXdyaXRlIiwibm90aWZpY2F0aW9ucy1yZWFkIiwib3JkZXJzLXJlYWQiLCJwcm9kdWN0cy1yZWFkIiwicHJvZHVjdHMtZGVzdHJveSIsInByb2R1Y3RzLXdyaXRlIiwicHVyY2hhc2VzLXJlYWQiLCJzaGlwcGluZy1jYWxjdWxhdGUiLCJzaGlwcGluZy1jYW5jZWwiLCJzaGlwcGluZy1jaGVja291dCIsInNoaXBwaW5nLWNvbXBhbmllcyIsInNoaXBwaW5nLWdlbmVyYXRlIiwic2hpcHBpbmctcHJldmlldyIsInNoaXBwaW5nLXByaW50Iiwic2hpcHBpbmctc2hhcmUiLCJzaGlwcGluZy10cmFja2luZyIsImVjb21tZXJjZS1zaGlwcGluZyIsInRyYW5zYWN0aW9ucy1yZWFkIiwidXNlcnMtcmVhZCIsInVzZXJzLXdyaXRlIiwid2ViaG9va3MtcmVhZCIsIndlYmhvb2tzLXdyaXRlIiwid2ViaG9va3MtZGVsZXRlIiwidGRlYWxlci13ZWJob29rIl19.F46VtAD8bD6ZTq1lf3FqxgAXCeZJcbVetmDBPq15RjQFjRmvBhUZKzdFqtymWcbIMUC52IPwAXDYuk6sI_A0Q7yqNg4kxjehmyqgOjJGlK1KXVCmW3nAYICEmhy2pFP5vXmNLBFO5h5aRtBrwy2bZZDCFYWcFy1GJKkCTtsBGluPxJhdYlPqFersY2d8zfV_i7xjZb11g9lH7KWj8WePVg7K8HKqGE4sL4pDHw-Wm5pr-TEJQ49pVNHARh0N0rs_-9A-w6L2lnnWXCWaEd75bzCilrbcacHu1PPcTlPK2T1_e8X7D6rJXevsDM9zxmXTPIhAO5OlYANlVBq3ofZho8uF1Ok2GsGl1_DleYsMCiF_bjr5yjA5vHvBJ5mTj4jEHILNWUKNivjvgw4LeCzL-bvnwDHIhtPmx_IvCMvKMBZ75fVgSr_eKOCG0zIU8xclEGfY6elV1CtTeHjQwmYo-SicDxx4w64UbwsEL-qeQWgqXblCBM0b1BQ3djcn3i2FW0CV9Gk6Emq_UEEYfEQvH6Lr8dsa6aMnp6T2r-zWbeamSozQcepPcfa59qp9KfNruMuL-xChvywFBmXw9EZ14qe3Nu43huE7-UsfMftA-3dXOmIQZSrcGcfvp3M_pjFHpiXMIYbvoo4uk1fIhYaWV96GxPYO4UfBgtWqPBrl7uU", // SUBSTITUIR PELO TOKEN DO USUÁRIO
   CEP_ORIGEM: "86057055",
-  PRODUTO_PRECO: 146.00,
+  PRODUTO_PRECO: 136.00,
   PRODUTO_PESO: 0.3, // kg
   PRODUTO_DIMS: { w: 20, h: 5, l: 20 }, // cm
-  PIX_KEY: "+554396802158",
+  PIX_KEY: "+5543996802158", // Adicionado + para formato E.164 padrão
   PIX_NAME: "Moises Eduardo Marques Geronimo",
   PIX_CITY: "Londrina"
 };
@@ -140,7 +140,7 @@ function updateTotal() {
   // LOGICA DE FRETE GRATIS NO FORMSPREE
   if (hiddenFrete) {
     if (state.frete === 0) {
-      hiddenFrete.type = "text"; // Muda para text para aceitar string se necessário, embora value aceite string
+      // hiddenFrete.type = "text"; // REMOVIDO: Causava bug visual
       hiddenFrete.value = "Gratis";
     } else {
       hiddenFrete.value = state.frete.toFixed(2);
@@ -199,11 +199,11 @@ function applyCoupon() {
     state.cupom = input;
 
     if (priceDisplay) {
-      priceDisplay.innerHTML = `TOTAL: <strike>R$ 146,00</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
+      priceDisplay.innerHTML = `TOTAL: <strike>R$ 136,00</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
     }
     showSuccess("Cupom YOUNG aplicado! Você ganhou 10% de desconto.", "CUPOM APLICADO!");
   } else if (input !== "") {
-    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 146,00";
+    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 136,00";
     showError("O cupom informado não é válido. Verifique e tente novamente.", "CUPOM INVÁLIDO");
   }
 
@@ -353,16 +353,44 @@ function copyPix() {
   // Garante que o payload está atualizado
   updateTotal();
 
+  // Seleciona o texto (mobile friendly)
   pixCode.select();
-  pixCode.setSelectionRange(0, 99999);
-  navigator.clipboard.writeText(pixCode.value);
+  pixCode.setSelectionRange(0, 99999); // Para mobile
 
-  const originalText = btn.innerText;
-  btn.innerText = "COPIADO!";
-  btn.style.background = "var(--vinho)";
+  try {
+    // Tenta usar a API Clipboard moderna primeiro
+    navigator.clipboard.writeText(pixCode.value).then(() => {
+      showCopyFeedback(btn);
+    }).catch(() => {
+      // Fallback para execCommand
+      document.execCommand('copy');
+      showCopyFeedback(btn);
+    });
+  } catch (err) {
+    console.error('Erro ao copiar', err);
+    // Fallback final
+    document.execCommand('copy');
+    showCopyFeedback(btn);
+  }
+}
+
+function showCopyFeedback(btn) {
+  const originalText = "COPIAR CÓDIGO PIX";
+
+  // Feedback visual
+  btn.innerText = "CÓDIGO COPIADO!";
+  btn.style.background = "#2ecc71"; // Verde sucesso
+  btn.style.borderColor = "#2ecc71";
+
+  // Feedback tátil (se disponível)
+  if (navigator.vibrate) {
+    navigator.vibrate(50);
+  }
+
   setTimeout(() => {
     btn.innerText = originalText;
-    btn.style.background = "#000";
+    btn.style.background = "var(--vinho)"; // Volta para a cor original (vinho ou preto dependendo do CSS)
+    btn.style.borderColor = "transparent";
   }, 2000);
 }
 
@@ -579,8 +607,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Inicia a verificação de estoque
   atualizarEstoquePlanilha();
+  setupLookbookReveal(); // Ativa o efeito de reveal no lookbook
   // wakeUpServer(); // Desativado pois não usaremos API de frete
 });
+
+// --- EFEITO LOOKBOOK REVEAL ---
+function setupLookbookReveal() {
+  const lookbookImages = document.querySelectorAll(".reveal-img");
+
+  if (lookbookImages.length === 0) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal-active");
+      } else {
+        // Opcional: Se quiser que fique preto e branco de novo ao sair da tela
+        // entry.target.classList.remove("reveal-active");
+      }
+    });
+  }, {
+    threshold: 0.3 // Dispara quando 30% da imagem estiver visível
+  });
+
+  lookbookImages.forEach(img => observer.observe(img));
+}
 
 // Funções de Navegação Checkout
 function goToPaymentStep() {
@@ -603,7 +654,42 @@ function goToPaymentStep() {
 
     // Gera o PIX ao entrar na etapa de pagamento
     updateTotal();
+    startPixPaymentTimer(); // Inicia o contador de 10 minutos
   }
+}
+
+let pixTimerInterval;
+function startPixPaymentTimer() {
+  const display = document.getElementById("pix-countdown");
+  const container = document.getElementById("pix-timer-container");
+  if (!display) return;
+
+  // Reseta estado
+  clearInterval(pixTimerInterval);
+  display.classList.remove("expired");
+  if (container) container.style.border = "1px solid #eee";
+
+  let duration = 600; // 10 minutos em segundos
+
+  function updateTimerDisplay() {
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+
+    display.textContent = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    if (duration < 0) {
+      clearInterval(pixTimerInterval);
+      display.textContent = "EXPIRADO";
+      display.classList.add("expired");
+      if (container) container.style.border = "1px solid red";
+      showError("O tempo para pagamento expirou. Por favor, gere um novo código.", "TEMPO ESGOTADO");
+    }
+
+    duration--;
+  }
+
+  updateTimerDisplay(); // Chama imediatamente
+  pixTimerInterval = setInterval(updateTimerDisplay, 1000);
 }
 
 function backToDataStep() {
