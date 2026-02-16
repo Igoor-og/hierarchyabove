@@ -531,8 +531,8 @@ nav#nav-menu a.active {
         /* Move completely off-screen */
         width: auto !important;
         /* Only take necessary width */
-        min-width: 180px;
-        /* Minimum width to look good but tight */
+        min-width: unset !important;
+        /* Remove minimum width constraint */
         height: auto !important;
         /* Auto height to fit content */
         min-height: 200px;
@@ -540,11 +540,14 @@ nav#nav-menu a.active {
         flex-direction: column !important;
         justify-content: flex-start !important;
         /* Align items to top */
-        align-items: flex-end !important;
+        align-items: center !important;
+        /* Center icons horizontally in the menu */
         padding-top: 80px;
         /* Space for close button */
-        padding-right: 30px;
-        padding-left: 20px;
+        padding-right: 15px;
+        /* Reduced padding */
+        padding-left: 15px;
+        /* Reduced padding */
         /* Adds some spacing on the left */
         z-index: 10000 !important;
         transition: right 0.5s ease-in-out !important;
@@ -619,7 +622,51 @@ nav#nav-menu a.active {
         flex-direction: column !important;
         gap: 0 !important;
     }
+
+    /* --- MOBILE MENU ICONS --- */
+    /* Hide text on mobile */
+    .desktop-text {
+        display: none !important;
+    }
+
+    /* Show icons on mobile */
+    .mobile-icon {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Adjust nav links for icons */
+    nav#nav-menu a {
+        font-size: 1.5rem !important;
+        margin: 20px 0 !important;
+        /* Increased spacing */
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        /* Keep right alignment */
+    }
+
+    .mobile-icon svg {
+        width: 32px;
+        height: 32px;
+        stroke: var(--black);
+        stroke-width: 1.5;
+        fill: none;
+        transition: stroke 0.3s;
+    }
+
+    nav#nav-menu a:hover .mobile-icon svg,
+    nav#nav-menu a.active .mobile-icon svg {
+        stroke: var(--vinho);
+    }
 }
+
+/* --- DESKTOP DEFAULTS --- */
+.mobile-icon {
+    display: none;
+}
+
 
 /* Container da imagem */
 .product-image-wrapper {
