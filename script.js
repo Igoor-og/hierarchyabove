@@ -4,20 +4,7 @@
 
 const targetDate = new Date("February 27, 2026 00:00:00").getTime();
 
-// 1. NAVEGAÇÃO MOBILE (Movido para o topo para garantir prioridade)
-function toggleMenu() {
-  // Mudamos o ponto (.) por hashtag (#) para encontrar o nav#nav-menu
-  const navMenu = document.querySelector("#nav-menu");
-  const hamburger = document.querySelector(".hamburger");
-
-  if (navMenu) {
-    navMenu.classList.toggle("active");
-  }
-
-  if (hamburger) {
-    hamburger.classList.toggle("open");
-  }
-}
+// 1. NAVEGAÇÃO (Removido toggleMenu pois o menu agora é fixo/visível)
 
 // 2. CRONÔMETRO
 function updateCountdown() {
