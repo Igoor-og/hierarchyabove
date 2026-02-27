@@ -2,40 +2,57 @@
  * HIERARCHY ABOVE - Official Script v3.1
  */
 
-const targetDate = new Date("February 27, 2026 00:00:00").getTime();
+// Define a data alvo para o countdown: 27 de fevereiro de 2026 às 13h
+const targetDate = new Date("February 27, 2026 13:00:00").getTime();
 
-// 1. NAVEGAÇÃO (Removido toggleMenu pois o menu agora é fixo/visível)
-
-// 2. CRONÔMETRO
+/**
+ * Função para atualizar o cronômetro regressivo
+ */
 function updateCountdown() {
+  // Captura parâmetros da URL para modo DEV
   const urlParams = new URLSearchParams(window.location.search);
-  // DEV MODE - só redireciona da página index.html
+
+  // Modo DEV: redireciona para produtos.html somente na página index.html ou raiz
   if (urlParams.get("dev") === "true") {
     if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
       window.location.href = "produtos.html";
     }
-    return;
+    return; // Para execução do countdown no modo DEV
   }
 
+  // Tempo atual em milissegundos
   const now = new Date().getTime();
+
+  // Calcula a diferença entre a data alvo e o tempo atual
   const distance = targetDate - now;
+
+  // Seleciona o elemento HTML onde o countdown será exibido
   const countdownEl = document.getElementById("countdown");
 
   if (countdownEl) {
+    // Se o tempo acabou, redireciona para produtos.html
     if (distance < 0) {
       window.location.href = "produtos.html";
       return;
     }
+
+    // Calcula dias, horas, minutos e segundos restantes
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
-    );
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Atualiza o conteúdo do elemento com o tempo formatado
     countdownEl.innerHTML = `${days}D ${hours}H ${minutes}M ${seconds}S`;
   }
 }
+
+// Atualiza o countdown a cada segundo
 setInterval(updateCountdown, 1000);
+
+// Atualiza imediatamente ao carregar para evitar atraso na primeira exibição
+updateCountdown();
+
 
 // 3. INTERFACE DE PRODUTO
 function showProductDetail() {
@@ -141,30 +158,56 @@ function updateTotal() {
   if (pixTextarea) pixTextarea.value = payload;
 }
 
-// --- FRETE (MELHOR ENVIO) ---
-// --- FRETE (COM MOCK FRETE GRÁTIS) ---
-async function calculateShipping() {
-  const cepInput = document.getElementById("cepInput");
+// --- TABELA DE FRETE PRÉ-DEFINIDA POR ESTADO ---
+const FRETE_POR_ESTADO = {
+  // Sudeste - R$15
+  SP: 15, RJ: 15, MG: 15, ES: 15,
+  // Sul - R$18
+  PR: 18, SC: 18, RS: 18,
+  // Centro-Oeste - R$20
+  DF: 20, GO: 20, MT: 20, MS: 20,
+  // Nordeste - R$22
+  BA: 22, PE: 22, CE: 22, SE: 22, AL: 22, PB: 22, RN: 22, MA: 22, PI: 22,
+  // Norte - R$25
+  AM: 25, PA: 25, RO: 25, AC: 25, RR: 25, AP: 25, TO: 25
+};
+
+/**
+ * Aplica o frete com base no estado (UF).
+ * Pode ser chamada a qualquer momento (autocomplete, restore, digitação).
+ */
+function aplicarFretePorEstado(uf) {
   const freteStatus = document.getElementById("frete-status");
+  if (!uf) return;
 
-  if (!cepInput || cepInput.value.length < 8) return;
+  const ufUpper = uf.toUpperCase().trim();
+  const valorFrete = FRETE_POR_ESTADO[ufUpper];
 
-  const cepDestino = cepInput.value.replace(/\D/g, "");
-  if (cepDestino.length !== 8) return;
-
-  // Como estamos oferecendo FRETE GRÁTIS, pulamos a consulta à API
-  // e apenas mostramos visualmente que o frete foi calculado/aplicado.
-
-  state.frete = 0.00;
-
-  if (freteStatus) {
-    freteStatus.style.display = "block";
-    freteStatus.innerText = "FRETE GRÁTIS APLICADO ✓";
+  if (valorFrete !== undefined) {
+    state.frete = valorFrete;
+    if (freteStatus) {
+      freteStatus.style.display = "block";
+      freteStatus.innerText = `FRETE: R$ ${valorFrete.toFixed(2).replace('.', ',')} ✓`;
+      freteStatus.style.color = "var(--vinho)";
+    }
+  } else {
+    state.frete = 0;
+    if (freteStatus) {
+      freteStatus.style.display = "block";
+      freteStatus.innerText = "ESTADO NÃO RECONHECIDO";
+      freteStatus.style.color = "#ff0000";
+    }
   }
 
   updateTotal();
-  // Se quiser simular um delay visual:
-  // setTimeout(() => updateTotal(), 500);
+}
+
+// Mantido para compatibilidade — agora delega para aplicarFretePorEstado
+function calculateShipping() {
+  const estadoInput = document.querySelector('input[name="Estado"]');
+  if (estadoInput && estadoInput.value) {
+    aplicarFretePorEstado(estadoInput.value);
+  }
 }
 
 
@@ -180,15 +223,15 @@ function applyCoupon() {
   state.desconto = 0.00;
   state.cupom = "";
 
-  if (input === "YOUNG") {
-    // 10% de desconto no produto
-    state.desconto = CONSTANTS.PRODUTO_PRECO * 0.10; // R$ 14,99
+  if (input === "MILGRAU15") {
+    // R$15 de desconto fixo no produto
+    state.desconto = 15.00;
     state.cupom = input;
 
     if (priceDisplay) {
       priceDisplay.innerHTML = `TOTAL: <strike>R$ 136,00</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
     }
-    showSuccess("Cupom YOUNG aplicado! Você ganhou 10% de desconto.", "CUPOM APLICADO!");
+    showSuccess("Cupom MILGRAU15 aplicado! Você ganhou R$ 15,00 de desconto.", "CUPOM APLICADO!");
   } else if (input !== "") {
     if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 136,00";
     showError("O cupom informado não é válido. Verifique e tente novamente.", "CUPOM INVÁLIDO");
@@ -721,6 +764,21 @@ function setupCepInput() {
       buscarCEP(value);
     }
   });
+
+  // Listener no campo Estado: aplica frete ao digitar/colar a UF manualmente
+  const estadoInput = document.querySelector('input[name="Estado"]');
+  if (estadoInput) {
+    estadoInput.addEventListener("input", function () {
+      if (this.value.length === 2) {
+        aplicarFretePorEstado(this.value);
+      }
+    });
+    estadoInput.addEventListener("change", function () {
+      if (this.value.length >= 2) {
+        aplicarFretePorEstado(this.value);
+      }
+    });
+  }
 }
 
 // --- INTEGRAÇÃO COM VIACEP API ---
@@ -755,19 +813,11 @@ async function buscarCEP(cep) {
     if (cidadeInput) cidadeInput.value = data.localidade || "";
     if (estadoInput) estadoInput.value = data.uf || "";
 
-    // Calcula frete (grátis)
-    state.frete = 0.00;
-    if (freteStatus) {
-      freteStatus.style.display = "block";
-      freteStatus.innerText = "FRETE GRÁTIS APLICADO ✓";
-      freteStatus.style.color = "var(--vinho)";
-    }
-
-    updateTotal();
+    // Aplica o frete imediatamente com base no estado retornado pelo ViaCEP
+    aplicarFretePorEstado(data.uf);
 
     // Foca no campo de número (que geralmente está junto com endereço)
     if (enderecoInput && !enderecoInput.value.includes(",")) {
-      // Se o campo endereço não tem vírgula (número), foca nele para o usuário completar
       enderecoInput.focus();
     }
 
@@ -826,6 +876,11 @@ function recuperarDadosFormulario() {
     if (complementoInput && formData.complemento) complementoInput.value = formData.complemento;
     if (cidadeInput && formData.cidade) cidadeInput.value = formData.cidade;
     if (estadoInput && formData.estado) estadoInput.value = formData.estado;
+
+    // Se o estado foi restaurado, aplica o frete automaticamente
+    if (formData.estado) {
+      aplicarFretePorEstado(formData.estado);
+    }
 
   } catch (e) {
     console.error("Erro ao recuperar dados salvos:", e);
