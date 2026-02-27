@@ -229,11 +229,11 @@ function applyCoupon() {
     state.cupom = input;
 
     if (priceDisplay) {
-      priceDisplay.innerHTML = `TOTAL: <strike>R$ 136,00</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
+      priceDisplay.innerHTML = `TOTAL: <strike>R$ 119,90</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
     }
     showSuccess("Cupom MILGRAU15 aplicado! Você ganhou R$ 15,00 de desconto.", "CUPOM APLICADO!");
   } else if (input !== "") {
-    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 136,00";
+    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 104,90";
     showError("O cupom informado não é válido. Verifique e tente novamente.", "CUPOM INVÁLIDO");
   }
 
