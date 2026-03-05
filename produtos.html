@@ -7,8 +7,6 @@
     <title>Hierarchy Above | Shop</title>
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="notification.css" />
-    <link rel="stylesheet" href="mobile-image-fix.css" />
-    <link rel="stylesheet" href="position-fix.css" />
     <link rel="icon" href="assets/ursopng.png" />
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -121,7 +119,7 @@
                     <h3 class="product-title-grid">
                         Camiseta Hierarchy - NOBLUFF
                     </h3>
-                    <p class="product-price-grid">R$ 119,90</p>
+                    <p class="product-price-grid">R$ 136,00</p>
                 </div>
             </div>
         </section>
@@ -170,7 +168,7 @@
                     <h2 class="product-title">
                         CAMISETA HIERARCHY - NOBLUFF
                     </h2>
-                    <p class="product-price">R$ 119,90</p>
+                    <p class="product-price">R$ 136,00</p>
 
 
                     <div class="product-description">
@@ -278,45 +276,57 @@
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Inicialização do Swiper Promocional
-        const promoSwiper = new Swiper('.promo-swiper', {
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-        });
+        // Declarar variáveis globais para os Swipers
+        var promoSwiper, vitrineSwiper, detailSwiper;
 
-        // Inicialização do Swiper da Vitrine (hover para ativar)
-        const vitrineSwiper = new Swiper('.product-vitrine-swiper', {
-            loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            allowTouchMove: true,
-        });
+        document.addEventListener("DOMContentLoaded", () => {
+            // Inicialização do Swiper Promocional
+            promoSwiper = new Swiper('.promo-swiper', {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
 
-        // Inicialização do Swiper da Página de Detalhes
-        const detailSwiper = new Swiper('.product-detail-swiper', {
-            loop: true,
-            zoom: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
+            // Inicialização do Swiper da Vitrine
+            vitrineSwiper = new Swiper('.product-vitrine-swiper', {
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                allowTouchMove: true,
+                grabCursor: true,
+                touchRatio: 1,
+            });
+
+            // Inicialização do Swiper da Página de Detalhes
+            detailSwiper = new Swiper('.product-detail-swiper', {
+                loop: true,
+                zoom: {
+                    maxRatio: 3,
+                    minRatio: 1,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                touchRatio: 1,
+                grabCursor: true,
+            });
         });
     </script>
 </body>

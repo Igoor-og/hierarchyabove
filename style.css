@@ -364,6 +364,8 @@ nav#nav-menu a.active .nav-icon svg {
     transition: opacity 0.3s;
     font-weight: 700;
     font-size: 0.8rem;
+    pointer-events: none;
+    /* Permite interagir com o Swiper por baixo */
 }
 
 .product-item:hover .image-overlay {
@@ -394,8 +396,8 @@ nav#nav-menu a.active .nav-icon svg {
     }
 
     .square-image-container {
-        pointer-events: none;
-        /* Evita zoom/clique indesejado no mobile se necessário */
+        pointer-events: auto !important;
+        /* Habilitar Swiper e Zoom no mobile */
     }
 }
 
@@ -614,6 +616,36 @@ nav#nav-menu a.active {
         padding-top: 5px !important;
     }
 
+    /* --- LOOKBOOK MOBILE FIX --- */
+    .lookbook-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .lookbook-item {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        /* Imagens quadradas no celular */
+        border-radius: 0 !important;
+        background-color: #000 !important;
+        /* Fundo preto caso a imagem não preencha tudo */
+    }
+
+    .lookbook-item img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        background-color: white;
+        /* Mostra a imagem inteira sem cortes */
+    }
+
+    .lookbook-header {
+        padding: 20px 15px !important;
+    }
 }
 
 /* --- DESKTOP DEFAULTS --- */
