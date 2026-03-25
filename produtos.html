@@ -8,17 +8,15 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="notification.css" />
     <link rel="icon" href="assets/ursopng.png" />
-    <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-
 </head>
 
 <body>
-    <header class="navbar">
+    <!-- Header: aparece ao rolar -->
+    <header class="navbar" id="main-header">
         <a href="index.html?dev=true" class="nav-logo">
-            <img src="assets/logo1.jpeg" alt="HIERARCHY ABOVE" />
+            <img src="assets/logo2.jpeg" alt="HIERARCHY ABOVE" />
         </a>
-
         <nav id="nav-menu">
             <a href="produtos.html" class="active">
                 <span class="nav-icon">
@@ -54,26 +52,23 @@
             </a>
         </nav>
     </header>
-    <main class="container">
-        <!-- Carousel Promocional -->
-        <section class="promo-carousel-section" id="promo-carousel">
-            <div class="swiper promo-swiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="assets/bannerelook (1).jpeg" alt="Promoção 1"
-                            style="object-position: center 25% !important;" />
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="assets/bannerelook (2).jpeg" alt="Promoção 2"
-                            style="object-position: center 25% !important;" />
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-        </section>
 
+    <!-- Banner ROTATIVO Full Width -->
+    <section class="hero-banner-section">
+        <div class="swiper hero-swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="assets/newb2.jpeg" alt="Hierarchy Above" class="hero-img" />
+                </div>
+                <div class="swiper-slide">
+                    <img src="assets/newb3.jpeg" alt="Hierarchy Above" class="hero-img" />
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <main class="container">
         <section id="vitrine" class="fade-in">
             <h1 class="logo-text" style="font-size: 1.5rem; margin-bottom: 40px">
                 COLLECTION #NoBluff
@@ -81,29 +76,22 @@
             <div class="product-grid-simple">
                 <div class="product-item unavailable-drop" style="display: none;">
                     <div class="product-image-wrapper">
-                        <img src="assets/NEW-WORLD.png" alt="Camiseta Hierarchy – New World" />
+                        <img src="assets/NEW-WORLD.png" alt="Camiseta Hierarchy - New World" />
                         <div class="image-overlay">EM BREVE</div>
-                        <div class="badge-status">PRÓXIMO DROP</div>
+                        <div class="badge-status">PROXIMO DROP</div>
                     </div>
-                    <h3 class="product-title-grid">
-                        Camiseta hierarchy – "New World"
-                    </h3>
-                    <p class="product-price-grid">NOVA COLEÇÃO | INDISPONÍVEL</p>
+                    <h3 class="product-title-grid">Camiseta hierarchy - "New World"</h3>
+                    <p class="product-price-grid">NOVA COLECAO | INDISPONIVEL</p>
                 </div>
                 <div class="product-item" onclick="showProductDetail()" id="card-nobluff">
                     <div class="product-image-wrapper square-image-container">
-                        <!-- Swiper para a vitrine -->
                         <div class="swiper product-vitrine-swiper">
                             <div class="swiper-wrapper">
-
                                 <div class="swiper-slide">
-                                    <img src="assets/Nobluffp (1).jpeg" alt="Camiseta NOBLUFF - Vista 1" />
+                                    <img src="assets/nobluff (1).jpeg" alt="Camiseta NOBLUFF - Vista 1" />
                                 </div>
                                 <div class="swiper-slide">
-                                    <img src="assets/Nobluffp (3).jpeg" alt="Camiseta Hierarchy - Vista 3" />
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="assets/Nobluffp (4).jpeg" alt="Camiseta Hierarchy - Vista 4" />
+                                    <img src="assets/nobluff (2).jpeg" alt="Camiseta NOBLUFF - Vista 2" />
                                 </div>
                                 <div class="swiper-slide">
                                     <img src="assets/Substituir (1).jpeg" alt="Tabela de Tamanhos NOBLUFF" />
@@ -112,44 +100,32 @@
                             <div class="swiper-pagination"></div>
                         </div>
                         <div class="image-overlay">VER DETALHES</div>
-
                         <div id="badge-nobluff" class="badge-estoque">CARREGANDO...</div>
-
                     </div>
-                    <h3 class="product-title-grid">
-                        Camiseta Hierarchy - NOBLUFF
-                    </h3>
+                    <h3 class="product-title-grid">Camiseta Hierarchy - NOBLUFF</h3>
                     <p class="product-price-grid">R$ 119,90</p>
                 </div>
             </div>
         </section>
 
         <section id="product-detail" class="hidden">
-
             <button onclick="hideProductDetail()" id="btn-voltar-vitrine"
                 style="display: flex !important; align-items: center !important; background: none !important; border: none !important; cursor: pointer !important; padding: 20px 0 !important; font-family: sans-serif !important; font-weight: 900 !important; letter-spacing: 2px !important; color: #000 !important; text-transform: uppercase !important; font-size: 0.7rem !important;">
                 <span style="margin-right: 10px; font-size: 1.2rem;">&lt;</span>
                 <span style="border-bottom: 1px solid #000;">VITRINE</span>
             </button>
-
             <div class="product-detail-layout fade-in">
                 <div class="product-image-large square-image-container">
-                    <!-- Swiper para a página de detalhes -->
                     <div class="swiper product-detail-swiper">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <div class="swiper-zoom-container">
-                                    <img src="assets/Nobluffp (1).jpeg" alt="Camiseta NOBLUFF - Vista 2" />
+                                    <img src="assets/nobluff (1).jpeg" alt="Camiseta NOBLUFF - Vista 1" />
                                 </div>
                             </div>
                             <div class="swiper-slide">
                                 <div class="swiper-zoom-container">
-                                    <img src="assets/Nobluffp (3).jpeg" alt="Camiseta NOBLUFF - Vista 3" />
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="swiper-zoom-container">
-                                    <img src="assets/Nobluffp (4).jpeg" alt="Camiseta Hierarchy - Roupa" />
+                                    <img src="assets/nobluff (2).jpeg" alt="Camiseta NOBLUFF - Vista 2" />
                                 </div>
                             </div>
                             <div class="swiper-slide">
@@ -163,23 +139,17 @@
                         <div class="swiper-button-prev"></div>
                     </div>
                 </div>
-
                 <div class="product-info-checkout">
-                    <h2 class="product-title">
-                        CAMISETA HIERARCHY - NOBLUFF
-                    </h2>
+                    <h2 class="product-title">CAMISETA HIERARCHY - NOBLUFF</h2>
                     <p class="product-price">R$ 119,90</p>
-
-
                     <div class="product-description">
-                        <p>Confeccionada em tecido de alta qualidade na cor branca, a peça apresenta uma estampa frontal
-                            exclusiva que une tipografia estilizada e fotografia artística de impacto. Com modelagem
-                            confortável.</p> <br>
-
+                        <p>Confeccionada em tecido de alta qualidade na cor branca, a peca apresenta uma estampa frontal
+                            exclusiva que une tipografia estilizada e fotografia artistica de impacto. Com modelagem
+                            confortavel.</p>
+                        <br>
                         <p>Seu pedido inclui embalagem premium, mimos exclusivos e envio seguro.</p>
                         <br>
-
-                        <p><strong>DROP 0:</strong> Edição ultralimitada de apenas 10 unidades.</p>
+                        <p><strong>DROP 0:</strong> Edicao ultralimitada de apenas 10 unidades.</p>
                     </div>
                     <div class="size-selection">
                         <p class="section-label">TAMANHO:</p>
@@ -198,133 +168,109 @@
                             </label>
                         </div>
                     </div>
-
-                    <!-- Botão de Comprar (aparece após selecionar tamanho) -->
                     <div id="buy-button-container" class="hidden" style="margin-top: 20px;">
                         <button onclick="goToCheckout()" class="btn-black w-100"
                             style="background-color: var(--vinho); font-size: 1rem; padding: 18px;">
                             COMPRAR
                         </button>
                     </div>
-                    <!-- Área de checkout foi movida para checkout.html -->
                 </div>
             </div>
         </section>
-        <!-- Newsletter Popup Notification -->
-        <div id="newsletter-popup" class="newsletter-popup hidden"
-            style="position: fixed !important; z-index: 9999 !important; contain: none !important;">
-            <div class="popup-content">
-                <button class="popup-close" onclick="closeNewsletterPopup(false)">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                </button>
+    </main>
 
-                <div class="popup-icon">
-                    <img src="assets/urso.jpeg" alt="Urso" class="popup-urso-img">
-                </div>
-
-                <h3 class="popup-title">Fique por dentro das novidades</h3>
-                <p class="popup-text">Receba atualizações de estoque e ofertas exclusivas direto no seu e-mail.</p>
-
-                <div class="popup-actions">
-                    <button class="btn-popup btn-accept" onclick="acceptNewsletter()">
-                        QUERO RECEBER
-                    </button>
-                    <button class="btn-popup btn-decline" onclick="closeNewsletterPopup(true)">
-                        NÃO, OBRIGADO
-                    </button>
-                </div>
-
-                <!-- Email Input Form (Initially Hidden) -->
-                <form id="popup-newsletter-form" class="popup-email-form hidden"
-                    action="https://formspree.io/f/xdalodkv" method="POST">
-                    <input type="hidden" name="_subject" value="NOVO INSCRITO - NEWSLETTER">
-                    <div class="email-input-group">
-                        <input type="email" name="email" placeholder="SEU MELHOR E-MAIL" required />
-                        <button type="submit" class="btn-black">CADASTRAR</button>
+    <!-- RODAPE ESOTERIC STYLE -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-grid">
+                <div class="footer-newsletter">
+                    <h4>ASSINE NOSSA NEWSLETTER</h4>
+                    <form class="footer-newsletter-form" action="https://formspree.io/f/xdalodkv" method="POST">
+                        <input type="email" name="email" placeholder="E-MAIL" required />
+                        <button type="submit" aria-label="Assinar">&#8594;</button>
+                    </form>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/hcyabove" target="_blank" rel="noopener noreferrer"
+                            title="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="https://www.tiktok.com/@hcyabove" target="_blank" rel="noopener noreferrer"
+                            title="TikTok">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+                            </svg>
+                        </a>
                     </div>
-                </form>
+                </div>
+                <div class="footer-nav">
+                    <h4>DEPARTAMENTOS</h4>
+                    <ul>
+                        <li><a href="produtos.html">SHOP</a></li>
+                        <li><a href="lookbook.html">LOOKBOOK</a></li>
+                        <li><a href="suporte.html">SUPORTE</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>ENTRE EM CONTATO</h4>
+                    <a href="mailto:mherarco2030@gmail.com">MHERARCO2030@GMAIL.COM</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">&#169; HIERARCHY ABOVE &#8212; TODOS OS DIREITOS RESERVADOS</p>
             </div>
         </div>
-    </main>
-    <footer style="
-                text-align: center;
-                padding: 60px 0;
-                border-top: 1px solid #f2f2f2;
-                margin-top: 50px;
-            ">
-        <div style="margin-bottom: 20px;">
-            <a href="https://www.instagram.com/hcyabove" target="_blank" rel="noopener noreferrer"
-                style="display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: #333; font-size: 0.75rem; font-weight: 800; letter-spacing: 2px; transition: color 0.2s;"
-                onmouseover="this.style.color='#C13584'" onmouseout="this.style.color='#333'">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-                @hcyabove
-            </a>
-        </div>
-        <p style="font-size: 0.7rem; color: #ccc; letter-spacing: 2px">
-            © HIERARCHY ABOVES - ALL RIGHTS RESERVED
-        </p>
     </footer>
-    <script src="notification.js"></script>
+
     <script src="script.js"></script>
-    <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // Declarar variáveis globais para os Swipers
-        var promoSwiper, vitrineSwiper, detailSwiper;
+        // Header aparece ao rolar
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('main-header');
+            if (window.scrollY > 80) {
+                header.classList.add('visible');
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('visible');
+                header.classList.remove('scrolled');
+            }
+        });
 
-        document.addEventListener("DOMContentLoaded", () => {
-            // Inicialização do Swiper Promocional
-            promoSwiper = new Swiper('.promo-swiper', {
+        var vitrineSwiper, detailSwiper, heroSwiper;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            heroSwiper = new Swiper('.hero-swiper', {
                 loop: true,
-                autoplay: {
-                    delay: 3000,
-                    disableOnInteraction: false,
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
+                autoplay: { delay: 4000, disableOnInteraction: false },
+                pagination: { el: '.hero-swiper .swiper-pagination', clickable: true },
+                grabCursor: true,
+                effect: 'fade', // Opcional: Efeito elegante
+                fadeEffect: { crossFade: true }
             });
 
-            // Inicialização do Swiper da Vitrine
             vitrineSwiper = new Swiper('.product-vitrine-swiper', {
                 loop: true,
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
+                pagination: { el: '.product-vitrine-swiper .swiper-pagination', clickable: true },
                 allowTouchMove: true,
                 grabCursor: true,
-                touchRatio: 1,
             });
 
-            // Inicialização do Swiper da Página de Detalhes
             detailSwiper = new Swiper('.product-detail-swiper', {
                 loop: true,
-                zoom: {
-                    maxRatio: 3,
-                    minRatio: 1,
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
+                zoom: { maxRatio: 3, minRatio: 1 },
+                pagination: { el: '.product-detail-swiper .swiper-pagination', clickable: true },
                 navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
+                    nextEl: '.product-detail-swiper .swiper-button-next',
+                    prevEl: '.product-detail-swiper .swiper-button-prev'
                 },
-                touchRatio: 1,
                 grabCursor: true,
             });
         });

@@ -1,6 +1,6 @@
-﻿@font-face {
-    font-family: "Denominary";
-    src: url("assets/fonts/denominary-bold.otf") format("truetype");
+@font-face {
+    font-family: "SIXTY";
+    src: url("assets/fonts/sixty/SIXTY.TTF") format("truetype");
     font-weight: bold;
     font-style: normal;
 }
@@ -19,6 +19,11 @@
     padding: 0;
     box-sizing: border-box;
     outline: none;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -78,60 +83,91 @@ body {
     display: none;
 }
 
-/* Navbar */
+/* ===========================
+   NAVBAR — ESOTERIC STYLE
+   =========================== */
+@keyframes slideDownHeader {
+    from { transform: translateY(-100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
 .navbar {
     display: flex;
-    justify-content: flex-end;
-    /* Ícones para a direita */
     align-items: center;
-    padding: 15px 5%;
-    border-bottom: 1px solid var(--gray);
+    padding: 0 4%;
+    border-bottom: 1px solid #ebebeb;
     background: var(--white);
-    position: relative;
-    min-height: 130px;
-    /* Altura generosa para o logo centralizado */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 65px;
+    opacity: 1;
+    transform: translateY(0);
+    animation: slideDownHeader 0.8s ease forwards;
+    transition: box-shadow 0.3s ease;
+    pointer-events: all;
+}
+
+.navbar.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.navbar.scrolled {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
 }
 
 .nav-logo {
-    position: absolute;
-    left: 50%;
-    top: 60%;
-    transform: translate(-50%, -50%);
+    position: static;
+    transform: none;
     text-decoration: none;
     display: flex;
     align-items: center;
-    z-index: 10;
+    margin-right: 40px;
+    flex-shrink: 0;
 }
 
 .navbar img {
-    height: 100px;
-    /* Tamanho no PC */
+    height: 32px;
+    max-width: 140px;
     width: auto;
     display: block;
+    object-fit: contain;
+    object-position: left center;
 }
 
 nav#nav-menu {
     display: flex;
-    gap: 30px;
+    gap: 28px;
     align-items: center;
+    margin-right: auto;
+    margin-left: 0;
 }
 
 nav#nav-menu a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     text-decoration: none;
     color: var(--black);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 1px;
-    transition: color 0.3s;
+    letter-spacing: 1.5px;
+    transition: color 0.25s;
+    display: flex;
+    align-items: center;
     gap: 5px;
+    flex-direction: row;
+}
+
+/* Ícones visíveis apenas no mobile */
+.nav-icon {
+    display: none;
 }
 
 .nav-icon svg {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     stroke: var(--black);
     stroke-width: 1.5;
     fill: none;
@@ -151,6 +187,34 @@ nav#nav-menu a.active .nav-icon svg {
     display: none !important;
 }
 
+/* Ícones de utilidade (busca, carrinho) à direita */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-left: auto;
+}
+
+.nav-actions a {
+    text-decoration: none;
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    transition: color 0.25s;
+}
+
+.nav-actions a:hover {
+    color: var(--vinho);
+}
+
+.nav-actions svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+}
+
 /* Typography */
 .logo-text {
     font-size: 5rem;
@@ -160,6 +224,7 @@ nav#nav-menu a.active .nav-icon svg {
 }
 
 .timer-bold {
+    font-family: "SIXTY", sans-serif;
     font-size: 3rem;
     font-weight: 700;
     margin: 20px 0;
@@ -193,6 +258,7 @@ nav#nav-menu a.active .nav-icon svg {
 }
 
 .product-title {
+    font-family: "SIXTY", sans-serif;
     font-size: 1.5rem;
     font-weight: 800;
     margin-bottom: 10px;
@@ -414,9 +480,12 @@ nav#nav-menu a.active .nav-icon svg {
 
 /* Estilização da Logo PC */
 .navbar img {
-    height: 130px;
+    height: 32px;
+    max-width: 140px;
     width: auto;
     display: block;
+    object-fit: contain;
+    object-position: left center;
 }
 
 .main-logo-img {
@@ -434,6 +503,7 @@ nav#nav-menu a.active .nav-icon svg {
 }
 
 .section-label {
+    font-family: "SIXTY", sans-serif;
     font-size: 0.7rem;
     font-weight: 800;
     margin-bottom: 10px;
@@ -504,27 +574,6 @@ nav#nav-menu a.active .nav-icon svg {
 /* ============================================================
    APENAS O BLOCO DE CELULAR (CORRIGIDO: LOGO E HAMBÚRGUER)
    ============================================================ */
-/* Estado inicial (Escondido) */
-/* Menu no PC */
-nav#nav-menu {
-    display: flex;
-    gap: 25px;
-}
-
-nav#nav-menu a {
-    text-decoration: none;
-    color: var(--black);
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    transition: color 0.3s;
-}
-
-nav#nav-menu a:hover,
-nav#nav-menu a.active {
-    color: var(--vinho);
-}
-
 .hamburger {
     display: none;
     /* Escondido no PC */
@@ -549,46 +598,59 @@ nav#nav-menu a.active {
         box-sizing: border-box !important;
     }
 
+    /* NAVBAR MOBILE */
     .navbar {
-        padding: 10px 5%;
-        min-height: 70px;
-        height: auto;
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        position: relative !important;
+        padding: 0 4%;
+        height: 58px;
+        position: sticky !important;
+        top: 0;
+        justify-content: space-between;
     }
 
+    /* No mobile: logo à esquerda, nav actions à direita */
     .nav-logo {
         position: static !important;
         transform: none !important;
         flex-shrink: 0;
         margin: 0 !important;
+        order: 1;
+    }
+
+    nav#nav-menu {
+        order: 2;
+        margin-right: 0 !important;
+        gap: 14px !important;
+        margin-left: auto;
+    }
+
+    .nav-actions {
+        order: 3;
+        gap: 12px;
+        margin-left: 12px;
     }
 
     .navbar img {
-        height: 50px !important;
-        /* Logo menor no celular para não bugar */
-        width: auto !important;
-    }
+    height: 32px;
+    max-width: 140px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+    object-position: left center;
+}
 
-    /* NAVEGAÇÃO MOBILE */
-    nav#nav-menu {
-        position: static !important;
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 15px !important;
-        background: none !important;
-        padding: 0 !important;
-        box-shadow: none !important;
-        width: auto !important;
-    }
-
+    /* NAVEGAÇÃO MOBILE — mostra ícones, oculta texto */
     nav#nav-menu a {
-        font-size: 0.65rem !important;
-        margin: 0 !important;
-        gap: 2px !important;
+        font-size: 0 !important;
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    nav#nav-menu a .nav-text {
+        display: none !important;
+    }
+
+    .nav-icon {
+        display: flex !important;
     }
 
     .nav-icon svg {
@@ -619,7 +681,7 @@ nav#nav-menu a.active {
     /* --- LOOKBOOK MOBILE FIX --- */
     .lookbook-grid {
         grid-template-columns: 1fr !important;
-        gap: 20 !important;
+        gap: 20px !important;
         width: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
@@ -629,10 +691,8 @@ nav#nav-menu a.active {
         width: 100% !important;
         height: auto !important;
         aspect-ratio: 1 / 1 !important;
-        /* Imagens quadradas no celular */
         border-radius: 0 !important;
         background-color: #000 !important;
-        /* Fundo preto caso a imagem não preencha tudo */
     }
 
     .lookbook-item img {
@@ -640,7 +700,6 @@ nav#nav-menu a.active {
         height: 100% !important;
         object-fit: cover !important;
         background-color: white;
-        /* Mostra a imagem inteira sem cortes */
     }
 
     .lookbook-header {
@@ -728,9 +787,9 @@ nav#nav-menu a.active {
     z-index: 5;
 }
 
-/* Garante que o título use a fonte Denominary que o cliente pediu */
+/* Garante que o título use a fonte SIXTY que o cliente pediu */
 .product-title-grid {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "SIXTY", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1.1rem;
     margin-top: 15px;
     font-weight: 400;
@@ -748,7 +807,7 @@ h1,
 h2,
 h3,
 .logo-text {
-    font-family: "Denominary", Helvetica, Arial, sans-serif;
+    font-family: "SIXTY", "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: bold;
@@ -1132,16 +1191,18 @@ h3,
    SWIPER CAROUSEL STYLES
    ========================================= */
 
-/* Carousel Promocional no Topo */
+/* Carousel Promocional — Full Width estilo esoteric.wtf */
 .promo-carousel-section {
-    margin: 40px 0;
+    margin: 0;
     width: 100%;
+    /* Quebra o container para full-width */
 }
 
 .promo-swiper {
     width: 100%;
-    height: 500px;
-    border-radius: 12px;
+    height: 80vh;
+    max-height: 600px;
+    border-radius: 0;
     overflow: hidden;
 }
 
@@ -1149,13 +1210,14 @@ h3,
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f9f9f9;
+    background: #f0f0f0;
 }
 
 .promo-swiper .swiper-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 25%;
 }
 
 .promo-swiper .swiper-pagination-bullet {
@@ -1164,22 +1226,23 @@ h3,
 }
 
 .promo-swiper .swiper-pagination-bullet-active {
-    background: var(--vinho);
+    background: #fff;
     opacity: 1;
 }
 
 .promo-swiper .swiper-button-next,
 .promo-swiper .swiper-button-prev {
     color: #fff;
-    background: rgba(0, 0, 0, 0.5);
-    width: 50px;
-    height: 50px;
+    background: rgba(0, 0, 0, 0.25);
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
+    backdrop-filter: blur(4px);
 }
 
 .promo-swiper .swiper-button-next:after,
 .promo-swiper .swiper-button-prev:after {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 /* Swiper da Vitrine */
@@ -1275,7 +1338,9 @@ h3,
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .promo-swiper {
-        height: 300px;
+        aspect-ratio: 1 / 1;
+        height: auto;
+        max-height: none;
     }
 
     .promo-swiper .swiper-button-next,
@@ -1287,5 +1352,221 @@ h3,
     .promo-swiper .swiper-button-next:after,
     .promo-swiper .swiper-button-prev:after {
         font-size: 16px;
+    }
+}
+
+/* =========================================
+   FOOTER � ESOTERIC STYLE (3 COLUNAS)
+   ========================================= */
+.site-footer {
+    border-top: 1px solid #e8e8e8;
+    padding: 60px 0 36px;
+    margin-top: 90px;
+    background: var(--white);
+}
+
+.footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 4%;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+}
+
+/* Coluna 1 - Newsletter */
+.footer-newsletter h4,
+.footer-nav h4,
+.footer-contact h4 {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    color: var(--black);
+}
+
+.footer-newsletter-form {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+    transition: border-color 0.25s;
+}
+
+.footer-newsletter-form:focus-within {
+    border-color: var(--black);
+}
+
+.footer-newsletter-form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    padding: 8px 0;
+    text-transform: uppercase;
+    background: transparent;
+    color: var(--black);
+}
+
+.footer-newsletter-form input::placeholder {
+    color: #aaa;
+}
+
+.footer-newsletter-form button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #888;
+    transition: color 0.25s;
+    padding: 0 4px;
+}
+
+.footer-newsletter-form button:hover {
+    color: var(--black);
+}
+
+.footer-social {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+}
+
+.footer-social a {
+    color: var(--black);
+    display: flex;
+    align-items: center;
+    transition: color 0.25s, transform 0.25s;
+}
+
+.footer-social a:hover {
+    color: var(--vinho);
+    transform: scale(1.15);
+}
+
+/* Ocultar ícone do TikTok globalmente (Mantendo HTML para uso futuro) */
+.footer-social a[href*="tiktok.com"] {
+    display: none !important;
+}
+
+.footer-social svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+}
+
+/* Coluna 2 - Nav */
+.footer-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-nav ul a {
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--black);
+    transition: color 0.25s;
+}
+
+.footer-nav ul a:hover {
+    color: var(--vinho);
+}
+
+/* Coluna 3 - Contato */
+.footer-contact a {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #2a6fc9;
+    text-decoration: none;
+    display: block;
+    word-break: break-all;
+    transition: color 0.25s;
+}
+
+.footer-contact a:hover {
+    color: var(--vinho);
+}
+
+/* Base inferior */
+.footer-bottom {
+    border-top: 1px solid #e8e8e8;
+    padding-top: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.footer-copyright {
+    font-size: 0.62rem;
+    color: #999;
+    letter-spacing: 1.5px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .site-footer {
+        padding: 40px 0 24px;
+        margin-top: 50px;
+    }
+}
+
+/* --- FIXES APLICADOS --- */
+.hero-banner-section { width: 100vw !important; margin-left: -50vw !important; margin-right: -50vw !important; left: 50% !important; right: 50% !important; position: relative !important; overflow: hidden; }
+.navbar img { height: 30px !important; max-width: 140px !important; object-fit: contain !important; object-position: left center !important; }
+
+/* SWIPER HERO BANNER */
+.hero-swiper { width: 100%; height: auto; }
+.hero-swiper .swiper-pagination-bullet { background: var(--black); }
+.hero-swiper .swiper-pagination-bullet-active { background: var(--vinho); }
+.hero-img { width: 100vw !important; height: auto; display: block; object-fit: cover; object-position: center; }
+
+/* Remove fundo branco chato da foto (se houver) para ela flutuar solta no quadrado */
+.product-image-wrapper img {
+    mix-blend-mode: multiply;
+}
+
+@media (max-width: 768px) {
+    .hero-img { height: 130vw !important; max-height: 85vh !important; }
+    
+    /* Preenche a borda ("não quero borda") da vitrine no mobile edge-to-edge */
+    .product-image-wrapper {
+        width: 100vw !important;
+        margin-left: calc(-50vw + 50%) !important;
+        margin-right: calc(-50vw + 50%) !important;
+        border-radius: 0 !important;
+    }
+
+    /* Impede que o super zoom vaze para o slide vizinho */
+    .product-vitrine-swiper .swiper-slide {
+        overflow: hidden !important;
+    }
+
+    /* Zoom MUITO maior para a camisa realmente ocupar TODO o quadrado */
+    .product-vitrine-swiper .swiper-slide:nth-child(1) img,
+    .product-vitrine-swiper .swiper-slide:nth-child(2) img {
+        transform: scale(1.65);
+        transform-origin: center 45%;
     }
 }
