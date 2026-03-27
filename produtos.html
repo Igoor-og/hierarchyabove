@@ -278,6 +278,10 @@
                 pagination: { el: '.product-vitrine-swiper .swiper-pagination', clickable: true },
                 allowTouchMove: true,
                 grabCursor: true,
+                observer: true,
+                observeParents: true,
+                preloadImages: true,
+                updateOnImagesReady: true
             });
 
             detailSwiper = new Swiper('.product-detail-swiper', {
@@ -289,6 +293,10 @@
                     prevEl: '.product-detail-swiper .swiper-button-prev'
                 },
                 grabCursor: true,
+                observer: true,
+                observeParents: true,
+                preloadImages: true,
+                updateOnImagesReady: true
             });
         });
     </script>

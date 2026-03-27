@@ -776,6 +776,20 @@ nav#nav-menu a.active .nav-icon svg {
     display: block;
 }
 
+@media (max-width: 768px) {
+    /* CORREÇÃO MOBILE: Fix CLS Vitrine/Detalhes sem quebrar o banner */
+    .product-vitrine-swiper .swiper-slide img,
+    .product-detail-swiper .swiper-slide img {
+        aspect-ratio: 1 / 1 !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+    .product-vitrine-swiper .swiper-slide,
+    .product-detail-swiper .swiper-slide {
+        overflow: hidden !important;
+    }
+}
+
 /* 3. Se houver um link ou div em volta da imagem, trava o tamanho dele também */
 .product-item {
     width: 100% !important;
