@@ -758,9 +758,7 @@ nav#nav-menu a.active .nav-icon svg {
 
 /* Garante que o Swiper ocupe todo o espaço do container quadrado */
 .product-vitrine-swiper,
-.product-detail-swiper,
-.swiper-wrapper,
-.swiper-slide {
+.product-detail-swiper {
     width: 100% !important;
     height: 100% !important;
 }
