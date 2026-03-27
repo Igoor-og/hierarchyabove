@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "SIXTY";
-    src: url("assets/fonts/sixty/SIXTY.TTF") format("truetype");
+    font-family: "You Are Loved";
+    src: url("assets/fonts/You Are Loved.ttf") format("truetype");
     font-weight: bold;
     font-style: normal;
 }
@@ -24,6 +24,7 @@
 html, body {
     width: 100%;
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -94,25 +95,20 @@ body {
 .navbar {
     display: flex;
     align-items: center;
+    justify-content: flex-end; /* Push menu to right if we center logo absolutely */
     padding: 0 4%;
     border-bottom: 1px solid #ebebeb;
     background: var(--white);
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     height: 65px;
-    opacity: 1;
-    transform: translateY(0);
-    animation: slideDownHeader 0.8s ease forwards;
-    transition: box-shadow 0.3s ease;
-    pointer-events: all;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .navbar.visible {
-    opacity: 1;
-    transform: translateY(0);
     pointer-events: all;
 }
 
@@ -121,30 +117,31 @@ body {
 }
 
 .nav-logo {
-    position: static;
-    transform: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     text-decoration: none;
     display: flex;
     align-items: center;
-    margin-right: 40px;
+    margin: 0;
     flex-shrink: 0;
+    z-index: 10;
 }
 
 .navbar img {
-    height: 32px;
-    max-width: 140px;
+    height: 38px; /* Increased slightly for scaling */
+    max-width: 160px;
     width: auto;
     display: block;
     object-fit: contain;
-    object-position: left center;
+    object-position: center;
 }
 
 nav#nav-menu {
     display: flex;
     gap: 28px;
     align-items: center;
-    margin-right: auto;
-    margin-left: 0;
+    margin-right: 0;
 }
 
 nav#nav-menu a {
@@ -217,6 +214,7 @@ nav#nav-menu a.active .nav-icon svg {
 
 /* Typography */
 .logo-text {
+    font-family: "You Are Loved", sans-serif !important;
     font-size: 5rem;
     font-weight: 900;
     letter-spacing: -4px;
@@ -224,7 +222,7 @@ nav#nav-menu a.active .nav-icon svg {
 }
 
 .timer-bold {
-    font-family: "SIXTY", sans-serif;
+    font-family: "You Are Loved", sans-serif;
     font-size: 3rem;
     font-weight: 700;
     margin: 20px 0;
@@ -258,7 +256,7 @@ nav#nav-menu a.active .nav-icon svg {
 }
 
 .product-title {
-    font-family: "SIXTY", sans-serif;
+    font-family: "You Are Loved", sans-serif;
     font-size: 1.5rem;
     font-weight: 800;
     margin-bottom: 10px;
@@ -503,7 +501,7 @@ nav#nav-menu a.active .nav-icon svg {
 }
 
 .section-label {
-    font-family: "SIXTY", sans-serif;
+    font-family: "You Are Loved", sans-serif;
     font-size: 0.7rem;
     font-weight: 800;
     margin-bottom: 10px;
@@ -604,39 +602,73 @@ nav#nav-menu a.active .nav-icon svg {
         height: 58px;
         position: sticky !important;
         top: 0;
-        justify-content: space-between;
+        justify-content: flex-end; /* Menu and actions to the right */
+        align-items: center;
     }
 
-    /* No mobile: logo à esquerda, nav actions à direita */
+    /* No mobile: logo centalized */
     .nav-logo {
-        position: static !important;
-        transform: none !important;
-        flex-shrink: 0;
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
         margin: 0 !important;
-        order: 1;
     }
 
     nav#nav-menu {
-        order: 2;
         margin-right: 0 !important;
         gap: 14px !important;
         margin-left: auto;
+        display: none; /* We will toggle this or show icons always. If we want icons only, keep flex */
+        /* wait, "Reativar o menu hambúrguer apenas com ícones. O menu deve ser compacto, alinhado à direita e "abraçado" aos ícones de utilidade." */
+    }
+
+    /* We show nav-menu and change to hamburger if needed, or keep icons */
+    .hamburger {
+        display: block !important;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+        margin-left: 10px;
+        z-index: 100;
+    }
+    
+    .hamburger svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--black);
+        stroke-width: 2;
+    }
+
+    /* Menu container toggled by hamburger */
+    .mobile-menu-active nav#nav-menu {
+        display: flex;
+        flex-direction: row;
+        position: absolute;
+        top: 60px;
+        right: 15px;
+        background: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        gap: 20px !important;
     }
 
     .nav-actions {
-        order: 3;
+        display: flex;
         gap: 12px;
         margin-left: 12px;
+        align-items: center;
     }
 
     .navbar img {
-    height: 32px;
-    max-width: 140px;
-    width: auto;
-    display: block;
-    object-fit: contain;
-    object-position: left center;
-}
+        height: 30px;
+        max-width: 130px;
+        width: auto;
+        display: block;
+        object-fit: contain;
+        object-position: center;
+    }
 
     /* NAVEGAÇÃO MOBILE — mostra ícones, oculta texto */
     nav#nav-menu a {
@@ -787,9 +819,9 @@ nav#nav-menu a.active .nav-icon svg {
     z-index: 5;
 }
 
-/* Garante que o título use a fonte SIXTY que o cliente pediu */
+/* Garante que o título use a fonte que o cliente pediu */
 .product-title-grid {
-    font-family: "SIXTY", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "You Are Loved", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1.1rem;
     margin-top: 15px;
     font-weight: 400;
@@ -1570,3 +1602,6 @@ h3,
         transform-origin: center 45%;
     }
 }
+i m g [ s r c * = ' T a b e l a ' ]   {   o b j e c t - f i t :   c o n t a i n   ! i m p o r t a n t ;   b a c k g r o u n d - c o l o r :   # f f f ;   }
+
+img[src*='Tabela'] { height: auto !important; max-height: 100% !important; object-fit: contain !important; background-color: #fff; padding: 5px; }
