@@ -1607,12 +1607,7 @@ h3,
         overflow: hidden !important;
     }
 
-    /* Zoom MUITO maior para a camisa realmente ocupar TODO o quadrado */
-    .product-vitrine-swiper .swiper-slide:nth-child(1) img,
-    .product-vitrine-swiper .swiper-slide:nth-child(2) img {
-        transform: scale(1.65);
-        transform-origin: center 45%;
-    }
+    /* (Bugfix: A regra de scale(1.65) nestas imagens da vitrine no mobile foi removida para evitar o redimensionamento gigante no loading inicial) */
 }
 i m g [ s r c * = ' T a b e l a ' ]   {   o b j e c t - f i t :   c o n t a i n   ! i m p o r t a n t ;   b a c k g r o u n d - c o l o r :   # f f f ;   }
 
