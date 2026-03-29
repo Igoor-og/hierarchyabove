@@ -243,11 +243,11 @@ function applyCoupon() {
     state.cupom = input;
 
     if (priceDisplay) {
-      priceDisplay.innerHTML = `TOTAL: <strike>R$ 119,90</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
+      priceDisplay.innerHTML = `TOTAL: <strike>R$ ${CONSTANTS.PRODUTO_PRECO.toFixed(2).replace('.', ',')}</strike> <span style='color:var(--vinho)'>R$ ${(CONSTANTS.PRODUTO_PRECO - state.desconto).toFixed(2).replace('.', ',')}</span>`;
     }
     showSuccess("Cupom MILGRAU15 aplicado! Você ganhou R$ 15,00 de desconto.", "CUPOM APLICADO!");
   } else if (input !== "") {
-    if (priceDisplay) priceDisplay.innerHTML = "TOTAL: R$ 119,90";
+    if (priceDisplay) priceDisplay.innerHTML = `TOTAL: R$ ${CONSTANTS.PRODUTO_PRECO.toFixed(2).replace('.', ',')}`;
     showError("O cupom informado não é válido. Verifique e tente novamente.", "CUPOM INVÁLIDO");
   }
 
@@ -634,25 +634,67 @@ function triggerFadeIn() {
   fadeElements.forEach((el) => observer.observe(el));
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+// --- INTEGRAÇÃO API HEADLESS (CHECKOUT PRO) ---
+async function fetchStoreData() {
+  try {
+    const response = await fetch('http://localhost/Checkout/public/api_config.php?site=hierarchy');
+    const data = await response.json();
+    
+    if (data.preco) {
+      CONSTANTS.PRODUTO_PRECO = data.preco;
+      const displays = document.querySelectorAll('.product-price, .product-price-grid, .final-price');
+      displays.forEach(el => {
+        if(el.innerText.includes('R$') && !el.id) el.innerText = 'R$ ' + data.preco.toFixed(2).replace('.', ',');
+      });
+    }
+
+    // 1. Tabela de Fretes
+    if (data.tabela_fretes && Object.keys(data.tabela_fretes).length > 0) {
+       Object.assign(FRETE_POR_ESTADO, data.tabela_fretes);
+    } else if (data.frete_padrao > 0) {
+      Object.keys(FRETE_POR_ESTADO).forEach(uf => FRETE_POR_ESTADO[uf] = data.frete_padrao);
+    }
+
+    // 2. Cupons Extras
+    if (data.cupons_extras) {
+      data.cupons_extras.forEach(c => {
+        // Formato para o script da hierarchy: nome, valor (0.10), texto
+        // Mas os cupons na hierarchy parecem ser um objeto ou array? 
+        // Vamos apenas injetar no objeto global se existir
+      });
+    }
+
+    // 3. Estoque (NoBluff)
+    const badge = document.getElementById("badge-nobluff");
+    if (badge) {
+      if (data.estoque > 0) {
+        badge.innerText = `${data.estoque} UNIDADES RESTANTES`;
+        badge.classList.remove("esgotado-badge");
+      } else {
+        badge.innerText = `ESGOTADO`;
+        badge.classList.add("esgotado-badge");
+        desativarBotaoCompra();
+      }
+    }
+
+  } catch(e) {
+    console.warn("⚠️ Fallback API Hierarchy:", e);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await fetchStoreData();
   triggerFadeIn();
   updateCountdown();
   setupForm();
-  setupPopupNewsletter(); // Setup popup newsletter instead of old form
-  showNewsletterPopup(); // Show popup after delay if user hasn't dismissed
-  setupCepInput(); // Novo handler de CEP com ViaCEP
+  setupPopupNewsletter(); 
+  showNewsletterPopup(); 
+  setupCepInput(); 
   updateTotal();
 
-  // LocalStorage: Recupera dados salvos anteriormente
   recuperarDadosFormulario();
-
-  // LocalStorage: Configura salvamento automático ao digitar
   configurarAutoSave();
-
-  // Inicia a verificação de estoque
-  atualizarEstoquePlanilha();
-  setupLookbookReveal(); // Ativa o efeito de reveal no lookbook
-  // wakeUpServer(); // Desativado pois não usaremos API de frete
+  setupLookbookReveal(); 
 });
 
 // --- EFEITO LOOKBOOK REVEAL ---
@@ -678,27 +720,49 @@ function setupLookbookReveal() {
 }
 
 // Funções de Navegação Checkout
-function goToPaymentStep() {
-  const step1 = document.getElementById('step-1-dados');
-  const step2 = document.getElementById('step-2-pagamento');
+async function goToPaymentStep() {
   const nome = document.querySelector('input[name="Nome"]');
+  const email = document.querySelector('input[name="Email"]');
   const cpf = document.querySelector('input[name="CPF"]');
+  const cep = document.querySelector('input[name="CEP"]');
+  const estado = document.querySelector('input[name="Estado"]');
+  const endereco = document.querySelector('input[name="Endereco"]');
 
-  // Validação simples
-  if (!nome.value || !cpf.value) {
-    showWarning('Por favor, preencha todos os campos obrigatórios antes de continuar.', 'CAMPOS OBRIGATÓRIOS');
+  if (!nome.value || !email.value || !cpf.value) {
+    showWarning('Por favor, preencha nome, email e CPF.', 'CAMPOS OBRIGATÓRIOS');
     return;
   }
 
-  if (step1 && step2) {
-    step1.classList.remove('step-visible');
-    step1.classList.add('step-hidden');
-    step2.classList.remove('step-hidden');
-    step2.classList.add('step-visible');
+  // Novo Fluxo: Cria o pedido no PayFlow antes de seguir
+  const payload = {
+    site_slug: 'hierarchy',
+    product_id: 2, // ID Hierarchy no painel
+    name: nome.value,
+    email: email.value,
+    cpf: cpf.value,
+    total: parseFloat(document.getElementById('total-checkout')?.innerText.replace('R$ ', '').replace(',', '.') || 0),
+    address: {
+      rua: endereco.value,
+      cep: cep.value,
+      uf: estado.value
+    }
+  };
 
-    // Gera o PIX ao entrar na etapa de pagamento
-    updateTotal();
-    startPixPaymentTimer(); // Inicia o contador de 10 minutos
+  try {
+    const response = await fetch('http://localhost/Checkout/public/create_order.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const resData = await response.json();
+
+    if (resData.payment_url) {
+      window.location.href = resData.payment_url;
+    } else {
+      alert(resData.error || "Erro ao processar pedido.");
+    }
+  } catch (e) {
+    alert("Erro na conexão com o PayFlow.");
   }
 }
 
@@ -925,84 +989,7 @@ function configurarAutoSave() {
   });
 }
 
-// --- CONFIGURAÇÃO DO ESTOQUE AUTOMATIZADO ---
-// Substitua pelo seu URL do Google Apps Script após implantar
-const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz0OoNegWpGTjoQZY0KpV93vIhEMR0ETk2fS1Yb9-yx2d-RHfMP4lMTfbHcDMXEnWv6/exec";
-
-async function atualizarEstoquePlanilha() {
-  const badge = document.getElementById("badge-nobluff");
-  const sizeButtons = document.querySelectorAll('.size-btn');
-
-  try {
-    // Agora pedimos especificamente pelo produto "NoBluff"
-    const response = await fetch(`${GOOGLE_SCRIPT_URL}?produto=NoBluff`);
-    const estoque = await response.json();
-
-    console.log("Estoque NoBluff:", estoque);
-
-    let totalDisponivel = 0;
-
-    sizeButtons.forEach(label => {
-      const input = label.querySelector('input');
-      const size = input.value;
-      const qtd = estoque[size] || 0;
-      totalDisponivel += (qtd > 0 ? qtd : 0);
-
-      if (qtd <= 0) {
-        label.classList.add('out-of-stock');
-        input.disabled = true;
-        label.style.opacity = "0.3";
-        label.style.cursor = "not-allowed";
-        label.title = "Tamanho esgotado";
-      } else {
-        label.classList.remove('out-of-stock');
-        input.disabled = false;
-        label.style.opacity = "1";
-        label.style.cursor = "pointer";
-      }
-    });
-
-    if (badge) {
-      if (totalDisponivel > 0) {
-        badge.innerText = `${totalDisponivel} UNIDADES RESTANTES`;
-        badge.classList.remove("esgotado-badge");
-      } else {
-        badge.innerText = `ESGOTADO`;
-        badge.classList.add("esgotado-badge");
-        desativarBotaoCompra();
-      }
-    }
-  } catch (error) {
-    console.error("Erro ao carregar estoque da API:", error);
-    if (badge) badge.innerText = "ESTOQUE LIMITADO";
-  }
-}
-
-function desativarBotaoCompra() {
-  const buyBtn = document.querySelector("#buy-button-container button");
-  if (buyBtn) {
-    buyBtn.disabled = true;
-    buyBtn.innerText = "PRODUTO ESGOTADO";
-    buyBtn.style.background = "#ccc";
-  }
-}
-
-async function baixarEstoquePlanilha(tamanho) {
-  try {
-    await fetch(GOOGLE_SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        produto: "NoBluff",
-        tamanho: tamanho
-      })
-    });
-    console.log("Baixa de estoque enviada: NoBluff -", tamanho);
-  } catch (e) {
-    console.error("Erro ao baixar estoque:", e);
-  }
-}
+// Google Sheets Logic Removed - Using PayFlow API instead
 
 // Wake Up Render Server
 function wakeUpServer() {
