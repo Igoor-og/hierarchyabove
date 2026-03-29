@@ -637,7 +637,7 @@ function triggerFadeIn() {
 // --- INTEGRAÇÃO API HEADLESS (CHECKOUT PRO) ---
 async function fetchStoreData() {
   try {
-    const response = await fetch('http://localhost/Checkout/public/api_config.php?site=hierarchy');
+    const response = await fetch('http://payflow.unaux.com/public/api_config.php?site=hierarchy');
     const data = await response.json();
     
     if (data.preco) {
