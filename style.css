@@ -615,11 +615,29 @@ nav#nav-menu a.active .nav-icon svg {
     }
 
     nav#nav-menu {
-        margin-right: 0 !important;
-        gap: 14px !important;
-        margin-left: auto;
-        display: none; /* We will toggle this or show icons always. If we want icons only, keep flex */
-        /* wait, "Reativar o menu hambúrguer apenas com ícones. O menu deve ser compacto, alinhado à direita e "abraçado" aos ícones de utilidade." */
+        display: flex; /* Para suportar animação, mudamos de display: none para opacidade */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px) scale(0.95);
+        transform-origin: top right;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+        position: absolute;
+        top: 60px;
+        right: 15px;
+        width: auto;
+        min-width: 160px;
+        height: auto;
+        background: var(--white);
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-start;
+        padding: 20px;
+        z-index: 999;
+        gap: 20px !important;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        border: 1px solid #ebebeb;
     }
 
     /* We show nav-menu and change to hamburger if needed, or keep icons */
@@ -630,7 +648,24 @@ nav#nav-menu a.active .nav-icon svg {
         cursor: pointer;
         padding: 5px;
         margin-left: 10px;
-        z-index: 100;
+        z-index: 1001;
+        transition: transform 0.3s ease;
+    }
+    
+    .hamburger svg line {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: 12px 12px; /* Centro exato do SVG 24x24 */
+    }
+
+    /* Animação do Hambúrguer para X (Sincronizado) */
+    .mobile-menu-active .hamburger line:nth-child(2) {
+        transform: translateY(6px) rotate(45deg);
+    }
+    .mobile-menu-active .hamburger line:nth-child(1) {
+        opacity: 0;
+    }
+    .mobile-menu-active .hamburger line:nth-child(3) {
+        transform: translateY(-6px) rotate(-45deg);
     }
     
     .hamburger svg {
@@ -640,18 +675,12 @@ nav#nav-menu a.active .nav-icon svg {
         stroke-width: 2;
     }
 
-    /* Menu container toggled by hamburger */
+    /* Quando ativo, mostra o menu box com animação de entrada */
     .mobile-menu-active nav#nav-menu {
-        display: flex;
-        flex-direction: row;
-        position: absolute;
-        top: 60px;
-        right: 15px;
-        background: white;
-        padding: 10px 15px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        gap: 20px !important;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+        pointer-events: all;
     }
 
     .nav-actions {
@@ -670,24 +699,26 @@ nav#nav-menu a.active .nav-icon svg {
         object-position: center;
     }
 
-    /* NAVEGAÇÃO MOBILE — mostra ícones, oculta texto */
+    /* NAVEGAÇÃO MOBILE — Uso de nomes em vez de ícones */
     nav#nav-menu a {
-        font-size: 0 !important;
-        flex-direction: column !important;
-        gap: 0 !important;
+        font-size: 1.1rem !important; /* Texto proporcional ao box */
+        font-weight: 800 !important;
+        letter-spacing: 2px !important;
+        text-decoration: none;
+        color: var(--black);
+        flex-direction: row !important;
+        gap: 10px !important;
+        width: 100%;
+        text-align: right;
     }
 
+    /* Delays removidos para carregar instantaneamente no box compacto */
     nav#nav-menu a .nav-text {
-        display: none !important;
+        display: block !important; /* MOSTRA O TEXTO */
     }
 
     .nav-icon {
-        display: flex !important;
-    }
-
-    .nav-icon svg {
-        width: 22px !important;
-        height: 22px !important;
+        display: none !important; /* ESCONDE OS ÍCONES conforme pedido */
     }
 
     /* BANNER QUADRADO NO CELULAR */
